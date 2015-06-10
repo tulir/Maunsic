@@ -1,0 +1,51 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven {
+            name = "forge"
+            url = "http://files.minecraftforge.net/maven"
+        }
+        maven {
+            name = "sonatype"
+            url = "https://oss.sonatype.org/content/repositories/snapshots/"
+        }
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
+    }
+}
+apply plugin: 'forge'
+
+version = "0.1-A1"
+group= "net.maunium.Maunsic"
+archivesBaseName = "Maunsic-MC1.8"
+
+jar {
+    manifest {
+        attributes 'FMLCorePlugin': 'net.maunium.Maunsic.Core.MaunsiCoreLoader'
+        attributes 'FMLCorePluginContainsFMLMod': 'true'
+    }
+}
+
+minecraft {
+    version = "1.8-11.14.2.1436"
+    runDir = "MinecraftEnv"
+    mappings = "snapshot_nodoc_20141130"
+}
+
+dependencies {
+  compile files('lib/GuiLib-Mau_1.0.1.jar')
+  compile files('lib/MauEventLib-1.2.2.jar')
+  compile files('lib/luaj-jse-3.0.jar')
+}
+
+processResources {
+    inputs.property "version", project.version
+    from(sourceSets.main.resources.srcDirs) {
+        include 'mcmod.info'
+        expand 'version':project.version
+    }
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'mcmod.info'
+    }
+}
