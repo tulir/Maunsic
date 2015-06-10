@@ -7,6 +7,12 @@ import net.maunium.Maunsic.Maunsic;
 import net.maunium.Maunsic.Server.Network.MPacket;
 import net.maunium.Maunsic.Server.Network.StringIO;
 
+/**
+ * Sent by the client to check if the version of the client has been killswitched.
+ * 
+ * @author Tulir293
+ * @since 0.1
+ */
 public class PacketKillswitched implements MPacket {
 	public static final int packetId = 11;
 	private String version, key;

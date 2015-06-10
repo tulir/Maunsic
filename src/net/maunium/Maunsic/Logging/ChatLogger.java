@@ -16,7 +16,8 @@ import net.minecraft.util.IChatComponent;
  * Used for logging Chat. Singleton instance only.
  * 
  * @author Tulir293
- * @since Unknown post-1.0 developement version.
+ * @since 0.1
+ * @from Maucros
  */
 public class ChatLogger {
 	private SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");;
