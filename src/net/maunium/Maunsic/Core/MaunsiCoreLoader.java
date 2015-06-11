@@ -13,6 +13,12 @@ import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin.Name;
 
 @MCVersion(value = "1.8")
 @Name(value = "MaunsiCore")
+/**
+ * The loader for the Maunsic Coremod, MaunsiCore.
+ * 
+ * @author Tulir293
+ * @since 0.11
+ */
 public class MaunsiCoreLoader implements IFMLLoadingPlugin {
 	public static final Logger log = LogManager.getLogger("MaunsiCore");
 	
