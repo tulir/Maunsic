@@ -7,8 +7,6 @@ import java.util.Collections;
 
 import javax.swing.JOptionPane;
 
-import org.apache.logging.log4j.Level;
-
 import net.maunium.Maunsic.Maunsic;
 import net.maunium.Maunsic.Core.MaunsiCoreLoader;
 import net.maunium.Maunsic.Server.Network.MPacket;
@@ -41,12 +39,12 @@ public class ServerHandler {
 			mac = sb.toString();
 		} catch (IOException e) {
 			mac = null;
-			MaunsiCoreLoader.log(Level.ERROR, "Failed to get MAC address");
-			MaunsiCoreLoader.catching(Level.ERROR, e);
+			MaunsiCoreLoader.log.error("Failed to get MAC address");
+			MaunsiCoreLoader.log.catching(e);
 			return;
 		}
 		
-		MaunsiCoreLoader.log(Level.INFO, "Checking licence/killswitch status...");
+		MaunsiCoreLoader.log.info("Checking licence/killswitch status...");
 		
 		try {
 			PacketRegistry.registerPacket(PacketLicence.class);
@@ -54,30 +52,30 @@ public class ServerHandler {
 			PacketRegistry.registerPacket(PacketKillswitched.class);
 			PacketRegistry.registerPacket(PacketKillswitchResponse.class);
 		} catch (Exception e) {
-			MaunsiCoreLoader.catching(Level.ERROR, e);
+			MaunsiCoreLoader.log.catching(e);
 		}
 		try {
 			s = new Socket("maunium.net", 29354);
 		} catch (IOException e) {
-			MaunsiCoreLoader.catching(Level.ERROR, e);
+			MaunsiCoreLoader.log.catching(e);
 		}
 		
 		try {
-			MaunsiCoreLoader.log(Level.DEBUG, "Sending killswitch query...");
+			MaunsiCoreLoader.log.debug("Sending killswitch query...");
 			sendPacket(new PacketKillswitched(Maunsic.version));
 			readResponse();
 		} catch (IOException e) {
-			MaunsiCoreLoader.log(Level.ERROR, "Failed to send killswitch query");
-			MaunsiCoreLoader.catching(Level.ERROR, e);
+			MaunsiCoreLoader.log.error("Failed to send killswitch query");
+			MaunsiCoreLoader.log.catching(e);
 		}
 		
 		if (ServerHandler.killswitched) {
 			try {
 				close();
 			} catch (IOException e) {
-				MaunsiCoreLoader.catching(Level.ERROR, e);
+				MaunsiCoreLoader.log.catching(e);
 			}
-			MaunsiCoreLoader.log(Level.ERROR, "Version killswitched; Informing the user.");
+			MaunsiCoreLoader.log.error("Version killswitched; Informing the user.");
 			JOptionPane.showMessageDialog(null, "The version of Maunsic that you\n" + "are using has been killswitched", "Killswitched",
 					JOptionPane.ERROR_MESSAGE);
 			FMLCommonHandler.instance().exitJava(0, false);
@@ -85,25 +83,25 @@ public class ServerHandler {
 		}
 		
 		try {
-			MaunsiCoreLoader.log(Level.DEBUG, "Loading licences from file...");
+			MaunsiCoreLoader.log.debug("Loading licences from file...");
 			LicensingSystem.loadLicences();
-			MaunsiCoreLoader.log(Level.DEBUG, "Sending licence query...");
+			MaunsiCoreLoader.log.debug("Sending licence query...");
 			if (LicensingSystem.query(mac)) readResponse();
 		} catch (Exception e) {
-			MaunsiCoreLoader.log(Level.ERROR, "Failed to send licence query");
-			MaunsiCoreLoader.catching(Level.ERROR, e);
+			MaunsiCoreLoader.log.error("Failed to send licence query");
+			MaunsiCoreLoader.log.catching(e);
 		}
 		
 		try {
 			close();
 		} catch (IOException e) {
-			MaunsiCoreLoader.catching(Level.ERROR, e);
+			MaunsiCoreLoader.log.catching(e);
 		}
 		
 		if (!ServerHandler.licenced) {
-			MaunsiCoreLoader.log(Level.ERROR, "Invalid licence; Requesting new one from user.");
+			MaunsiCoreLoader.log.error("Invalid licence; Requesting new one from user.");
 			LicensingSystem.requestLicence(mac);
-		} else MaunsiCoreLoader.log(Level.INFO, "All checks passes; Granting access to Maunsic");
+		} else MaunsiCoreLoader.log.info("All checks passes; Granting access to Maunsic");
 	}
 	
 	public static boolean canUse() {
