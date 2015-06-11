@@ -20,6 +20,10 @@ import net.maunium.Maunsic.Server.ServerHandler;
 import net.maunium.Maunsic.Util.I18n;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.ChatStyle;
+import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.IChatComponent;
 
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
@@ -37,14 +41,16 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
  * @since 0.1
  * @version 0.1 Alpha 1. Same as {@link #version}
  */
-@Mod(modid = Maunsic.name, version = Maunsic.version, name = Maunsic.name, acceptedMinecraftVersions = "[1.8,1.9)", clientSideOnly = true, canBeDeactivated = true)
+@Mod(modid = Maunsic.name, version = Maunsic.version, name = Maunsic.name, acceptedMinecraftVersions = "[1.8,1.9)", clientSideOnly = true)
 public class Maunsic {
 	/** The official instance of Maunsic */
 	@Instance(Maunsic.name)
 	private static Maunsic instance;
 	/** "Maunsic", which is the name of this mod. Most likely will never change. */
 	public static final String name = "Maunsic";
+	/** The version of Minecraft that this version of Maunsic is made for. */
 	public static final String forMC = "1.8";
+	/** The current version of Maunsic */
 	public static final String version = "0.1-A1", longVersion = "0.1 Alpha 1";
 	private static final File maunsicDir = new File(Minecraft.getMinecraft().mcDataDir, "config" + File.separator + "Maunsic" + File.separator);
 	/** A standard Minecraft logger with the name "Maunsic" ({@link #name}) */
@@ -53,6 +59,22 @@ public class Maunsic {
 	public static PrintStream sout = new PrintStream(new FileOutputStream(FileDescriptor.out));
 	/** The real err channel since Forge overrides System.err */
 	public static PrintStream serr = new PrintStream(new FileOutputStream(FileDescriptor.err));
+	/** The color of the standard output messages */
+	public static final ChatStyle stdStyle = new ChatStyle().setColor(EnumChatFormatting.GRAY);
+	/** A colorful IChatComponent that should be used as the start of each Maucros standard output message. */
+	public static final IChatComponent stdTag = new ChatComponentText("")
+			.appendSibling(new ChatComponentText("[").setChatStyle(new ChatStyle().setColor(EnumChatFormatting.AQUA)))
+			.appendSibling(new ChatComponentText(Maunsic.name).setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GREEN).setBold(true)))
+			.appendSibling(new ChatComponentText("]").setChatStyle(new ChatStyle().setColor(EnumChatFormatting.AQUA)))
+			.appendSibling(new ChatComponentText(" ").setChatStyle(stdStyle));
+	/** The color of the error output messages */
+	public static final ChatStyle errStyle = new ChatStyle().setColor(EnumChatFormatting.RED);
+	/** A colorful IChatComponent that should be used as the start of each Maucros error output message. */
+	public static final IChatComponent errTag = new ChatComponentText("")
+			.appendSibling(new ChatComponentText("[").setChatStyle(new ChatStyle().setColor(EnumChatFormatting.DARK_PURPLE)))
+			.appendSibling(new ChatComponentText(Maunsic.name).setChatStyle(new ChatStyle().setColor(EnumChatFormatting.DARK_RED).setBold(true)))
+			.appendSibling(new ChatComponentText("]").setChatStyle(new ChatStyle().setColor(EnumChatFormatting.DARK_PURPLE)))
+			.appendSibling(new ChatComponentText(" ").setChatStyle(errStyle));
 	/** Initialization time or -1 if the initialization has not finished. */
 	private int construct = -1, preInit = -1, init = -1, postInit = -1;
 	/** Maucros Configuration */
@@ -126,11 +148,6 @@ public class Maunsic {
 		getLogger().info(name + " v" + longVersion + " for Minecraft " + forMC + " enabled in " + (construct + preInit + init + postInit) + "ms.");
 	}
 	
-	@EventHandler
-	public void deactivate(net.minecraftforge.fml.common.event.FMLModDisabledEvent evt) {
-		
-	}
-	
 	public static final MaunsicLogger getLogger() {
 		return MaunsicLogger.getMaunsicLogger();
 	}
@@ -148,7 +165,7 @@ public class Maunsic {
 	}
 	
 	/**
-	 * Copies a language file from the lang folder inside the jar to minecraf/config/Maunsic/language/.
+	 * Copies a language file from the lang folder inside the jar to minecraft/config/Maunsic/language/.
 	 * 
 	 * @param lang The name of the language file without the ending.
 	 * @throws IOException If reading (Resource as Stream) or writing (bytestreams.copy) fails
@@ -164,14 +181,105 @@ public class Maunsic {
 		input.close();
 	}
 	
-	public File getConfDir(String dir) {
+	/**
+	 * Get a config subdirectory with the given name.
+	 * 
+	 * @param dir The name of the subdirectory
+	 * @return A file instance. The directory in the instance will always exist if using this method.
+	 */
+	public static File getConfDir(String dir) {
 		File f = new File(maunsicDir, dir);
 		if (!f.exists()) f.mkdirs();
 		return f;
 	}
 	
-	public File getConfDir() {
+	/**
+	 * Get the main Maunsic config directory
+	 * 
+	 * @return A file instance. The directory in the instance will always exist if using this method.
+	 */
+	public static File getConfDir() {
 		if (!maunsicDir.exists()) maunsicDir.mkdirs();
 		return maunsicDir;
+	}
+	
+	/**
+	 * Localizes a message with I18n and prints it to chat.
+	 * 
+	 * @param key The I18n tag
+	 * @param args The I18n args
+	 */
+	public static void printChat(String key, Object... args) {
+		ChatLogger.printChat(stdTag.createCopy().appendText(I18n.format(key, args)).setChatStyle(stdStyle));
+	}
+	
+	/**
+	 * Localizes a message with I18n and prints it to chat as an error.
+	 * 
+	 * @param key The I18n tag
+	 * @param args The I18n args
+	 */
+	public static void printChatError(String key, Object... args) {
+		ChatLogger.printChat(errTag.createCopy().appendText(I18n.format(key, args)).setChatStyle(errStyle));
+	}
+	
+	/**
+	 * Localizes a message with I18n and prints it to chat using the given style.
+	 * 
+	 * @param style The Chat Style to use.
+	 * @param key The I18n tag
+	 * @param args The I18n args
+	 */
+	public static void printChatStyled(ChatStyle style, String message, Object... args) {
+		ChatLogger.printChat(new ChatComponentText(I18n.format(message, args)).setChatStyle(style));
+	}
+	
+	/**
+	 * Prints a chat message (without sending to server)<br>
+	 * Uses the public static final String stag as prefix and gray as message color
+	 * 
+	 * @param message The message to print.
+	 * @deprecated Use {@link #printChat}
+	 */
+	@Deprecated
+	public static void printChat_static(String message) {
+		ChatLogger.printChat(stdTag.createCopy().appendText(message).setChatStyle(stdStyle));
+	}
+	
+	/**
+	 * Prints a chat error message (without sending to server)<br>
+	 * Uses the public static final String errtag as prefix and red as message color
+	 * 
+	 * @param message The message to print.
+	 * @deprecated Use {@link #printChatError}
+	 */
+	@Deprecated
+	public static void printChatError_static(String message) {
+		ChatLogger.printChat(errTag.createCopy().appendText(message).setChatStyle(errStyle));
+	}
+	
+	/**
+	 * Prints a styled chat message (without sending to server)<br>
+	 * There is no prefix and all color is specified in the message and/or the ChatStyle object.
+	 * 
+	 * @param message The message to print.
+	 * @param style The ChatStyle object to apply to the message.
+	 * @deprecated Use {@link #printChatStyled}
+	 */
+	@Deprecated
+	public static void printChat_static(Object message, ChatStyle style) {
+		ChatLogger.printChat(new ChatComponentText(message.toString()).setChatStyle(style));
+	}
+	
+	/**
+	 * Sends a chat message to the server. Color support is up to the server.<br>
+	 * The server has the ability to modify this all it wants.
+	 * 
+	 * @param message The message to send
+	 */
+	public static void sendChat(String message) {
+		if (Minecraft.getMinecraft() == null) return;
+		if (Minecraft.getMinecraft().thePlayer == null) return;
+		Minecraft.getMinecraft().thePlayer.sendChatMessage(message);
 	}
 }
