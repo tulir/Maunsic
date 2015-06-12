@@ -7,7 +7,6 @@ import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.AbstractInsnNode;
 import org.objectweb.asm.tree.ClassNode;
-import org.objectweb.asm.tree.InsnList;
 import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 
@@ -24,7 +23,6 @@ import net.maunium.Maunsic.Core.ClientChatSendEvent;
 public class EntityPlayerSPT extends AbstractMauTransformer {
 	public EntityPlayerSPT() {
 		super("net.minecraft.client.entity.EntityPlayerSP", "cio");
-		// TODO Auto-generated constructor stub
 	}
 	
 	@Override
@@ -44,11 +42,9 @@ public class EntityPlayerSPT extends AbstractMauTransformer {
 				while (iter.hasNext()) {
 					current = iter.next();
 					if (current.getOpcode() == Opcodes.INVOKESPECIAL || current.getOpcode() == Opcodes.INVOKEVIRTUAL) {
-						InsnList inject = new InsnList();
-						inject.add(new MethodInsnNode(Opcodes.INVOKESTATIC, ClientChatSendEvent.class.getName().replace(".", "/"), "sendChatMessage",
-								"(Ljava/lang/String;)V", false));
-						
-						if (i > 0) m.instructions.insert(current, inject);
+						if (i > 0)
+							m.instructions.insert(current, new MethodInsnNode(Opcodes.INVOKESTATIC, ClientChatSendEvent.class.getName().replace(".", "/"),
+									"sendChatMessage", "(Ljava/lang/String;)V", false));
 						m.instructions.remove(current);
 						i++;
 					}
