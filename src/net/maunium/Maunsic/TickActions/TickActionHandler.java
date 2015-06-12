@@ -1,6 +1,7 @@
 package net.maunium.Maunsic.TickActions;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -59,6 +60,15 @@ public class TickActionHandler {
 	@SubscribeEvent
 	public void renderOverlay(RenderGameOverlayEvent.Text evt) {
 		for (TickAction ta : allActions)
-			if (ta.isActive()) evt.left.add(ta.getStatusText());
+			if (ta.isActive()) add(evt.left, ta.getStatusText());
+	}
+	
+	/**
+	 * Add the contents of {@code objects} to {@code list}
+	 */
+	private void add(List<String> list, String[] objects) {
+		if (objects == null) return;
+		for (String s : objects)
+			list.add(s);
 	}
 }

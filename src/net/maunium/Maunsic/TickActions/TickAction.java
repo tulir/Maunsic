@@ -30,9 +30,9 @@ public interface TickAction {
 	 * @return The text to render on the left side of the screen when this action is active. An empty string will render an empty line. To render no text,
 	 *         return null.
 	 */
-	public default String getStatusText() {
+	public default String[] getStatusText() {
 		// Default implementation returns the name and a green "ON" text
-		return getName() + EnumChatFormatting.GREEN + " ON";
+		return new String[] { getName() + EnumChatFormatting.GREEN + " ON" };
 	}
 	
 	/**
