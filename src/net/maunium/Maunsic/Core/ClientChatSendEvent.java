@@ -12,6 +12,7 @@ import net.minecraftforge.fml.common.eventhandler.Event;
  * 
  * @author Tulir293
  * @since 0.1
+ * @from MauEventLib
  */
 @Cancelable
 public class ClientChatSendEvent extends Event {
@@ -19,8 +20,11 @@ public class ClientChatSendEvent extends Event {
 	 * This method is what the transformer tells the player class to use.
 	 */
 	public static void sendChatMessage(String message) {
+		// Create a ClientChatSendEvent
 		ClientChatSendEvent ccse = new ClientChatSendEvent(message);
+		// Post it to the Forge event bus, and return if it was cancelled.
 		if (MinecraftForge.EVENT_BUS.post(ccse)) return;
+		// Add the message in the ClientChatSendEvent to the player send queue.
 		Minecraft.getMinecraft().thePlayer.sendQueue.addToSendQueue(new C01PacketChatMessage(ccse.getMessage()));
 	}
 	
@@ -34,7 +38,7 @@ public class ClientChatSendEvent extends Event {
 	 * Get the message of this event.
 	 */
 	public String getMessage() {
-		return this.message;
+		return message;
 	}
 	
 	/**
