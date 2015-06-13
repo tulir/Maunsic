@@ -100,9 +100,9 @@ public class Maunsic {
 		mm.name = name;
 		mm.modId = name;
 		mm.version = version;
-		mm.authorList = Arrays.asList("Tulir293");
+		mm.authorList = Arrays.asList("Tulir293", "Davidee");
 		mm.url = "http://maunium.net/forge/";
-		mm.description = "The follower of Maucros, Maunsic. Made from scratch.";
+		mm.description = "The follower of Maucros, Maunsic. Made from scratch.\nContains a modified version of GuiLib by Davidee";
 		
 		if (!ServerHandler.canUse()) {
 			if (ServerHandler.killswitched) mm.description += "\nNOTE: Maunsic disabled due to using a killswitched version.";
