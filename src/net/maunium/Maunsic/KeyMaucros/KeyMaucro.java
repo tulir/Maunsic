@@ -1,6 +1,9 @@
 package net.maunium.Maunsic.KeyMaucros;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.regex.Pattern;
 
 import org.lwjgl.input.Keyboard;
@@ -14,6 +17,52 @@ import org.lwjgl.input.Keyboard;
  */
 public abstract class KeyMaucro implements Serializable, Comparable<KeyMaucro> {
 	static final long serialVersionUID = 29300001L;
+	
+	private static List<KeyMaucro> keymaucros = new ArrayList<KeyMaucro>();
+	
+	public static void init(List<KeyMaucro> kms) {
+		keymaucros = kms;
+	}
+	
+	public static void sort() {
+		Collections.sort(keymaucros);
+	}
+	
+	public static void addKeyMaucro(KeyMaucro km) {
+		if (keymaucros.size() > 0) {
+			for (int i = 0; i < keymaucros.size(); i++) {
+				if (keymaucros.get(i).getName().equals(km.getName())) modifyKeyMaucro(i, km);
+				else continue;
+				return;
+			}
+		}
+		keymaucros.add(km);
+		sort();
+	}
+	
+	public static boolean modifyKeyMaucro(int index, KeyMaucro newkm) {
+		if (keymaucros.size() > index && !keymaucros.get(index).equals(newkm)) {
+			keymaucros.set(index, newkm);
+			sort();
+			return true;
+		}
+		return false;
+	}
+	
+	public static boolean removeKeyMaucro(KeyMaucro km) {
+		return keymaucros.remove(km);
+	}
+	
+	public static boolean removeKeyMaucro(int index) {
+		if (keymaucros.size() > index) {
+			keymaucros.remove(index);
+			return true;
+		} else return false;
+	}
+	
+	public static List<KeyMaucro> getKeyMaucros() {
+		return keymaucros;
+	}
 	
 	protected String name;
 	protected int keyCode;
