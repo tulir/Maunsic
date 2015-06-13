@@ -66,9 +66,9 @@ public class I18n {
 	 * 
 	 * @param node The node to format.
 	 * @param replace The arguments to replace {i}'s with.
-	 * @return The formatted String.
+	 * @return The translated String.
 	 */
-	public static String format(String node, Object... replace) {
+	public static String translate(String node, Object... replace) {
 		if (!ServerHandler.canUse()) return "";
 		if (lang.containsKey(node)) {
 			String rtrn = lang.getProperty(node);
