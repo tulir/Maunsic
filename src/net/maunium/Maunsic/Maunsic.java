@@ -82,6 +82,9 @@ public class Maunsic {
 	/** Maucros Configuration */
 	private Configuration conf;
 	
+	/**
+	 * Constructor
+	 */
 	public Maunsic() {
 		if (!ServerHandler.canUse()) return;
 		long st = Minecraft.getSystemTime();
@@ -95,6 +98,9 @@ public class Maunsic {
 		return;
 	}
 	
+	/**
+	 * PreInitializer
+	 */
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent evt) {
 		long st = Minecraft.getSystemTime();
@@ -134,6 +140,9 @@ public class Maunsic {
 		getLogger().info("PreInit complete in " + (init = (int) (System.currentTimeMillis() - st)) + "ms.");
 	}
 	
+	/**
+	 * Initializer
+	 */
 	@EventHandler
 	public void init(FMLInitializationEvent evt) {
 		if (!ServerHandler.canUse()) return;
@@ -147,6 +156,9 @@ public class Maunsic {
 		getLogger().info("Init complete in " + (init = (int) (System.currentTimeMillis() - st)) + "ms.");
 	}
 	
+	/**
+	 * PostInitializer
+	 */
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent evt) {
 		if (!ServerHandler.canUse()) return;
@@ -156,13 +168,27 @@ public class Maunsic {
 		getLogger().info(name + " v" + longVersion + " for Minecraft " + forMC + " enabled in " + (construct + preInit + init + postInit) + "ms.");
 	}
 	
+	/*
+	 * Getters
+	 */
+	
+	/**
+	 * Get the main logger for Maunsic.
+	 */
 	public static final MaunsicLogger getLogger() {
 		return MaunsicLogger.getMaunsicLogger();
 	}
 	
+	/**
+	 * Get the chat logger by Maunsic which should be used for all chat-related logs.
+	 */
 	public static final ChatLogger getChatLogger() {
 		return ChatLogger.getChatLogger();
 	}
+	
+	/*
+	 * Language saving methods
+	 */
 	
 	/**
 	 * Saves all premade language files.
@@ -189,6 +215,10 @@ public class Maunsic {
 		input.close();
 	}
 	
+	/*
+	 * Get conf methods
+	 */
+	
 	/**
 	 * Get a config subdirectory with the given name.
 	 * 
@@ -210,6 +240,10 @@ public class Maunsic {
 		if (!maunsicDir.exists()) maunsicDir.mkdirs();
 		return maunsicDir;
 	}
+	
+	/*
+	 * Chat methods
+	 */
 	
 	/**
 	 * Localizes a message with I18n and prints it to chat.
@@ -290,5 +324,4 @@ public class Maunsic {
 		if (Minecraft.getMinecraft().thePlayer == null) return;
 		Minecraft.getMinecraft().thePlayer.sendChatMessage(message);
 	}
-	
 }
