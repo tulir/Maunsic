@@ -7,10 +7,10 @@ import net.maunium.Maunsic.Gui.GuiMaunsic;
 import net.maunium.Maunsic.KeyMaucros.KeyMaucro;
 import net.maunium.Maunsic.Server.ServerHandler;
 import net.maunium.Maunsic.TickActions.ActionFly;
+import net.maunium.Maunsic.Util.MauKeybinding;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;
-import net.minecraft.client.settings.KeyBinding;
 
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -108,9 +108,9 @@ public class InputHandler {
 	}
 	
 	public class Keybinds {
-		public final KeyBinding config = new KeyBinding("Configuration", Keyboard.KEY_F4, null);
-		public final KeyBinding fly = new KeyBinding("Fly", Keyboard.KEY_F, null);
-		public final KeyBinding inc_speed = new KeyBinding("Increase Speed", Keyboard.KEY_PRIOR, null);
-		public final KeyBinding dec_speed = new KeyBinding("Decrease Speed", Keyboard.KEY_NEXT, null);
+		public final MauKeybinding config = new MauKeybinding("Configuration", Keyboard.KEY_F4);
+		public final MauKeybinding fly = new MauKeybinding("Fly", Keyboard.KEY_F);
+		public final MauKeybinding inc_speed = new MauKeybinding("Increase Speed", Keyboard.KEY_PRIOR);
+		public final MauKeybinding dec_speed = new MauKeybinding("Decrease Speed", Keyboard.KEY_NEXT);
 	}
 }
