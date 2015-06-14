@@ -1,7 +1,8 @@
-package net.maunium.Maunsic;
+package net.maunium.Maunsic.Listeners;
 
 import org.lwjgl.input.Keyboard;
 
+import net.maunium.Maunsic.Maunsic;
 import net.maunium.Maunsic.Gui.GuiMaunsic;
 import net.maunium.Maunsic.KeyMaucros.KeyMaucro;
 import net.maunium.Maunsic.Server.ServerHandler;

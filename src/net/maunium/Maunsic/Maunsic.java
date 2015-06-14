@@ -15,6 +15,9 @@ import org.apache.logging.log4j.Logger;
 import com.google.common.io.ByteStreams;
 import com.google.gson.JsonParseException;
 
+import net.maunium.Maunsic.Listeners.InChatListener;
+import net.maunium.Maunsic.Listeners.InputHandler;
+import net.maunium.Maunsic.Listeners.OutChatListener;
 import net.maunium.Maunsic.Logging.ChatLogger;
 import net.maunium.Maunsic.Logging.MaunsicLogger;
 import net.maunium.Maunsic.Server.ServerHandler;
@@ -161,6 +164,8 @@ public class Maunsic {
 		MinecraftForge.EVENT_BUS.register(tah);
 		getLogger().trace("Creating and Registering Key Binding listener");
 		FMLCommonHandler.instance().bus().register(new InputHandler(this));
+		MinecraftForge.EVENT_BUS.register(new InChatListener());
+		MinecraftForge.EVENT_BUS.register(new OutChatListener());
 		
 		actionFly = tah.registerAction(new ActionFly(this), TickEvent.Phase.END);
 		
