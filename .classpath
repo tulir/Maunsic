@@ -3,8 +3,8 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="resources"/>
 	<classpathentry kind="src" path="guilib"/>
+	<classpathentry kind="src" path="luaj"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/Forge 1.8"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/LuaJForge"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

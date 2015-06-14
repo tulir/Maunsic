@@ -3,6 +3,9 @@ package net.maunium.Maunsic.KeyMaucros;
 import java.io.File;
 import java.util.regex.Pattern;
 
+import mauluam.LuaExecutionThread;
+import mauluam.MauThreadLib;
+
 import net.maunium.Maunsic.Maunsic;
 
 /**
@@ -51,10 +54,8 @@ public class LuaKeyMaucro extends KeyMaucro {
 	public void executeMacro() {
 		if (!file.exists()) Maunsic.printChatError("message.lua.missingfile", file.getName(), getName());
 		else {
-			Maunsic.printChatError_static("LuaJ not implemented");
-			// TODO: Add LuaJ and MauluaM
-//			mauluam.LuaExecutionThread t = new mauluam.LuaExecutionThread(getName(), file);
-//			mauluam.MauThreadLib.startThread(t);
+			LuaExecutionThread t = new LuaExecutionThread(getName(), file);
+			MauThreadLib.startThread(t);
 		}
 	}
 	
