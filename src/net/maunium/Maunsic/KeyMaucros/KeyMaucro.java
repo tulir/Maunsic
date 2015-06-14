@@ -302,38 +302,43 @@ public abstract class KeyMaucro implements Serializable, Comparable<KeyMaucro> {
 	 * 
 	 * @author Tulir293
 	 * @since 0.1
-	 * @from Maucros
 	 */
 	public static enum ExecPhase {
-		PRECHECKS, PREKEYS, POSTKEYS;
+		PRECHECKS_DOWN, PREKEYS_DOWN, POSTKEYS_DOWN, PRECHECKS_UP, PREKEYS_UP, POSTKEYS_UP;
+		
 		public int toInt() {
 			switch (this) {
-				case PRECHECKS:
-					return 0;
-				case PREKEYS:
+				case PRECHECKS_UP:
 					return 1;
-				case POSTKEYS:
+				case PREKEYS_UP:
 					return 2;
+				case POSTKEYS_UP:
+					return 3;
+				case PRECHECKS_DOWN:
+					return 11;
+				case PREKEYS_DOWN:
+					return 12;
+				case POSTKEYS_DOWN:
+					return 13;
 				default:
 					return -1;
 			}
 		}
 		
-		public static ExecPhase fromString(String s) {
-			if (s.equalsIgnoreCase("PRECHECKS")) return PRECHECKS;
-			else if (s.equalsIgnoreCase("PREKEYS")) return PREKEYS;
-			else if (s.equalsIgnoreCase("POSTKEYS")) return POSTKEYS;
-			else return null;
-		}
-		
 		public static ExecPhase fromInt(int i) {
 			switch (i) {
-				case 0:
-					return PRECHECKS;
 				case 1:
-					return PREKEYS;
+					return PRECHECKS_DOWN;
 				case 2:
-					return POSTKEYS;
+					return PREKEYS_DOWN;
+				case 3:
+					return POSTKEYS_DOWN;
+				case 11:
+					return PRECHECKS_UP;
+				case 12:
+					return PREKEYS_UP;
+				case 13:
+					return POSTKEYS_UP;
 				default:
 					return null;
 			}

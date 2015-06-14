@@ -32,24 +32,26 @@ public class InputHandler {
 		// Check if usage is allowed
 		if (!ServerHandler.canUse()) return;
 		// Execute the precheck key maucros, but only if the input handler is enabled.
-		if (!disabled) for (KeyMaucro km : KeyMaucro.getKeyMaucros())
-			if (km.getExecutionPhase().equals(KeyMaucro.ExecPhase.PRECHECKS)) km.checkAndExecute();
+		if (!disabled) for (KeyMaucro km : KeyMaucro.getKeyMaucros()) {
+			KeyMaucro.ExecPhase ep = pressed ? KeyMaucro.ExecPhase.PRECHECKS_DOWN : KeyMaucro.ExecPhase.PRECHECKS_UP;
+			if (km.getExecutionPhase().equals(ep)) km.checkAndExecute();
+		}
 		
-		// Check if the event key was recognized. If not, return.
-		if (Keyboard.getEventKey() == Keyboard.KEY_NONE) return;
 		// Check if the chat gui is open. If it is, return.
 		if (FMLClientHandler.instance().isGUIOpen(GuiChat.class)) return;
 		// Check if the player exists. If not, return.
 		if (Minecraft.getMinecraft().thePlayer == null) return;
 		
 		// Execute the prekeys key maucros, but only if the input handler is enabled.
-		if (!disabled) for (KeyMaucro km : KeyMaucro.getKeyMaucros())
-			if (km.getExecutionPhase().equals(KeyMaucro.ExecPhase.PREKEYS)) km.checkAndExecute();
+		if (!disabled) for (KeyMaucro km : KeyMaucro.getKeyMaucros()) {
+			KeyMaucro.ExecPhase ep = pressed ? KeyMaucro.ExecPhase.PREKEYS_DOWN : KeyMaucro.ExecPhase.PREKEYS_UP;
+			if (km.getExecutionPhase().equals(ep)) km.checkAndExecute();
+		}
 		
 		// Check for the input handler toggle combination.
 		if (Keyboard.isKeyDown(Keyboard.KEY_M) && Keyboard.isKeyDown(Keyboard.KEY_A) && Keyboard.isKeyDown(Keyboard.KEY_U)) {
 			disabled = !disabled;
-			Maunsic.printChat("conf.keys." + (disabled ? "dis" : "en") + "able");
+			Maunsic.printChat("conf.keys." + (disabled ? "disable" : "enable"));
 			return;
 		}
 		
@@ -70,8 +72,10 @@ public class InputHandler {
 			else host.actionFly.changeSpeed(false);
 		}
 		
-		for (KeyMaucro km : KeyMaucro.getKeyMaucros())
-			if (km.getExecutionPhase().equals(KeyMaucro.ExecPhase.POSTKEYS)) km.checkAndExecute();
+		for (KeyMaucro km : KeyMaucro.getKeyMaucros()) {
+			KeyMaucro.ExecPhase ep = pressed ? KeyMaucro.ExecPhase.POSTKEYS_DOWN : KeyMaucro.ExecPhase.POSTKEYS_UP;
+			if (km.getExecutionPhase().equals(ep)) km.checkAndExecute();
+		}
 	}
 	
 	public void enable() {
