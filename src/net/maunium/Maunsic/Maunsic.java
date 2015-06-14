@@ -17,6 +17,7 @@ import com.google.common.io.ByteStreams;
 import net.maunium.Maunsic.Logging.ChatLogger;
 import net.maunium.Maunsic.Logging.MaunsicLogger;
 import net.maunium.Maunsic.Server.ServerHandler;
+import net.maunium.Maunsic.TickActions.ActionFly;
 import net.maunium.Maunsic.TickActions.TickActionHandler;
 import net.maunium.Maunsic.Util.I18n;
 
@@ -35,6 +36,7 @@ import net.minecraftforge.fml.common.ModMetadata;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 /**
  * The main class of Maunsic.
@@ -81,6 +83,10 @@ public class Maunsic {
 	private int construct = -1, preInit = -1, init = -1, postInit = -1;
 	/** Maucros Configuration */
 	private Configuration conf;
+	
+	/** The TickActionHandler for Maucros */
+	private TickActionHandler tah;
+	public ActionFly actionFly;
 	
 	/**
 	 * Constructor
@@ -149,9 +155,11 @@ public class Maunsic {
 		long st = Minecraft.getSystemTime();
 		
 		getLogger().trace("Creating and Registering TickListener");
-		FMLCommonHandler.instance().bus().register(new TickActionHandler());
+		FMLCommonHandler.instance().bus().register(tah = new TickActionHandler());
 		getLogger().trace("Creating and Registering Key Binding listener");
 		FMLCommonHandler.instance().bus().register(new InputHandler(this));
+		
+		tah.registerAction(actionFly = new ActionFly(), TickEvent.Phase.START);
 		
 		getLogger().info("Init complete in " + (init = (int) (System.currentTimeMillis() - st)) + "ms.");
 	}
@@ -184,6 +192,10 @@ public class Maunsic {
 	 */
 	public static final ChatLogger getChatLogger() {
 		return ChatLogger.getChatLogger();
+	}
+	
+	public TickActionHandler getTickActionHandler() {
+		return tah;
 	}
 	
 	/*
