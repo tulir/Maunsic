@@ -5,6 +5,7 @@ import org.lwjgl.input.Keyboard;
 import net.maunium.Maunsic.Gui.GuiMaunsic;
 import net.maunium.Maunsic.KeyMaucros.KeyMaucro;
 import net.maunium.Maunsic.Server.ServerHandler;
+import net.maunium.Maunsic.TickActions.ActionFly;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;
@@ -67,7 +68,21 @@ public class InputHandler {
 		
 		if (kbs.config.isPressed()) Minecraft.getMinecraft().displayGuiScreen(new GuiMaunsic(host));
 		if (kbs.fly.isPressed()) {
-			
+			if (!host.actionFly.isActive()) {
+				if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) host.actionFly.setType(ActionFly.TYPE_WALK);
+				else host.actionFly.setType(ActionFly.TYPE_FLY);
+			} else host.actionFly.setType(ActionFly.TYPE_DISABLED);
+			Maunsic.getLogger().info("Fly toggld");
+		}
+		if (kbs.inc_speed.isPressed()) {
+			if (kbs.dec_speed.isKeyDown()) host.actionFly.setSpeed(ActionFly.DEFAULT_SPEED);
+			else host.actionFly.changeSpeed(true);
+			Maunsic.getLogger().info("Fly speed up");
+		}
+		if (kbs.dec_speed.isPressed()) {
+			if (kbs.inc_speed.isKeyDown()) host.actionFly.setSpeed(ActionFly.DEFAULT_SPEED);
+			else host.actionFly.changeSpeed(false);
+			Maunsic.getLogger().info("Fly speed down");
 		}
 		
 		for (KeyMaucro km : KeyMaucro.getKeyMaucros())
