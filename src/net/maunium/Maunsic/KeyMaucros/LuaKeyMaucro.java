@@ -50,10 +50,12 @@ public class LuaKeyMaucro extends KeyMaucro {
 	@Override
 	public void executeMacro() {
 		if (!file.exists()) Maunsic.printChatError("message.lua.missingfile", file.getName(), getName());
-		else Maunsic.printChatError_static("LuaJ not implemented");// if (Settings.Enabled.lua) {
+		else {
+			Maunsic.printChatError_static("LuaJ not implemented");
+			// TODO: Add LuaJ and MauluaM
 //			mauluam.LuaExecutionThread t = new mauluam.LuaExecutionThread(getName(), file);
 //			mauluam.MauThreadLib.startThread(t);
-//		} else Maunsic.printChatError("message.missing.luaj");
+		}
 	}
 	
 	public static KeyMaucro parseKeyMaucro(String s) {
