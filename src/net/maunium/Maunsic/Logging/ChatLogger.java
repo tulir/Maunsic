@@ -131,10 +131,15 @@ public class ChatLogger {
 		}
 	}
 	
-	public static void printChat(IChatComponent msg) {
+	public static void printChatNoLog(IChatComponent msg) {
 		if (Minecraft.getMinecraft() == null) return;
 		if (Minecraft.getMinecraft().ingameGUI == null) return;
 		if (Minecraft.getMinecraft().ingameGUI.getChatGUI() == null) return;
-		Minecraft.getMinecraft().ingameGUI.getChatGUI().printChatMessage(msg);
+		Minecraft.getMinecraft().ingameGUI.getChatGUI().setChatLine(msg, 0, Minecraft.getMinecraft().ingameGUI.getUpdateCounter(), false);
+	}
+	
+	public static void printChat(IChatComponent msg) {
+		printChatNoLog(msg);
+		if(instance != null) instance.local(msg.getUnformattedText());
 	}
 }
