@@ -104,7 +104,12 @@ public class Maunsic {
 		ChatLogger.create();
 		// From here on, the debug and trace logger calls describe everything.
 		getLogger().info("Maunsic Loggers opened from constructor in " + (construct = (int) (Minecraft.getSystemTime() - st)) + "ms.");
-		return;
+		Runtime.getRuntime().addShutdownHook(new Thread() {
+			@Override
+			public void run() {
+				saveConfig();
+			}
+		});
 	}
 	
 	/**
