@@ -11,6 +11,12 @@ import net.maunium.Maunsic.Core.ClientChatSendEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+/**
+ * Currently used for logging outgoing chat and encoding messages marked with base64.
+ * 
+ * @author Tulir293
+ * @since 0.1
+ */
 public class OutChatListener {
 	@SubscribeEvent(priority = EventPriority.HIGH)
 	public void onSendChat(ClientChatSendEvent evt) {

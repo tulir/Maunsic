@@ -15,6 +15,12 @@ import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+/**
+ * Currently used for logging incoming chat and decoding base64 input.
+ * 
+ * @author Tulir293
+ * @since 0.1
+ */
 public class InChatListener {
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public void onChat(ClientChatReceivedEvent evt) {
