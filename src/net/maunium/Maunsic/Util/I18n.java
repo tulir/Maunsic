@@ -9,6 +9,8 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.Properties;
 
+import com.mcf.davidee.guilib.vanilla.extended.StateButton;
+
 import net.maunium.Maunsic.Maunsic;
 import net.maunium.Maunsic.Server.ServerHandler;
 
@@ -79,5 +81,20 @@ public class I18n {
 			}
 			return rtrn;
 		} else return node;
+	}
+	
+	public static void reinitMaunsicI18n(Maunsic host) {
+		try {
+			I18n.init(Maunsic.getConfDir("language"), host.getConfig().getString("general.language", "en_US"));
+		} catch (IOException e) {
+			Maunsic.getLogger().error("Failed to load I18n:");
+			Maunsic.getLogger().catching(e);
+		}
+	}
+	
+	public static void refreshCachedI18n(Maunsic host) {
+		StateButton.DefaultFormat.setDefaultStates(I18n.translate("off"), I18n.translate("on"));
+		host.actionFly.setStatusI18n(I18n.translate("action.amv.title"), I18n.translate("action.amv.mode"), I18n.translate("action.amv.fly"),
+				I18n.translate("action.amv.walk"), I18n.translate("action.amv.speed"), I18n.translate("on"));
 	}
 }
