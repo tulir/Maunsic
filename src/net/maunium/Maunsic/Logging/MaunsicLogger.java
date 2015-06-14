@@ -10,7 +10,6 @@ import java.util.Date;
 import net.maunium.Maunsic.Maunsic;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatStyle;
 import net.minecraft.util.EnumChatFormatting;
 
@@ -25,7 +24,8 @@ public class MaunsicLogger {
 	private SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");;
 	private BufferedWriter bw;
 	private static MaunsicLogger instance = null;
-	private int logType = 1, debugType = 0;
+	private int debugType = 0;
+	private boolean print = true;
 	
 	public static MaunsicLogger getMaunsicLogger() {
 		if (instance == null) throw new NullPointerException("Attempted to get the MaunsicLogger instance when it's null!");
@@ -164,14 +164,12 @@ public class MaunsicLogger {
 	
 	private void printout(String msg, ChatStyle cs) {
 		write(msg);
-		if (logType >= 1) Maunsic.sout.println(msg);
-		if (logType >= 2) ChatLogger.printChatNoLog(new ChatComponentText(msg).setChatStyle(cs));
+		if (print) Maunsic.sout.println(msg);
 	}
 	
 	private void printerr(String msg, ChatStyle cs) {
 		write(msg);
-		if (logType >= 1) Maunsic.serr.println(msg);
-		if (logType >= 2) ChatLogger.printChatNoLog(new ChatComponentText(msg).setChatStyle(cs));
+		if (print) Maunsic.serr.println(msg);
 	}
 	
 	int lines = 0;
@@ -190,12 +188,12 @@ public class MaunsicLogger {
 		}
 	}
 	
-	public int getLogType() {
-		return logType;
+	public boolean getPrint() {
+		return print;
 	}
 	
-	public void setLogType(int logType) {
-		this.logType = logType;
+	public void setPrint(boolean print) {
+		this.print = print;
 	}
 	
 	public int getDebugType() {
