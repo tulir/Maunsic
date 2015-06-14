@@ -24,7 +24,7 @@ public class ActionFly implements TickAction {
 	public ActionFly(Maunsic host) {
 		this.host = host;
 		setSpeed(host.getConfig().getInt("altmovement.speed", DEFAULT_SPEED));
-		setJump(host.getConfig().getInt("altmovement.speed", 0));
+		setJump(host.getConfig().getInt("altmovement.jump", 0));
 	}
 	
 	@Override
