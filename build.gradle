@@ -17,13 +17,14 @@ buildscript {
 apply plugin: 'forge'
 
 version = "0.1-A1"
-group= "net.maunium.Maunsic"
+group = "net.maunium.Maunsic"
 archivesBaseName = "Maunsic-MC1.8"
 
 jar {
     manifest {
         attributes 'FMLCorePlugin': 'net.maunium.Maunsic.Core.MaunsiCoreLoader'
         attributes 'FMLCorePluginContainsFMLMod': 'true'
+        attributes 'FMLAT': 'Maunsic_at.cfg'
     }
 }
 
@@ -34,9 +35,7 @@ minecraft {
 }
 
 dependencies {
-  compile files('lib/GuiLib-Mau_1.0.1.jar')
-  compile files('lib/MauEventLib-1.2.2.jar')
-  compile files('lib/luaj-jse-3.0.jar')
+#  compile files('lib/luaj-jse-3.0.jar')
 }
 
 processResources {
