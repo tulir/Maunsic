@@ -171,7 +171,6 @@ public class Maunsic {
 		long st = Minecraft.getSystemTime();
 		
 		I18n.refreshCachedI18n(this);
-		saveConfig();
 		
 		getLogger().info("PostInit complete in " + (init = (int) (System.currentTimeMillis() - st)) + "ms.");
 		getLogger().info(name + " v" + longVersion + " for Minecraft " + forMC + " enabled in " + (construct + preInit + init + postInit) + "ms.");
