@@ -1,0 +1,12 @@
+on=ON
+off=OFF
+
+conf.title=Maunsic {0} - Page {1}
+conf.keys=Keybindings
+conf.keys.title=Maunsic Keybindings
+
+action.amv.title=Alt. Movement
+action.amv.mode=Mode
+action.amv.fly=Fly
+action.amv.walk=Walk
+action.amv.speed=Speed
