@@ -50,7 +50,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
  * @since 0.1
  * @version 0.1 Alpha 1. Same as {@link #version}
  */
-@Mod(modid = Maunsic.name, version = Maunsic.version, name = Maunsic.name, acceptedMinecraftVersions = "[1.8,1.9)", clientSideOnly = true, dependencies = "required-after:ParentMod")
+@Mod(modid = Maunsic.name, version = Maunsic.version, name = Maunsic.name, acceptedMinecraftVersions = "[1.8,1.9)", clientSideOnly = true, dependencies = "required-after:Forge")
 public class Maunsic {
 	/** The official instance of Maunsic */
 	@Instance(Maunsic.name)
