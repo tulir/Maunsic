@@ -18,6 +18,12 @@ import net.maunium.Maunsic.Server.Network.Packets.PacketLicenceResponse;
 
 import net.minecraftforge.fml.common.FMLCommonHandler;
 
+/**
+ * Handles the Maunsic Server connection.
+ * 
+ * @author Tulir293
+ * @since 0.1
+ */
 public class ServerHandler {
 	public static boolean killswitched = true, licenced = false;
 	private static String mac;

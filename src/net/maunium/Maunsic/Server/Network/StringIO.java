@@ -10,6 +10,7 @@ import java.nio.charset.StandardCharsets;
  * 
  * @author Tulir293
  * @since 0.1
+ * @from MaunsicServer
  */
 public class StringIO {
 	/**

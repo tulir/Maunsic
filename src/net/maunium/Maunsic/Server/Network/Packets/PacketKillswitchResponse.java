@@ -6,6 +6,13 @@ import java.net.Socket;
 import net.maunium.Maunsic.Server.ServerHandler;
 import net.maunium.Maunsic.Server.Network.MPacket;
 
+/**
+ * Sent by the server to indicate whether or not the clients version of Maunsic has been killswitched.
+ * 
+ * @author Tulir293
+ * @since 0.1
+ * @from MaunsicServer
+ */
 public class PacketKillswitchResponse implements MPacket {
 	public static final int packetId = 12, NOT_KILLSWITCHED = 1, KILLSWITCHED_BUT_KEY_BYPASS = 2, KILLSWITCHED_NO_KEY = 3, KILLSWITCHED_INVALID_KEY = 4;
 	private int data;

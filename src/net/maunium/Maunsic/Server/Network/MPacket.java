@@ -8,6 +8,8 @@ import java.net.Socket;
  * All classes implementing this must have a public static final int packetId.<br>
  * 
  * @author Tulir293
+ * @since 0.1
+ * @from MaunsicServer
  */
 public interface MPacket {
 	/**

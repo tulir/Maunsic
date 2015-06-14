@@ -12,6 +12,7 @@ import net.maunium.Maunsic.Server.Network.StringIO;
  * 
  * @author Tulir293
  * @since 0.1
+ * @from MaunsicServer
  */
 public class PacketLicence implements MPacket {
 	public static final int packetId = 1;

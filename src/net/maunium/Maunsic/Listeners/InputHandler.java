@@ -16,6 +16,12 @@ import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent;
 
+/**
+ * Handles all key and mouse input for Maunsic and also stores keybinds.
+ * 
+ * @author Tulir293
+ * @since 0.1
+ */
 public class InputHandler {
 	private boolean disabled = false;
 	private Keybinds kbs;
@@ -26,6 +32,9 @@ public class InputHandler {
 		kbs = new Keybinds();
 	}
 	
+	/**
+	 * Get the keybinds stored here.
+	 */
 	public Keybinds getKeybinds() {
 		return kbs;
 	}
