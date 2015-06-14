@@ -7,6 +7,7 @@ import org.apache.commons.codec.binary.Base64;
 
 import net.maunium.Maunsic.Maunsic;
 import net.maunium.Maunsic.Core.ClientChatSendEvent;
+import net.maunium.Maunsic.Util.Calculator;
 
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -31,6 +32,12 @@ public class OutChatListener {
 				return;
 			}
 			evt.setMessage(msg);
+			return;
+		} else if (m.startsWith("calculate ") || m.startsWith("calc ")) {
+			evt.setCanceled(true);
+			String s = Calculator.processCalculation(evt.getMessage().split(" ", 2)[1]);
+			if (s.equals("varname")) Maunsic.printChatError("message.calculator.variable.spacename");
+			else if (!s.equals("syntax")) Maunsic.printChat_static(s);
 			return;
 		}
 		Maunsic.getChatLogger().out(evt.getMessage());
