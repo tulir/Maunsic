@@ -15,6 +15,12 @@ import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.stream.JsonWriter;
 
+/**
+ * The Maunsic Configuration System. Based on Gson.
+ * 
+ * @author Tulir293
+ * @since 0.1
+ */
 public class MaunsiConfig {
 	private JsonObject json;
 	
@@ -217,6 +223,9 @@ public class MaunsiConfig {
 		else return e;
 	}
 	
+	/**
+	 * Hey! Don't you touch this! It's mine! But seriously, don't use this. It's only supposed to be used by the public methods for recursive abilities.
+	 */
 	private JsonElement get(JsonObject jo, String path) {
 		if (path.indexOf('.') == -1) return jo.get(path);
 		else {
@@ -229,27 +238,60 @@ public class MaunsiConfig {
 		}
 	}
 	
+	/**
+	 * Set the value in the given path to the given String.
+	 * 
+	 * @param path The path.
+	 * @param obj The String.
+	 */
 	public void set(String path, String obj) {
 		if (path.indexOf('.') == -1) json.addProperty(path, obj);
 		else set(json, path, obj);
 	}
 	
+	/**
+	 * Set the value in the given path to the given Number.
+	 * 
+	 * @param path The path.
+	 * @param obj The Number.
+	 */
 	public void set(String path, Number obj) {
 		set(json, path, obj);
 	}
 	
+	/**
+	 * Set the value in the given path to the given Boolean.
+	 * 
+	 * @param path The path.
+	 * @param obj The Boolean.
+	 */
 	public void set(String path, Boolean obj) {
 		set(json, path, obj);
 	}
 	
+	/**
+	 * Set the value in the given path to the given Character.
+	 * 
+	 * @param path The path.
+	 * @param obj The Character.
+	 */
 	public void set(String path, Character obj) {
 		set(json, path, obj);
 	}
 	
+	/**
+	 * Set the value in the given path to the given JsonElement.
+	 * 
+	 * @param path The path.
+	 * @param obj The JsonElement.
+	 */
 	public void set(String path, JsonElement obj) {
 		set(json, path, obj);
 	}
 	
+	/**
+	 * Hey! Don't you touch this! It's mine! But seriously, don't use this. It's only supposed to be used by the public methods for recursive abilities.
+	 */
 	private void set(JsonObject jo, String path, String obj) {
 		if (path.indexOf('.') == -1) jo.addProperty(path, obj);
 		else {
@@ -264,6 +306,9 @@ public class MaunsiConfig {
 		}
 	}
 	
+	/**
+	 * Hey! Don't you touch this! It's mine! But seriously, don't use this. It's only supposed to be used by the public methods for recursive abilities.
+	 */
 	private void set(JsonObject jo, String path, Number obj) {
 		if (path.indexOf('.') == -1) jo.addProperty(path, obj);
 		else {
@@ -278,6 +323,9 @@ public class MaunsiConfig {
 		}
 	}
 	
+	/**
+	 * Hey! Don't you touch this! It's mine! But seriously, don't use this. It's only supposed to be used by the public methods for recursive abilities.
+	 */
 	private void set(JsonObject jo, String path, Boolean obj) {
 		if (path.indexOf('.') == -1) jo.addProperty(path, obj);
 		else {
@@ -292,6 +340,9 @@ public class MaunsiConfig {
 		}
 	}
 	
+	/**
+	 * Hey! Don't you touch this! It's mine! But seriously, don't use this. It's only supposed to be used by the public methods for recursive abilities.
+	 */
 	private void set(JsonObject jo, String path, Character obj) {
 		if (path.indexOf('.') == -1) jo.addProperty(path, obj);
 		else {
@@ -306,6 +357,9 @@ public class MaunsiConfig {
 		}
 	}
 	
+	/**
+	 * Hey! Don't you touch this! It's mine! But seriously, don't use this. It's only supposed to be used by the public methods for recursive abilities.
+	 */
 	private void set(JsonObject jo, String path, JsonElement obj) {
 		if (path.indexOf('.') == -1) jo.add(path, obj);
 		else {
