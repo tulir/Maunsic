@@ -16,7 +16,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
  */
 public class TickActionHandler {
 //	private Maunsic host;
-	private Set<TickAction> startActions = new HashSet<TickAction>(), endActions = new HashSet<TickAction>(), allActions = new HashSet<TickAction>();
+	private Set<TickAction> startActions = new HashSet<TickAction>(), endActions = new HashSet<TickAction>();
 	
 //	public TickActionHandler(Maunsic host) {
 //		this.host = host;
@@ -31,7 +31,6 @@ public class TickActionHandler {
 	public void registerAction(TickAction ta, boolean end) {
 		if (!end) startActions.add(ta);
 		else endActions.add(ta);
-		allActions.add(ta);
 	}
 	
 	/**
@@ -43,7 +42,6 @@ public class TickActionHandler {
 	public void unregisterAction(TickAction ta, boolean end) {
 		if (!end) startActions.remove(ta);
 		else endActions.remove(ta);
-		allActions.remove(ta);
 	}
 	
 	@SubscribeEvent
@@ -59,7 +57,9 @@ public class TickActionHandler {
 	
 	@SubscribeEvent
 	public void renderOverlay(RenderGameOverlayEvent.Text evt) {
-		for (TickAction ta : allActions)
+		for (TickAction ta : startActions)
+			if (ta.isActive()) add(evt.left, ta.getStatusText());
+		for (TickAction ta : endActions)
 			if (ta.isActive()) add(evt.left, ta.getStatusText());
 	}
 	
