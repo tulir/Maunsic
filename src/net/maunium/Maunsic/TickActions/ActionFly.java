@@ -49,10 +49,14 @@ public class ActionFly implements TickAction {
 	
 	public void setJump(int jump) {
 		this.jump = jump;
+		host.getConfig().set("altmovement.jump", jump);
 	}
 	
 	public void setSpeed(int speed) {
-		if (MIN_SPEED <= getSpeed() && getSpeed() <= MAX_SPEED) this.speed = speed;
+		if (MIN_SPEED <= getSpeed() && getSpeed() <= MAX_SPEED) {
+			this.speed = speed;
+			host.getConfig().set("altmovement.speed", speed);
+		}
 	}
 	
 	public void changeSpeed(boolean increase) {
