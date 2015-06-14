@@ -10,3 +10,8 @@ action.amv.mode=Mode
 action.amv.fly=Fly
 action.amv.walk=Walk
 action.amv.speed=Speed
+
+keymaucros.syntax.delay=The MaucroCommand Delay takes one integer.
+keymaucros.syntax.forward=The MaucroCommand Forward takes one integer.
+keymaucros.syntax.look=The MaucroCommand Look takes two integers.
+keymaucros.output.local={0}

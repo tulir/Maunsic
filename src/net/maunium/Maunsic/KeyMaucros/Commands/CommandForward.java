@@ -30,7 +30,7 @@ public class CommandForward implements MaucroCommand {
 			try {
 				time = Integer.parseInt(args[0]);
 			} catch (NumberFormatException e) {
-				Maunsic.printChatError_static("The MaucroCommand Move takes one integer.");
+				Maunsic.printChatError("keymaucros.syntax.forward");
 				return;
 			}
 			new Thread() {
@@ -45,7 +45,7 @@ public class CommandForward implements MaucroCommand {
 					KeyBinding.setKeyBindState(Minecraft.getMinecraft().gameSettings.keyBindForward.getKeyCode(), false);
 				}
 			}.start();
-		} else Maunsic.printChatError_static("The MaucroCommand Move takes one integer.");
+		} else Maunsic.printChatError("keymaucros.syntax.forward");
 	}
 	
 }

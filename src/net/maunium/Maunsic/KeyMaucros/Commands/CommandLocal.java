@@ -27,7 +27,7 @@ public class CommandLocal implements MaucroCommand {
 			for (String s : args)
 				sb.append(s + " ");
 			// TODO: Use a proper chat formatter.
-			Maunsic.printChat_static(sb.toString().replace("&", "§"));
+			Maunsic.printChat("keymaucros.output.local", sb.toString().replace("&", "§"));
 		}
 	}
 }

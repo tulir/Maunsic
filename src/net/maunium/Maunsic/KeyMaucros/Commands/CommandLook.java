@@ -30,12 +30,12 @@ public class CommandLook implements MaucroCommand {
 				yaw = Integer.parseInt(args[0]);
 				pitch = Integer.parseInt(args[1]);
 			} catch (NumberFormatException e) {
-				Maunsic.printChatError_static("The MaucroCommand Look takes two integers.");
+				Maunsic.printChatError("keymaucros.syntax.look");
 				return;
 			}
 			Minecraft.getMinecraft().thePlayer.rotationYaw = yaw;
 			Minecraft.getMinecraft().thePlayer.rotationPitch = pitch;
-		} else Maunsic.printChatError_static("The MaucroCommand Look takes two integers.");
+		} else Maunsic.printChatError("keymaucros.syntax.look");
 	}
 	
 }

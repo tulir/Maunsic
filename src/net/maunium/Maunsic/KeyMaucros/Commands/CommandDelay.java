@@ -22,12 +22,13 @@ public class CommandDelay implements MaucroCommand {
 	
 	@Override
 	public void execute(String label, String[] args) {
-		if (args.length > 0) try {
-			Thread.sleep(Integer.parseInt(args[0]));
-		} catch (NumberFormatException e) {
-			Maunsic.printChatError_static("The MaucroCommand Delay takes one integer.");
-		} catch (InterruptedException e) {}
-		else Maunsic.printChatError_static("The MaucroCommand Delay takes one integer.");
+		if (args.length > 0) {
+			try {
+				Thread.sleep(Integer.parseInt(args[0]));
+			} catch (NumberFormatException e) {
+				Maunsic.printChatError("keymaucros.syntax.delay");
+			} catch (InterruptedException e) {}
+		} else Maunsic.printChatError("keymaucros.syntax.delay");
 	}
 	
 }
