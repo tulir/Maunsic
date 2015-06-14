@@ -13,6 +13,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.google.common.io.ByteStreams;
+import com.google.gson.JsonParseException;
 
 import net.maunium.Maunsic.Logging.ChatLogger;
 import net.maunium.Maunsic.Logging.MaunsicLogger;
@@ -20,6 +21,7 @@ import net.maunium.Maunsic.Server.ServerHandler;
 import net.maunium.Maunsic.TickActions.ActionFly;
 import net.maunium.Maunsic.TickActions.TickActionHandler;
 import net.maunium.Maunsic.Util.I18n;
+import net.maunium.Maunsic.Util.MaunsiConfig;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ChatComponentText;
@@ -27,7 +29,7 @@ import net.minecraft.util.ChatStyle;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
 
-import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -82,7 +84,8 @@ public class Maunsic {
 	/** Initialization time or -1 if the initialization has not finished. */
 	private int construct = -1, preInit = -1, init = -1, postInit = -1;
 	/** Maucros Configuration */
-	private Configuration conf;
+	private MaunsiConfig conf;
+	private File confFile = new File(getConfDir(), "conf.maudat");
 	
 	/** The TickActionHandler for Maucros */
 	private TickActionHandler tah;
@@ -131,17 +134,11 @@ public class Maunsic {
 			getLogger().error("Failed to save language files:");
 			getLogger().catching(e);
 		}
-		conf = new Configuration(new File(getConfDir(), "conf.maudat"));
-		conf.load();
 		
-		try {
-			I18n.init(getConfDir("language"), conf.get(Configuration.CATEGORY_GENERAL, "language", "en_US").getString());
-		} catch (IOException e) {
-			getLogger().error("Failed to load I18n:");
-			getLogger().catching(e);
-		}
+		conf = new MaunsiConfig();
+		loadConfig();
 		
-		conf.save();
+		I18n.reinitMaunsicI18n(this);
 		
 		getLogger().info("PreInit complete in " + (init = (int) (System.currentTimeMillis() - st)) + "ms.");
 	}
@@ -156,10 +153,11 @@ public class Maunsic {
 		
 		getLogger().trace("Creating and Registering TickListener");
 		FMLCommonHandler.instance().bus().register(tah = new TickActionHandler());
+		MinecraftForge.EVENT_BUS.register(tah);
 		getLogger().trace("Creating and Registering Key Binding listener");
 		FMLCommonHandler.instance().bus().register(new InputHandler(this));
 		
-		tah.registerAction(actionFly = new ActionFly(), TickEvent.Phase.START);
+		actionFly = tah.registerAction(new ActionFly(this), TickEvent.Phase.END);
 		
 		getLogger().info("Init complete in " + (init = (int) (System.currentTimeMillis() - st)) + "ms.");
 	}
@@ -172,8 +170,37 @@ public class Maunsic {
 		if (!ServerHandler.canUse()) return;
 		long st = Minecraft.getSystemTime();
 		
+		I18n.refreshCachedI18n(this);
+		saveConfig();
+		
 		getLogger().info("PostInit complete in " + (init = (int) (System.currentTimeMillis() - st)) + "ms.");
 		getLogger().info(name + " v" + longVersion + " for Minecraft " + forMC + " enabled in " + (construct + preInit + init + postInit) + "ms.");
+	}
+	
+	/*
+	 * Config actions
+	 */
+	
+	public MaunsiConfig getConfig() {
+		return conf;
+	}
+	
+	public void saveConfig() {
+		try {
+			conf.save(confFile);
+		} catch (IOException e) {
+			getLogger().error("Failed to save configuration:");
+			getLogger().catching(e);
+		}
+	}
+	
+	public void loadConfig() {
+		try {
+			conf.load(confFile);
+		} catch (JsonParseException e) {
+			getLogger().error("Failed to load configuration:");
+			getLogger().catching(e);
+		}
 	}
 	
 	/*
