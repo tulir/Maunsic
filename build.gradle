@@ -29,7 +29,7 @@ jar {
 }
 
 minecraft {
-    version = "1.8-11.14.2.1436"
+    version = "1.8-11.14.3.1446"
     runDir = "MinecraftEnv"
     mappings = "snapshot_nodoc_20141130"
 }
