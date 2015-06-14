@@ -58,11 +58,17 @@ public class InputHandler {
 		if (disabled) {
 			// If it is, call the isPressed method of each keybind so they won't get "stuck" and fire after enabling the input listener.
 			kbs.config.isPressed();
+			kbs.fly.isPressed();
+			kbs.inc_speed.isPressed();
+			kbs.dec_speed.isPressed();
 			// Return, since anything beyond shouldn't be executed when disabled.
 			return;
 		}
 		
 		if (kbs.config.isPressed()) Minecraft.getMinecraft().displayGuiScreen(new GuiMaunsic(host));
+		if (kbs.fly.isPressed()) {
+			
+		}
 		
 		for (KeyMaucro km : KeyMaucro.getKeyMaucros())
 			if (km.getExecutionPhase().equals(KeyMaucro.ExecPhase.POSTKEYS)) km.checkAndExecute();
@@ -78,5 +84,8 @@ public class InputHandler {
 	
 	public class Keybinds {
 		public final KeyBinding config = new KeyBinding("Configuration", Keyboard.KEY_F4, null);
+		public final KeyBinding fly = new KeyBinding("Fly", Keyboard.KEY_F, null);
+		public final KeyBinding inc_speed = new KeyBinding("Increase Speed", Keyboard.KEY_PRIOR, null);
+		public final KeyBinding dec_speed = new KeyBinding("Decrease Speed", Keyboard.KEY_NEXT, null);
 	}
 }
