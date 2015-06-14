@@ -1,20 +1,18 @@
 package net.maunium.Maunsic.Listeners;
 
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
 
 import net.maunium.Maunsic.Maunsic;
 import net.maunium.Maunsic.Gui.GuiMaunsic;
 import net.maunium.Maunsic.KeyMaucros.KeyMaucro;
 import net.maunium.Maunsic.Server.ServerHandler;
 import net.maunium.Maunsic.TickActions.ActionFly;
-import net.maunium.Maunsic.Util.MauKeybinding;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;
 
 import net.minecraftforge.fml.client.FMLClientHandler;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent;
 
 /**
  * Handles all key and mouse input for Maunsic and also stores keybinds.
@@ -23,24 +21,14 @@ import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent;
  * @since 0.1
  */
 public class InputHandler {
-	private boolean disabled = false;
-	private Keybinds kbs;
-	private Maunsic host;
+	private static boolean disabled = false;
+	private static Maunsic host;
 	
-	public InputHandler(Maunsic host) {
-		this.host = host;
-		kbs = new Keybinds();
+	public static void setHost(Maunsic newHost) {
+		host = newHost;
 	}
 	
-	/**
-	 * Get the keybinds stored here.
-	 */
-	public Keybinds getKeybinds() {
-		return kbs;
-	}
-	
-	@SubscribeEvent
-	public void onKeyInput(KeyInputEvent evt) {
+	public static void input(int keycode, boolean pressed) {
 		// Check if usage is allowed
 		if (!ServerHandler.canUse()) return;
 		// Execute the precheck key maucros, but only if the input handler is enabled.
@@ -66,33 +54,20 @@ public class InputHandler {
 		}
 		
 		// Check if the input handler is disabled.
-		if (disabled) {
-			// If it is, call the isPressed method of each keybind so they won't get "stuck" and fire after enabling the input listener.
-			kbs.config.isPressed();
-			kbs.fly.isPressed();
-			kbs.inc_speed.isPressed();
-			kbs.dec_speed.isPressed();
-			// Return, since anything beyond shouldn't be executed when disabled.
-			return;
-		}
+		if (disabled) return;
 		
-		if (kbs.config.isPressed()) Minecraft.getMinecraft().displayGuiScreen(new GuiMaunsic(host));
-		if (kbs.fly.isPressed()) {
+		if (keycode == Keybinds.config.getKeyCode()) Minecraft.getMinecraft().displayGuiScreen(new GuiMaunsic(host));
+		else if (keycode == Keybinds.fly.getKeyCode()) {
 			if (!host.actionFly.isActive()) {
 				if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) host.actionFly.setType(ActionFly.TYPE_WALK);
 				else host.actionFly.setType(ActionFly.TYPE_FLY);
 			} else host.actionFly.setType(ActionFly.TYPE_DISABLED);
-			Maunsic.getLogger().info("Fly toggld");
-		}
-		if (kbs.inc_speed.isPressed()) {
-			if (kbs.dec_speed.isKeyDown()) host.actionFly.setSpeed(ActionFly.DEFAULT_SPEED);
+		} else if (keycode == Keybinds.inc_speed.getKeyCode()) {
+			if (Keybinds.dec_speed.isDown()) host.actionFly.setSpeed(ActionFly.DEFAULT_SPEED);
 			else host.actionFly.changeSpeed(true);
-			Maunsic.getLogger().info("Fly speed up");
-		}
-		if (kbs.dec_speed.isPressed()) {
-			if (kbs.inc_speed.isKeyDown()) host.actionFly.setSpeed(ActionFly.DEFAULT_SPEED);
+		} else if (keycode == Keybinds.inc_speed.getKeyCode()) {
+			if (Keybinds.inc_speed.isDown()) host.actionFly.setSpeed(ActionFly.DEFAULT_SPEED);
 			else host.actionFly.changeSpeed(false);
-			Maunsic.getLogger().info("Fly speed down");
 		}
 		
 		for (KeyMaucro km : KeyMaucro.getKeyMaucros())
@@ -107,10 +82,42 @@ public class InputHandler {
 		disabled = true;
 	}
 	
-	public class Keybinds {
-		public final MauKeybinding config = new MauKeybinding("Configuration", Keyboard.KEY_F4);
-		public final MauKeybinding fly = new MauKeybinding("Fly", Keyboard.KEY_F);
-		public final MauKeybinding inc_speed = new MauKeybinding("Increase Speed", Keyboard.KEY_PRIOR);
-		public final MauKeybinding dec_speed = new MauKeybinding("Decrease Speed", Keyboard.KEY_NEXT);
+	public static class Keybind {
+		private int keyCode;
+		private final int defaultKeyCode;
+		private final String name;
+		
+		public Keybind(String name, int keyCode) {
+			this.keyCode = keyCode;
+			defaultKeyCode = keyCode;
+			this.name = name;
+		}
+		
+		public int getKeyCode() {
+			return keyCode;
+		}
+		
+		public int getDefaultKeyCode() {
+			return defaultKeyCode;
+		}
+		
+		public String getName() {
+			return name;
+		}
+		
+		public void setKeyCode(int keyCode) {
+			this.keyCode = keyCode;
+		}
+		
+		public boolean isDown() {
+			return Keyboard.isKeyDown(keyCode) || Mouse.isButtonDown(keyCode);
+		}
+	}
+	
+	public static class Keybinds {
+		public static final Keybind config = new Keybind("Configuration", Keyboard.KEY_F4);
+		public static final Keybind fly = new Keybind("Fly", Keyboard.KEY_F);
+		public static final Keybind inc_speed = new Keybind("Increase Speed", Keyboard.KEY_PRIOR);
+		public static final Keybind dec_speed = new Keybind("Decrease Speed", Keyboard.KEY_NEXT);
 	}
 }

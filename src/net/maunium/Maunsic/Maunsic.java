@@ -162,10 +162,10 @@ public class Maunsic {
 		getLogger().trace("Creating and Registering TickListener");
 		FMLCommonHandler.instance().bus().register(tah = new TickActionHandler());
 		MinecraftForge.EVENT_BUS.register(tah);
-		getLogger().trace("Creating and Registering Key Binding listener");
-		FMLCommonHandler.instance().bus().register(new InputHandler(this));
 		MinecraftForge.EVENT_BUS.register(new InChatListener());
 		MinecraftForge.EVENT_BUS.register(new OutChatListener());
+		
+		InputHandler.setHost(this);
 		
 		actionFly = tah.registerAction(new ActionFly(this), TickEvent.Phase.END);
 		
