@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import net.minecraft.client.Minecraft;
+
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -22,19 +24,26 @@ public class TickActionHandler {
 //		this.host = host;
 //	}
 	
+	public Set<TickAction> ga() {
+		return startActions;
+	}
+	
 	/**
 	 * Register an action.
 	 * 
 	 * @param ta The action to register.
 	 * @param phase The tick event phase to execute this action at.
 	 */
-	public void registerAction(TickAction ta, TickEvent.Phase phase) {
+	public <T extends TickAction> T registerAction(T ta, TickEvent.Phase phase) {
 		switch (phase) {
 			case START:
 				startActions.add(ta);
+				break;
 			case END:
 				endActions.add(ta);
+				break;
 		}
+		return ta;
 	}
 	
 	/**
@@ -47,8 +56,10 @@ public class TickActionHandler {
 		switch (phase) {
 			case START:
 				startActions.remove(ta);
+				break;
 			case END:
 				endActions.remove(ta);
+				break;
 		}
 	}
 	
@@ -65,6 +76,7 @@ public class TickActionHandler {
 	
 	@SubscribeEvent
 	public void renderOverlay(RenderGameOverlayEvent.Text evt) {
+		if (Minecraft.getMinecraft().gameSettings.showDebugInfo) return;
 		for (TickAction ta : startActions)
 			if (ta.isActive()) add(evt.left, ta.getStatusText());
 		for (TickAction ta : endActions)
