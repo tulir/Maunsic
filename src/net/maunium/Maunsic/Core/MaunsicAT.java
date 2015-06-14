@@ -12,6 +12,6 @@ import net.minecraftforge.fml.common.asm.transformers.AccessTransformer;
  */
 public class MaunsicAT extends AccessTransformer {
 	public MaunsicAT() throws IOException {
-		super("maunsicat.cfg");
+		super("Maunsic_at.cfg");
 	}
 }
