@@ -5,6 +5,8 @@ import java.util.Map;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import net.maunium.Maunsic.Core.Transformers.EntityPlayerSPT;
+import net.maunium.Maunsic.Core.Transformers.GuiNewChatT;
 import net.maunium.Maunsic.Server.ServerHandler;
 
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
@@ -30,7 +32,7 @@ public class MaunsiCoreLoader implements IFMLLoadingPlugin {
 	
 	@Override
 	public String[] getASMTransformerClass() {
-		return new String[] { /* ClassNameHere.class.getName() */};
+		return new String[] { EntityPlayerSPT.class.getName(), GuiNewChatT.class.getName() };
 	}
 	
 	@Override
