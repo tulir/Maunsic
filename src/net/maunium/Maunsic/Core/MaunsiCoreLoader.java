@@ -50,6 +50,6 @@ public class MaunsiCoreLoader implements IFMLLoadingPlugin {
 	
 	@Override
 	public String getAccessTransformerClass() {
-		return MaunsicAT.class.getName();
+		return null;
 	}
 }
