@@ -52,6 +52,7 @@ public class EntityPlayerSPT extends AbstractMauTransformer {
 				break;
 			}
 		}
+		
 		ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS | ClassWriter.COMPUTE_FRAMES);
 		node.accept(cw);
 		return cw.toByteArray();
