@@ -17,6 +17,7 @@ import com.google.common.io.ByteStreams;
 import net.maunium.Maunsic.Logging.ChatLogger;
 import net.maunium.Maunsic.Logging.MaunsicLogger;
 import net.maunium.Maunsic.Server.ServerHandler;
+import net.maunium.Maunsic.TickActions.TickActionHandler;
 import net.maunium.Maunsic.Util.I18n;
 
 import net.minecraft.client.Minecraft;
@@ -26,6 +27,7 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
 
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -87,8 +89,9 @@ public class Maunsic {
 		log.info("Loading Maunsic Logger (see logs/Maunsic/ for log files)");
 		// Create the Maucros Logger.
 		MaunsicLogger.create();
+		ChatLogger.create();
 		// From here on, the debug and trace logger calls describe everything.
-		getLogger().info("Maucros Logger opened from constructor in " + (construct = (int) (Minecraft.getSystemTime() - st)) + "ms.");
+		getLogger().info("Maunsic Loggers opened from constructor in " + (construct = (int) (Minecraft.getSystemTime() - st)) + "ms.");
 		return;
 	}
 	
@@ -135,6 +138,11 @@ public class Maunsic {
 	public void init(FMLInitializationEvent evt) {
 		if (!ServerHandler.canUse()) return;
 		long st = Minecraft.getSystemTime();
+		
+		getLogger().trace("Creating and Registering TickListener");
+		FMLCommonHandler.instance().bus().register(new TickActionHandler());
+		getLogger().trace("Creating and Registering Key Binding listener");
+		FMLCommonHandler.instance().bus().register(new InputHandler(this));
 		
 		getLogger().info("Init complete in " + (init = (int) (System.currentTimeMillis() - st)) + "ms.");
 	}
@@ -210,7 +218,7 @@ public class Maunsic {
 	 * @param args The I18n args
 	 */
 	public static void printChat(String key, Object... args) {
-		ChatLogger.printChat(stdTag.createCopy().appendText(I18n.format(key, args)).setChatStyle(stdStyle));
+		ChatLogger.printChat(stdTag.createCopy().appendText(I18n.translate(key, args)).setChatStyle(stdStyle));
 	}
 	
 	/**
@@ -220,7 +228,7 @@ public class Maunsic {
 	 * @param args The I18n args
 	 */
 	public static void printChatError(String key, Object... args) {
-		ChatLogger.printChat(errTag.createCopy().appendText(I18n.format(key, args)).setChatStyle(errStyle));
+		ChatLogger.printChat(errTag.createCopy().appendText(I18n.translate(key, args)).setChatStyle(errStyle));
 	}
 	
 	/**
@@ -231,7 +239,7 @@ public class Maunsic {
 	 * @param args The I18n args
 	 */
 	public static void printChatStyled(ChatStyle style, String message, Object... args) {
-		ChatLogger.printChat(new ChatComponentText(I18n.format(message, args)).setChatStyle(style));
+		ChatLogger.printChat(new ChatComponentText(I18n.translate(message, args)).setChatStyle(style));
 	}
 	
 	/**
@@ -282,4 +290,5 @@ public class Maunsic {
 		if (Minecraft.getMinecraft().thePlayer == null) return;
 		Minecraft.getMinecraft().thePlayer.sendChatMessage(message);
 	}
+	
 }
