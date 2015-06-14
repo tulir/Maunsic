@@ -26,22 +26,30 @@ public class TickActionHandler {
 	 * Register an action.
 	 * 
 	 * @param ta The action to register.
-	 * @param end True if the action should be called at the end of a tick event. False if it should be called at the start.
+	 * @param phase The tick event phase to execute this action at.
 	 */
-	public void registerAction(TickAction ta, boolean end) {
-		if (!end) startActions.add(ta);
-		else endActions.add(ta);
+	public void registerAction(TickAction ta, TickEvent.Phase phase) {
+		switch (phase) {
+			case START:
+				startActions.add(ta);
+			case END:
+				endActions.add(ta);
+		}
 	}
 	
 	/**
 	 * Unregister an action.
 	 * 
 	 * @param ta The action to unregister.
-	 * @param end The value used when registering the action.
+	 * @param phase The value used when registering the action.
 	 */
-	public void unregisterAction(TickAction ta, boolean end) {
-		if (!end) startActions.remove(ta);
-		else endActions.remove(ta);
+	public void unregisterAction(TickAction ta, TickEvent.Phase phase) {
+		switch (phase) {
+			case START:
+				startActions.remove(ta);
+			case END:
+				endActions.remove(ta);
+		}
 	}
 	
 	@SubscribeEvent
