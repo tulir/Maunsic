@@ -2,11 +2,14 @@ package net.maunium.Maunsic.Gui;
 
 import com.mcf.davidee.guilib.basic.BasicScreen;
 import com.mcf.davidee.guilib.basic.Label;
+import com.mcf.davidee.guilib.core.Button;
 import com.mcf.davidee.guilib.core.Container;
 import com.mcf.davidee.guilib.vanilla.ButtonVanilla;
 
 import net.maunium.Maunsic.Maunsic;
 import net.maunium.Maunsic.Util.I18n;
+
+import net.minecraft.client.Minecraft;
 
 public class GuiMaunsic extends BasicScreen {
 	private Maunsic host;
@@ -45,6 +48,12 @@ public class GuiMaunsic extends BasicScreen {
 		
 		Maunsic.getLogger().trace("Revalidating container for page " + page, this);
 		pages[page].revalidate(0, 0, width, height);
+	}
+	
+	@Override
+	protected void onButtonClicked(Button b) {
+		// Yes, they are supposed to be the same instance, so using == is just fine.
+		if (b == keys) Minecraft.getMinecraft().displayGuiScreen(new GuiKeybinds(this));
 	}
 	
 	private int y(int y) {
