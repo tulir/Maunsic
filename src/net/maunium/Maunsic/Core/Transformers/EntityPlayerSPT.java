@@ -14,7 +14,7 @@ import net.maunium.Maunsic.Core.AbstractMauTransformer;
 import net.maunium.Maunsic.Core.ClientChatSendEvent;
 
 /**
- * Transformer for the EntityPlayerSP class.
+ * Transformer to add a caller for the ClientChatSendEvent.
  * 
  * @author Tulir293
  * @since 0.1

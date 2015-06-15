@@ -28,6 +28,12 @@ import net.maunium.Maunsic.Util.I18n;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiScreen;
 
+/**
+ * The keybinding Gui for Maunsic.
+ * 
+ * @author Tulir293
+ * @since 0.1
+ */
 public class GuiKeybinds extends BasicScreen {
 	private Maunsic host;
 	private Label title;

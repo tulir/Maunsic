@@ -83,15 +83,22 @@ public class I18n {
 		} else return node;
 	}
 	
-	public static void reinitMaunsicI18n(Maunsic host) {
+	/**
+	 * Reinitialize I18n with the given language. Only for Maunsic.
+	 */
+	public static void reinitMaunsicI18n(Maunsic host, boolean refresh) {
 		try {
 			I18n.init(Maunsic.getConfDir("language"), host.getConfig().getString("general.language", "en_US"));
+			if (refresh) refreshCachedI18n(host);
 		} catch (IOException e) {
 			Maunsic.getLogger().error("Failed to load I18n:");
 			Maunsic.getLogger().catching(e);
 		}
 	}
 	
+	/**
+	 * Refresh all cached I18n in Maunsic.
+	 */
 	public static void refreshCachedI18n(Maunsic host) {
 		StateButton.DefaultFormat.setDefaultStates(I18n.translate("off"), I18n.translate("on"));
 		host.actionFly.setStatusI18n(I18n.translate("action.amv.title"), I18n.translate("action.amv.mode"), I18n.translate("action.amv.fly"),

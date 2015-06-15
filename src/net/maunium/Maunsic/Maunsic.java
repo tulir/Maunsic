@@ -153,7 +153,7 @@ public class Maunsic {
 		conf = new MaunsiConfig();
 		loadConfig();
 		
-		I18n.reinitMaunsicI18n(this);
+		I18n.reinitMaunsicI18n(this, false);
 		
 		getLogger().info("PreInit complete in " + (init = (int) (System.currentTimeMillis() - st)) + "ms.");
 	}

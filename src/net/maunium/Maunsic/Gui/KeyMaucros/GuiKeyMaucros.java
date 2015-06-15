@@ -30,6 +30,7 @@ import net.minecraftforge.fml.client.config.GuiConfig;
  */
 public class GuiKeyMaucros extends BasicScreen {
 	// kmlc means KeyMaucroListContainer
+	private Maunsic host;
 	private Container c, kmlc;
 	private ScrollbarVanilla sb;
 	private Label title;
@@ -37,8 +38,9 @@ public class GuiKeyMaucros extends BasicScreen {
 	private ShiftableButton[] buttons;
 	private FocusableLabel[] labels;
 	
-	public GuiKeyMaucros(GuiConfig parent) {
+	public GuiKeyMaucros(GuiConfig parent, Maunsic host) {
 		super(parent);
+		this.host = host;
 	}
 	
 	@Override
@@ -105,7 +107,7 @@ public class GuiKeyMaucros extends BasicScreen {
 	public void save() {
 		Maunsic.getLogger().trace("Saving Key Maunsic to file", this);
 		KeyMaucro.sort();
-		KeyMaucro.save();
+		KeyMaucro.save(host.getConfig());
 	}
 	
 	@Override

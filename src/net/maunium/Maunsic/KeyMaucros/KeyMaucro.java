@@ -8,6 +8,8 @@ import java.util.regex.Pattern;
 
 import org.lwjgl.input.Keyboard;
 
+import net.maunium.Maunsic.Util.MaunsiConfig;
+
 /**
  * An abstract Key Maucro. Contains the basic parts, but execution is up to subclasses.
  * 
@@ -20,14 +22,13 @@ public abstract class KeyMaucro implements Serializable, Comparable<KeyMaucro> {
 	
 	private static List<KeyMaucro> keymaucros = new ArrayList<KeyMaucro>();
 	
-	public static void init(List<KeyMaucro> kms) {
-		keymaucros = kms;
-	}
-	
 	public static void sort() {
 		Collections.sort(keymaucros);
 	}
 	
+	/**
+	 * Add the given key maucro to the key maucro registry.
+	 */
 	public static void addKeyMaucro(KeyMaucro km) {
 		if (keymaucros.size() > 0) {
 			for (int i = 0; i < keymaucros.size(); i++) {
@@ -40,6 +41,11 @@ public abstract class KeyMaucro implements Serializable, Comparable<KeyMaucro> {
 		sort();
 	}
 	
+	/**
+	 * Set the key maucro in the given key index to the given new key maucro.
+	 * 
+	 * @return True if the key maucro was updated, false otherwise.
+	 */
 	public static boolean modifyKeyMaucro(int index, KeyMaucro newkm) {
 		if (keymaucros.size() > index && !keymaucros.get(index).equals(newkm)) {
 			keymaucros.set(index, newkm);
@@ -49,10 +55,18 @@ public abstract class KeyMaucro implements Serializable, Comparable<KeyMaucro> {
 		return false;
 	}
 	
+	/**
+	 * Remove the given key maucro from the registry.
+	 */
 	public static boolean removeKeyMaucro(KeyMaucro km) {
 		return keymaucros.remove(km);
 	}
 	
+	/**
+	 * Remove the key maucro in the given index from the registry.
+	 * 
+	 * @return True if there was a key maucro in the given index and it was removed. False otherwise.
+	 */
 	public static boolean removeKeyMaucro(int index) {
 		if (keymaucros.size() > index) {
 			keymaucros.remove(index);
@@ -60,15 +74,24 @@ public abstract class KeyMaucro implements Serializable, Comparable<KeyMaucro> {
 		} else return false;
 	}
 	
+	/**
+	 * Get all the key maucros.
+	 */
 	public static List<KeyMaucro> getKeyMaucros() {
 		return keymaucros;
 	}
 	
-	public static void save() {
+	/**
+	 * Save the key maucros to the given MaunsiConfig.
+	 */
+	public static void save(MaunsiConfig conf) {
 		
 	}
 	
-	public static void load() {
+	/**
+	 * Load all key maucros from the given MaunsiConfig.
+	 */
+	public static void load(MaunsiConfig conf) {
 		
 	}
 	

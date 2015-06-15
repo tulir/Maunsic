@@ -22,16 +22,13 @@ public class CCKeyMaucro extends KeyMaucro {
 	
 	private static Set<MaucroCommand> commands = new HashSet<MaucroCommand>();
 	
+	/**
+	 * Register the given CommandChain key maucro command.
+	 * 
+	 * @return As defined in {@link java.util.HashSet#add(Object)}
+	 */
 	public static boolean registerMaucroCommand(MaucroCommand command) {
 		return commands.add(command);
-	}
-	
-	public static class CommandAlreadyRegisteredException extends IllegalArgumentException {
-		private static final long serialVersionUID = -3783607323630895752L;
-		
-		public CommandAlreadyRegisteredException(String msg) {
-			super(msg);
-		}
 	}
 	
 	private String[] messages;

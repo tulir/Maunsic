@@ -12,6 +12,12 @@ import org.objectweb.asm.tree.VarInsnNode;
 import net.maunium.Maunsic.Core.AbstractMauTransformer;
 import net.maunium.Maunsic.Listeners.KeyHandling.InputHandler;
 
+/**
+ * Transformer to steal raw key and mouse input from the KeyBinding class.
+ * 
+ * @author Tulir293
+ * @since 0.1
+ */
 public class KeyBindingT extends AbstractMauTransformer {
 	public KeyBindingT() {
 		super("net.minecraft.client.settings.KeyBinding", "");

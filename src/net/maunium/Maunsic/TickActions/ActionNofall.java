@@ -3,6 +3,13 @@ package net.maunium.Maunsic.TickActions;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.play.client.C03PacketPlayer;
 
+/**
+ * The TickAction to remove fall damage.
+ * 
+ * @author Tulir293
+ * @since 0.1
+ * @from Maucros
+ */
 public class ActionNofall implements TickAction {
 	private boolean active = false;
 	

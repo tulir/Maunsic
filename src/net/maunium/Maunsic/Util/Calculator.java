@@ -11,10 +11,24 @@ import net.maunium.Maunsic.Maunsic;
 import net.minecraft.util.ChatStyle;
 import net.minecraft.util.EnumChatFormatting;
 
+/**
+ * A simplified interface for Expr by Darius.
+ * 
+ * @author Tulir293
+ * @since 0.1
+ * @from Maucros
+ */
 public class Calculator {
 	private static Variable ans = Variable.make("ans");
 	private static Variable answer = Variable.make("answer");
 	
+	/**
+	 * Process the given expression.
+	 * 
+	 * @param s The expression to process.
+	 * @return The result, "varname" if the expression was a variable setting one and contained an invalid variable name or "syntax" if the syntax was
+	 *         incorrect. If the return is "syntax" the error has already been printed to the chat.
+	 */
 	public static String processCalculation(String s) {
 		if (s.contains("=")) {
 			String[] ss = s.split(Pattern.quote("="));

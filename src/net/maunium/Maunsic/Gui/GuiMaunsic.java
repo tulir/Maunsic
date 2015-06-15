@@ -11,6 +11,12 @@ import net.maunium.Maunsic.Util.I18n;
 
 import net.minecraft.client.Minecraft;
 
+/**
+ * The main config Gui for Maunsic.
+ * 
+ * @author Tulir293
+ * @since 0.1
+ */
 public class GuiMaunsic extends BasicScreen {
 	private Maunsic host;
 	
