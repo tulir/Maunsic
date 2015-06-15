@@ -121,16 +121,14 @@ public abstract class BasicScreen extends GuiScreen implements ButtonHandler {
 	
 	@Override
 	protected void mouseClicked(int mx, int my, int code) {
-		if (code == 0) {
-			for (Container c : containers) {
-				if (c.mouseClicked(mx, my, code)) {
-					selectedContainer = c;
-					break;
-				}
+		for (Container c : containers) {
+			if (c.mouseClicked(mx, my, code)) {
+				selectedContainer = c;
+				break;
 			}
-			for (Container c : containers)
-				if (c != selectedContainer) c.setFocused(null);
 		}
+		if (code == 0) for (Container c : containers)
+			if (c != selectedContainer) c.setFocused(null);
 	}
 	
 	@Override
