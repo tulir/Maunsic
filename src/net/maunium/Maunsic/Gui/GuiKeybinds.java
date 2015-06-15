@@ -81,7 +81,7 @@ public class GuiKeybinds extends BasicScreen {
 		
 		for (int i = 0; i < kbs.size(); i++) {
 			MauKeybind kb = kbs.get(i);
-			keybindTitles[i] = new ShiftableLabel(I18n.translate(kb.getName()), false);
+			keybindTitles[i] = new ShiftableLabel(I18n.translate("key." + kb.getName()), false);
 			keybindKeys[i] = new KeySelectButtonWithDefault(100, 20, this, kb.getKeyCode(), new KSBF(), kb.getDefaultKeyCode());
 			keybindReset[i] = new ShiftableButtonWithMeta(50, 20, I18n.translate("conf.keys.reset"), this, i);
 			keybindTitles[i].setPosition(width / 2 - 150, 40 + i * 25);
@@ -102,6 +102,9 @@ public class GuiKeybinds extends BasicScreen {
 			ShiftableButtonWithMeta sbwm = (ShiftableButtonWithMeta) b;
 			KeySelectButtonWithDefault ksb = keybindKeys[sbwm.meta];
 			ksb.setKeycode(ksb.default_);
+//		} else if (b instanceof KeySelectButton) {
+//			KeySelectButton ksb = (KeySelectButton) b;
+//			ksb.focusGained();
 		}
 	}
 	
