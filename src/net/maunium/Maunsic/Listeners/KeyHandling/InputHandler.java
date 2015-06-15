@@ -29,6 +29,12 @@ public class InputHandler {
 	
 	public static void setHost(Maunsic newHost) {
 		host = newHost;
+		KeyRegistry.registerKeybind(Keybinds.config);
+		KeyRegistry.registerKeybind(Keybinds.fly);
+		KeyRegistry.registerKeybind(Keybinds.nofall);
+		KeyRegistry.registerKeybind(Keybinds.inc_speed);
+		KeyRegistry.registerKeybind(Keybinds.dec_speed);
+		KeyRegistry.registerKeybind(Keybinds.antikb);
 	}
 	
 	public static void input(int keycode, boolean pressed) {
@@ -101,15 +107,6 @@ public class InputHandler {
 	}
 	
 	public final static class Keybinds {
-		static {
-			KeyRegistry.registerKeybind(Keybinds.config);
-			KeyRegistry.registerKeybind(Keybinds.fly);
-			KeyRegistry.registerKeybind(Keybinds.nofall);
-			KeyRegistry.registerKeybind(Keybinds.inc_speed);
-			KeyRegistry.registerKeybind(Keybinds.dec_speed);
-			KeyRegistry.registerKeybind(Keybinds.antikb);
-		}
-		
 		public static final MauKeybind config = new MauKeybind("conf", Keyboard.KEY_F4);
 		public static final MauKeybind fly = new MauKeybind("fly", Keyboard.KEY_F);
 		public static final MauKeybind nofall = new MauKeybind("nofall", Keyboard.KEY_N);
