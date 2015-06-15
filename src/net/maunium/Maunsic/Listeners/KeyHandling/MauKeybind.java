@@ -4,6 +4,7 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
 import net.maunium.Maunsic.Util.I18n;
+import net.maunium.Maunsic.Util.MaunsiConfig;
 
 public class MauKeybind implements Comparable<MauKeybind> {
 	private int keyCode;
@@ -47,5 +48,13 @@ public class MauKeybind implements Comparable<MauKeybind> {
 	@Override
 	public int compareTo(MauKeybind o) {
 		return I18n.translate(getName()).compareTo(I18n.translate(o.getName()));
+	}
+	
+	public void save(MaunsiConfig conf) {
+		conf.set("key." + getName(), getKeyCode());
+	}
+	
+	public void load(MaunsiConfig conf) {
+		setKeyCode(conf.getInt("key." + getName(), getKeyCode()));
 	}
 }
