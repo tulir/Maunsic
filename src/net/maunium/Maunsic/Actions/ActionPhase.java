@@ -16,7 +16,7 @@ import net.minecraft.util.MathHelper;
 public class ActionPhase implements StatusAction {
 	private boolean active = false, automated = true, autoforward = true;
 	
-	public void execute() {
+	public void phase() {
 		// Is shift down? If yes, stop phasing
 		if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) stopPhase();
 		// Start automated phasing
