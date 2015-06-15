@@ -16,6 +16,7 @@ public class ActionNofall implements TickAction {
 		return active;
 	}
 	
+	@Override
 	public void setActive(boolean active) {
 		this.active = active;
 	}
