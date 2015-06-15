@@ -34,10 +34,11 @@ public class InputHandler {
 		KeyRegistry.registerKeybind(Keybinds.nofall);
 		KeyRegistry.registerKeybind(Keybinds.inc_speed);
 		KeyRegistry.registerKeybind(Keybinds.dec_speed);
+		KeyRegistry.registerKeybind(Keybinds.antikb);
 	}
 	
 	public static void input(int keycode, boolean pressed) {
-		if (keycode == -101) return;
+		if (keycode == -101 || keycode == Keyboard.KEY_NONE) return;
 		// Check if usage is allowed
 		if (!ServerHandler.canUse()) return;
 		// Execute the precheck key maucros, but only if the input handler is enabled.
@@ -86,9 +87,8 @@ public class InputHandler {
 			} else if (keycode == Keybinds.dec_speed.getKeyCode()) {
 				if (Keybinds.inc_speed.isDown()) host.actionFly.setSpeed(ActionFly.DEFAULT_SPEED);
 				else host.actionFly.changeSpeed(false);
-			} else if (keycode == Keybinds.nofall.getKeyCode()) {
-				host.actionNofall.setActive(!host.actionNofall.isActive());
-			}
+			} else if (keycode == Keybinds.nofall.getKeyCode()) host.actionNofall.setActive(!host.actionNofall.isActive());
+			else if (keycode == Keybinds.antikb.getKeyCode()) host.actionAntiKB.setActive(!host.actionAntiKB.isActive());
 		}
 		
 		if (!disabled) for (KeyMaucro km : KeyMaucro.getKeyMaucros()) {
@@ -107,10 +107,11 @@ public class InputHandler {
 	}
 	
 	public static class Keybinds {
-		public static final MauKeybind config = new MauKeybind("Configuration", Keyboard.KEY_F4);
-		public static final MauKeybind fly = new MauKeybind("Fly", Keyboard.KEY_F);
+		public static final MauKeybind config = new MauKeybind("conf", Keyboard.KEY_F4);
+		public static final MauKeybind fly = new MauKeybind("fly", Keyboard.KEY_F);
 		public static final MauKeybind nofall = new MauKeybind("nofall", Keyboard.KEY_N);
-		public static final MauKeybind inc_speed = new MauKeybind("Increase Speed", Keyboard.KEY_PRIOR);
-		public static final MauKeybind dec_speed = new MauKeybind("Decrease Speed", Keyboard.KEY_NEXT);
+		public static final MauKeybind inc_speed = new MauKeybind("inc_speed", Keyboard.KEY_PRIOR);
+		public static final MauKeybind dec_speed = new MauKeybind("dec_speed", Keyboard.KEY_NEXT);
+		public static final MauKeybind antikb = new MauKeybind("antikb", Keyboard.KEY_NONE);
 	}
 }
