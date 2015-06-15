@@ -95,8 +95,7 @@ public class KeySelectButton extends FocusableButton {
 	@Override
 	public void handleClick(int mx, int my, int code) {
 		if (code == 0) super.handleClick(mx, my, code);
-		System.out.println(isFocused() + ", " + code + ", " + (-100 + code));
-		if (isFocused() && code > 1) {
+		else if (isFocused() && code > 1) {
 			setKeycode(code - 100);
 			focusLost();
 		}
