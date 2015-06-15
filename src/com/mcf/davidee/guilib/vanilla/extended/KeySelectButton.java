@@ -6,8 +6,6 @@ import org.lwjgl.opengl.GL11;
 import com.mcf.davidee.guilib.core.Button.ButtonHandler;
 import com.mcf.davidee.guilib.vanilla.focusable.FocusableButton;
 
-import net.maunium.Maunsic.Util.I18n;
-
 import net.minecraft.util.ResourceLocation;
 
 public class KeySelectButton extends FocusableButton {
@@ -88,10 +86,25 @@ public class KeySelectButton extends FocusableButton {
 	@Override
 	public boolean keyTyped(char k, int kc) {
 		if (isFocused()) {
-			this.kc = kc;
+			setKeycode(kc);
 			focusLost();
 			return true;
 		} else return false;
+	}
+	
+	@Override
+	public void handleClick(int mx, int my, int code) {
+		if (code == 0) super.handleClick(mx, my, code);
+		System.out.println(isFocused() + ", " + code + ", " + (-100 + code));
+		if (isFocused() && code > 1) {
+			setKeycode(code - 100);
+			focusLost();
+		}
+	}
+	
+	@Override
+	public boolean click(int mx, int my, int code) {
+		return enabled && inBounds(mx, my);
 	}
 	
 	public static interface KSBFormat {
@@ -101,7 +114,7 @@ public class KeySelectButton extends FocusableButton {
 	public static class DefaultKSBFormat implements KSBFormat {
 		@Override
 		public String format(int keyCode, boolean pressed) {
-			if (keyCode < 1) return I18n.translate("conf.keys.notset");
+			if (keyCode < 1) return "Not set";
 			else if (pressed) return "> " + Keyboard.getKeyName(keyCode) + " <";
 			else return Keyboard.getKeyName(keyCode);
 		}
