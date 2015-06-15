@@ -20,6 +20,7 @@ public class ActionFly implements TickAction {
 	private Maunsic host;
 	public static final int DEFAULT_SPEED = 20, MAX_SPEED = 980, MIN_SPEED = 0, TYPE_DISABLED = 0, TYPE_FLY = 1, TYPE_WALK = 2;
 	private int speed = DEFAULT_SPEED, type = TYPE_DISABLED, jump = 0;
+	private boolean viewBobbing = Minecraft.getMinecraft().gameSettings.viewBobbing;
 	
 	public ActionFly(Maunsic host) {
 		this.host = host;
@@ -37,13 +38,13 @@ public class ActionFly implements TickAction {
 		return type > TYPE_DISABLED;
 	}
 	
-	@Override
-	public void setActive(boolean active) {
-		if (active) type = TYPE_FLY;
-		else type = TYPE_DISABLED;
-	}
-	
 	public void setType(int type) {
+		if (type == TYPE_DISABLED && this.type == TYPE_FLY) {
+			Minecraft.getMinecraft().gameSettings.viewBobbing = viewBobbing;
+			Minecraft.getMinecraft().thePlayer.motionX = 0;
+			Minecraft.getMinecraft().thePlayer.motionY = 0;
+			Minecraft.getMinecraft().thePlayer.motionZ = 0;
+		} else viewBobbing = Minecraft.getMinecraft().gameSettings.viewBobbing;
 		if (TYPE_DISABLED <= type && type <= TYPE_WALK) this.type = type;
 	}
 	
@@ -53,7 +54,7 @@ public class ActionFly implements TickAction {
 	}
 	
 	public void setSpeed(int speed) {
-		if (MIN_SPEED <= getSpeed() && getSpeed() <= MAX_SPEED) {
+		if (MIN_SPEED <= speed && speed <= MAX_SPEED) {
 			this.speed = speed;
 			host.getConfig().set("altmovement.speed", speed);
 		}
@@ -72,10 +73,10 @@ public class ActionFly implements TickAction {
 		} else amount = 10;
 		
 		int res = getSpeed() + (increase ? amount : -amount);
-		if (amount > ActionFly.MAX_SPEED) {
+		if (res > ActionFly.MAX_SPEED) {
 			Maunsic.printChatError("message.speed.toohigh", ActionFly.MAX_SPEED);
 			setSpeed(ActionFly.MAX_SPEED);
-		} else if (amount < ActionFly.MIN_SPEED) {
+		} else if (res < ActionFly.MIN_SPEED) {
 			Maunsic.printChatError("message.speed.toolow", ActionFly.MIN_SPEED);
 			setSpeed(ActionFly.MIN_SPEED);
 		} else setSpeed(res);
@@ -86,7 +87,29 @@ public class ActionFly implements TickAction {
 	}
 	
 	public double getMCSpeed() {
-		return getSpeed() / 100;
+		return getSpeed() / 100.0D;
+	}
+	
+	private String amv = "Alt. Movement ", mode = " Mode ", fly = "Fly", walk = "Walk", speedt = " Speed ", on = "ON";
+	
+	public void setStatusI18n(String amv, String mode, String fly, String walk, String speed, String on) {
+		this.amv = amv + " ";
+		this.mode = " " + mode + " ";
+		this.fly = fly;
+		this.walk = walk;
+		speedt = " " + speed + " ";
+		this.on = on;
+	}
+	
+	@Override
+	public String[] getStatusText() {
+		String[] rtrn = new String[3];
+		rtrn[0] = amv + EnumChatFormatting.GREEN + on;
+		rtrn[1] = mode + EnumChatFormatting.GREEN + (type == TYPE_FLY ? fly : walk);
+		if (getSpeed() > MAX_SPEED / 2) rtrn[2] = speedt + EnumChatFormatting.RED + EnumChatFormatting.ITALIC + getSpeed();
+		else if (getSpeed() > MAX_SPEED / 4) rtrn[2] = speedt + EnumChatFormatting.GREEN + EnumChatFormatting.ITALIC + getSpeed();
+		else rtrn[2] = speedt + EnumChatFormatting.GREEN + getSpeed();
+		return rtrn;
 	}
 	
 	@Override
@@ -105,8 +128,10 @@ public class ActionFly implements TickAction {
 		}
 		
 		double extra = 0;
-		if (type == TYPE_FLY) p.setSprinting(false);
-		else extra = (p.isSprinting() ? getMCSpeed() / 5 : 0) - (p.isSneaking() ? getMCSpeed() / 5 : 0);
+		if (type == TYPE_FLY) {
+			p.setSprinting(false);
+			gs.viewBobbing = false;
+		} else extra = (p.isSprinting() ? getMCSpeed() / 5 : 0) - (p.isSneaking() ? getMCSpeed() / 5 : 0);
 		
 		double mX = p.motionX;
 		double mY = p.motionY;
@@ -156,31 +181,11 @@ public class ActionFly implements TickAction {
 				else mY = getMCSpeed();
 			} else if (Keyboard.isKeyDown(gs.keyBindSneak.getKeyCode())) mY = -getMCSpeed();
 			else mY = 0;
-		} else if (Keyboard.isKeyDown(gs.keyBindJump.getKeyCode())) if (jump == 0) mY = getMCSpeed() * 2;
-		else mY = jump;
+		} else if (Keyboard.isKeyDown(gs.keyBindJump.getKeyCode())) {
+			if (jump == 0) mY = getMCSpeed() * 2;
+			else mY = jump;
+		}
 		
 		p.setVelocity(mX, mY, mZ);
-	}
-	
-	private String amv = "Alt. Movement ", mode = " Mode ", fly = "Fly", walk = "Walk", speedt = " Speed ", on = "ON";
-	
-	public void setStatusI18n(String amv, String mode, String fly, String walk, String speed, String on) {
-		this.amv = amv + " ";
-		this.mode = " " + mode + " ";
-		this.fly = fly;
-		this.walk = walk;
-		speedt = " " + speed + " ";
-		this.on = on;
-	}
-	
-	@Override
-	public String[] getStatusText() {
-		String[] rtrn = new String[3];
-		rtrn[0] = amv + EnumChatFormatting.GREEN + on;
-		rtrn[1] = mode + EnumChatFormatting.GREEN + (type == TYPE_FLY ? fly : walk);
-		if (getSpeed() > MAX_SPEED / 2) rtrn[2] = speedt + EnumChatFormatting.RED + EnumChatFormatting.ITALIC + getSpeed();
-		else if (getSpeed() > MAX_SPEED / 4) rtrn[2] = speedt + EnumChatFormatting.GREEN + EnumChatFormatting.ITALIC + getSpeed();
-		else rtrn[2] = speedt + EnumChatFormatting.GREEN + getSpeed();
-		return rtrn;
 	}
 }
