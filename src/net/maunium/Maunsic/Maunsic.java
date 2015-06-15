@@ -20,6 +20,7 @@ import net.maunium.Maunsic.Listeners.OutChatListener;
 import net.maunium.Maunsic.Listeners.KeyHandling.InputHandler;
 import net.maunium.Maunsic.Server.ServerHandler;
 import net.maunium.Maunsic.TickActions.ActionFly;
+import net.maunium.Maunsic.TickActions.ActionNofall;
 import net.maunium.Maunsic.TickActions.TickActionHandler;
 import net.maunium.Maunsic.Util.I18n;
 import net.maunium.Maunsic.Util.MaunsiConfig;
@@ -93,6 +94,7 @@ public class Maunsic {
 	/** The TickActionHandler for Maucros */
 	private TickActionHandler tah;
 	public ActionFly actionFly;
+	public ActionNofall actionNofall;
 	
 	/**
 	 * Constructor
@@ -168,6 +170,7 @@ public class Maunsic {
 		InputHandler.setHost(this);
 		
 		actionFly = tah.registerAction(new ActionFly(this), TickEvent.Phase.END);
+		actionNofall = tah.registerAction(new ActionNofall(), TickEvent.Phase.END);
 		
 		getLogger().info("Init complete in " + (init = (int) (System.currentTimeMillis() - st)) + "ms.");
 	}
