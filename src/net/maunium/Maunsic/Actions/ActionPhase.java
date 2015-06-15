@@ -1,10 +1,10 @@
-package net.maunium.Maunsic.TickActions;
+package net.maunium.Maunsic.Actions;
 
 import org.lwjgl.input.Keyboard;
 
 import net.maunium.Maunsic.Maunsic;
+import net.maunium.Maunsic.Actions.Util.StatusAction;
 import net.maunium.Maunsic.Server.ServerHandler;
-import net.maunium.Maunsic.TickActions.Util.StatusAction;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;

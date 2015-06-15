@@ -1,9 +1,9 @@
-package net.maunium.Maunsic.TickActions;
+package net.maunium.Maunsic.Actions;
 
 import java.util.List;
 
+import net.maunium.Maunsic.Actions.Util.IntervalAction;
 import net.maunium.Maunsic.Settings.Friends;
-import net.maunium.Maunsic.TickActions.Util.IntervalAction;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;

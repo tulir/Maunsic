@@ -14,8 +14,8 @@ import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 import org.objectweb.asm.tree.VarInsnNode;
 
+import net.maunium.Maunsic.Actions.ActionBlink;
 import net.maunium.Maunsic.Core.AbstractMauTransformer;
-import net.maunium.Maunsic.TickActions.ActionBlink;
 
 /**
  * Transformer to allow blinking.

@@ -1,6 +1,6 @@
-package net.maunium.Maunsic.TickActions;
+package net.maunium.Maunsic.Actions;
 
-import net.maunium.Maunsic.TickActions.Util.TickAction;
+import net.maunium.Maunsic.Actions.Util.TickAction;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.play.client.C03PacketPlayer;

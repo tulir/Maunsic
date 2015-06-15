@@ -1,7 +1,7 @@
-package net.maunium.Maunsic.TickActions;
+package net.maunium.Maunsic.Actions;
 
 import net.maunium.Maunsic.Maunsic;
-import net.maunium.Maunsic.TickActions.Util.IntervalAction;
+import net.maunium.Maunsic.Actions.Util.IntervalAction;
 
 import net.minecraft.util.EnumChatFormatting;
 

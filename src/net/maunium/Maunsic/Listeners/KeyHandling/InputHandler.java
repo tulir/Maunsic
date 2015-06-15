@@ -3,10 +3,10 @@ package net.maunium.Maunsic.Listeners.KeyHandling;
 import org.lwjgl.input.Keyboard;
 
 import net.maunium.Maunsic.Maunsic;
+import net.maunium.Maunsic.Actions.ActionFly;
 import net.maunium.Maunsic.Gui.GuiMaunsic;
 import net.maunium.Maunsic.KeyMaucros.KeyMaucro;
 import net.maunium.Maunsic.Server.ServerHandler;
-import net.maunium.Maunsic.TickActions.ActionFly;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;

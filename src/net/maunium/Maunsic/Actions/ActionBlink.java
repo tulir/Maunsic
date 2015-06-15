@@ -1,9 +1,9 @@
-package net.maunium.Maunsic.TickActions;
+package net.maunium.Maunsic.Actions;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import net.maunium.Maunsic.TickActions.Util.StatusAction;
+import net.maunium.Maunsic.Actions.Util.StatusAction;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetHandlerPlayClient;

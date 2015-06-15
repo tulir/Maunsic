@@ -1,4 +1,4 @@
-package net.maunium.Maunsic.TickActions.Util;
+package net.maunium.Maunsic.Actions.Util;
 
 /**
  * The base class for all Maunsic tick actions.

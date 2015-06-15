@@ -1,9 +1,9 @@
-package net.maunium.Maunsic.TickActions;
+package net.maunium.Maunsic.Actions;
 
 import org.lwjgl.input.Keyboard;
 
 import net.maunium.Maunsic.Maunsic;
-import net.maunium.Maunsic.TickActions.Util.TickAction;
+import net.maunium.Maunsic.Actions.Util.TickAction;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.GameSettings;
