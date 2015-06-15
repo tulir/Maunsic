@@ -114,12 +114,12 @@ public abstract class TextField extends FocusableWidget {
 	}
 	
 	@Override
-	public boolean click(int mx, int my) {
-		return inBounds(mx, my);
+	public boolean click(int mx, int my, int code) {
+		return code == 0 && inBounds(mx, my);
 	}
 	
 	@Override
-	public void handleClick(int mx, int my) {
+	public void handleClick(int mx, int my, int code) {
 		int pos = mx - x;
 		pos -= Math.abs(getInternalWidth() - width) / 2;
 		

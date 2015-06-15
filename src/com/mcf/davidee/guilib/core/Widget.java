@@ -8,16 +8,15 @@ import net.minecraft.client.gui.Gui;
 
 /**
  * 
- * Widgets are the core of this library.
- * All controls should be a subclass of Widget.
+ * Widgets are the core of this library. All controls should be a subclass of Widget.
  *
  */
 public abstract class Widget extends Gui {
-
+	
 	protected Minecraft mc = Minecraft.getMinecraft();
 	protected int x, y, width, height;
 	protected boolean enabled;
-
+	
 	/**
 	 * 
 	 * @param width Widget of this widget
@@ -26,7 +25,7 @@ public abstract class Widget extends Gui {
 	public Widget(int width, int height) {
 		this.width = width;
 		this.height = height;
-		this.enabled = true;
+		enabled = true;
 	}
 	
 	/**
@@ -41,9 +40,9 @@ public abstract class Widget extends Gui {
 		this.y = y;
 		this.width = width;
 		this.height = height;
-		this.enabled = true;
+		enabled = true;
 	}
-
+	
 	/**
 	 * Draws this widget
 	 * 
@@ -57,23 +56,24 @@ public abstract class Widget extends Gui {
 	 * 
 	 * @param mx Mouse-X
 	 * @param my Mouse-Y
+	 * @param code Mouse button
 	 * @return Whether the control should handleClick
 	 */
-	public abstract boolean click(int mx, int my);
-
+	public abstract boolean click(int mx, int my, int code);
+	
 	/**
-	 * Called when a call to click(mx, my) returns true.
-	 * Handle the click event in this method.
+	 * Called when a call to click(mx, my) returns true. Handle the click event in this method.
 	 * 
 	 * @param mx Mouse-X
 	 * @param my Mouse-Y
+	 * @param code Mouse button
 	 */
-	public void handleClick(int mx, int my){ }
+	public void handleClick(int mx, int my, int code) {}
 	
 	/**
-	 * Update this control (if necessary). 
+	 * Update this control (if necessary).
 	 */
-	public void update(){ }
+	public void update() {}
 	
 	/**
 	 * Called when the mouse is released.
@@ -81,7 +81,7 @@ public abstract class Widget extends Gui {
 	 * @param mx Mouse-X
 	 * @param my Mouse-Y
 	 */
-	public void mouseReleased(int mx, int my){ }
+	public void mouseReleased(int mx, int my) {}
 	
 	/**
 	 * Called when a key is typed.
@@ -90,7 +90,7 @@ public abstract class Widget extends Gui {
 	 * @param code Keyboard.KEY_ code for this key
 	 * @return Whether this widget has captured this keyboard event
 	 */
-	public boolean keyTyped(char c, int code) { 
+	public boolean keyTyped(char c, int code) {
 		return false;
 	}
 	
@@ -100,10 +100,10 @@ public abstract class Widget extends Gui {
 	 * @param delta Clamped difference, currently either +5 or -5
 	 * @return Whether this widget has captured this mouse wheel event
 	 */
-	public boolean mouseWheel(int delta) { 
+	public boolean mouseWheel(int delta) {
 		return false;
 	}
-
+	
 	/**
 	 * Called when rendering to get tooltips.
 	 * 
@@ -112,7 +112,7 @@ public abstract class Widget extends Gui {
 	public List<Widget> getTooltips() {
 		return Collections.emptyList();
 	}
-
+	
 	/**
 	 * Called to see if the specified coordinate is in bounds.
 	 * 
@@ -132,9 +132,9 @@ public abstract class Widget extends Gui {
 	 * @return Whether or not this widget should be rendered
 	 */
 	public boolean shouldRender(int topY, int bottomY) {
-		return  y + height >= topY && y <= bottomY;
+		return y + height >= topY && y <= bottomY;
 	}
-
+	
 	/**
 	 * Set the position of this widget.
 	 * 
@@ -153,7 +153,7 @@ public abstract class Widget extends Gui {
 	public int getY() {
 		return y;
 	}
-
+	
 	public int getWidth() {
 		return width;
 	}

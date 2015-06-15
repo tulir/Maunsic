@@ -40,7 +40,7 @@ public class ExtendedIntSlider extends Widget implements Shiftable {
 	}
 	
 	@Override
-	public void handleClick(int mx, int my) {
+	public void handleClick(int mx, int my, int code) {
 		value = (float) (mx - (x + 4)) / (float) (width - 8);
 		value = MathHelper.clamp_float(value, 0, 1);
 		dragging = true;
@@ -96,8 +96,8 @@ public class ExtendedIntSlider extends Widget implements Shiftable {
 	}
 	
 	@Override
-	public boolean click(int mx, int my) {
-		if (inBounds(mx, my)) {
+	public boolean click(int mx, int my, int code) {
+		if (code == 0 && inBounds(mx, my)) {
 			value = (float) (mx - (x + 4)) / (float) (width - 8);
 			value = MathHelper.clamp_float(value, 0, 1);
 			dragging = true;
@@ -130,6 +130,6 @@ public class ExtendedIntSlider extends Widget implements Shiftable {
 	
 	@Override
 	public void shiftY(int dy) {
-		this.y += dy;
+		y += dy;
 	}
 }

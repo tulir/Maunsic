@@ -3,8 +3,8 @@ package com.mcf.davidee.guilib.vanilla.focusable;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.mcf.davidee.guilib.core.Scrollbar.Shiftable;
 import com.mcf.davidee.guilib.core.FocusableWidget;
+import com.mcf.davidee.guilib.core.Scrollbar.Shiftable;
 import com.mcf.davidee.guilib.core.Widget;
 
 import net.minecraft.client.Minecraft;
@@ -108,7 +108,7 @@ public class FocusableLabel extends FocusableWidget implements Shiftable {
 	}
 	
 	@Override
-	public boolean click(int mx, int my) {
+	public boolean click(int mx, int my, int code) {
 		return inBounds(mx, my);
 	}
 	

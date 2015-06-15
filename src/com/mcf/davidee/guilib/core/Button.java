@@ -8,7 +8,7 @@ package com.mcf.davidee.guilib.core;
 public abstract class Button extends Widget {
 	
 	public interface ButtonHandler {
-		void buttonClicked(Button button);
+		void buttonClicked(Button button, int code);
 	}
 	
 	protected ButtonHandler handler;
@@ -20,13 +20,13 @@ public abstract class Button extends Widget {
 	}
 	
 	@Override
-	public boolean click(int mx, int my) {
+	public boolean click(int mx, int my, int code) {
 		return enabled && inBounds(mx, my);
 	}
 	
 	@Override
-	public void handleClick(int mx, int my) {
-		if (handler != null) handler.buttonClicked(this);
+	public void handleClick(int mx, int my, int code) {
+		if (handler != null) handler.buttonClicked(this, code);
 	}
 	
 	public void setEnabled(boolean flag) {

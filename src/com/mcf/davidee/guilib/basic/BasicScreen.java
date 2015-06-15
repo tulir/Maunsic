@@ -52,7 +52,7 @@ public abstract class BasicScreen extends GuiScreen implements ButtonHandler {
 	 */
 	protected void onReopen() {};
 	
-	protected void onButtonClicked(Button b) {}
+	protected void onButtonClicked(Button b, int code) {}
 	
 	/**
 	 * Called when this GUI is closed.
@@ -123,7 +123,7 @@ public abstract class BasicScreen extends GuiScreen implements ButtonHandler {
 	protected void mouseClicked(int mx, int my, int code) {
 		if (code == 0) {
 			for (Container c : containers) {
-				if (c.mouseClicked(mx, my)) {
+				if (c.mouseClicked(mx, my, code)) {
 					selectedContainer = c;
 					break;
 				}
@@ -178,12 +178,12 @@ public abstract class BasicScreen extends GuiScreen implements ButtonHandler {
 	}
 	
 	@Override
-	public final void buttonClicked(Button b) {
+	public final void buttonClicked(Button b, int code) {
 		// START MAUNSIC-DEPENDANT
 		if (!ServerHandler.canUse()) return;
 		Maunsic.getLogger().trace("Button " + b.getText() + " clicked", this);
 		// END MAUNSIC-DEPENDANT
-		onButtonClicked(b);
+		onButtonClicked(b, code);
 	}
 	
 	@Override

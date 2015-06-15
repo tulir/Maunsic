@@ -148,20 +148,20 @@ public class Container {
 		return mx >= left && my >= top && mx < right && my < bottom;
 	}
 	
-	public boolean mouseClicked(int mx, int my) {
+	public boolean mouseClicked(int mx, int my, int code) {
 		if (inBounds(mx, my)) {
 			boolean resetFocus = true;
 			
 			if (scrollbar != null && scrollbar.shouldRender(top, bottom) && scrollbar.inBounds(mx, my)) return true;
 			
 			for (Widget w : widgets) {
-				if (w.shouldRender(top, bottom) && w.click(mx, my)) {
+				if (w.shouldRender(top, bottom) && w.click(mx, my, code)) {
 					lastSelected = w;
 					if (w instanceof FocusableWidget) {
 						setFocused((FocusableWidget) w);
 						resetFocus = false;
 					}
-					w.handleClick(mx, my);
+					w.handleClick(mx, my, code);
 					break;
 				}
 			}

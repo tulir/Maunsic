@@ -8,42 +8,39 @@ import org.lwjgl.input.Mouse;
  *
  */
 public abstract class Scrollbar extends Widget {
-
+	
 	public interface Shiftable {
 		void shiftY(int dy);
 	}
-
+	
 	protected int yClick;
 	protected Container container;
-
+	
 	private int topY, bottomY;
 	private int offset;
-
+	
 	public Scrollbar(int width) {
 		super(width, 0);
-
+		
 		yClick = -1;
 	}
-
+	
 	protected abstract void shiftChildren(int dy);
-
+	
 	protected abstract void drawBoundary(int x, int y, int width, int height);
-
+	
 	protected abstract void drawScrollbar(int x, int y, int width, int height);
-
+	
 	public void revalidate(int topY, int bottomY) {
 		this.topY = topY;
 		this.bottomY = bottomY;
-		this.height = bottomY - topY;
+		height = bottomY - topY;
 		int heightDiff = getHeightDifference();
-		if (offset != 0 && heightDiff <= 0)
-			offset = 0;
-		if (heightDiff > 0 && offset < -heightDiff)
-			offset = -heightDiff;
-		if (offset != 0)
-			shiftChildren(offset);
+		if (offset != 0 && heightDiff <= 0) offset = 0;
+		if (heightDiff > 0 && offset < -heightDiff) offset = -heightDiff;
+		if (offset != 0) shiftChildren(offset);
 	}
-
+	
 	public void onChildRemoved() {
 		int heightDiff = getHeightDifference();
 		if (offset != 0) {
@@ -56,27 +53,24 @@ public abstract class Scrollbar extends Widget {
 			}
 		}
 	}
-
+	
 	public void setContainer(Container c) {
-		this.container = c;
+		container = c;
 	}
-
+	
 	protected int getHeightDifference() {
 		return container.getContentHeight() - (bottomY - topY);
 	}
 	
 	protected int getLength() {
-		if (container.getContentHeight() == 0)
-			return 0;
+		if (container.getContentHeight() == 0) return 0;
 		int length = (bottomY - topY) * (bottomY - topY) / container.getContentHeight();
-		if (length < 32)
-			length = 32;
+		if (length < 32) length = 32;
 		if (length > bottomY - topY - 8) // Prevent it from getting too big
 			length = bottomY - topY - 8;
 		return length;
 	}
 	
-
 	@Override
 	public void draw(int mx, int my) {
 		int length = getLength();
@@ -89,36 +83,33 @@ public abstract class Scrollbar extends Widget {
 			} else {
 				float scrollMultiplier = 1.0F;
 				int diff = getHeightDifference();
-
-				if (diff < 1)
-					diff = 1;
 				
-				scrollMultiplier /= (bottomY - topY - length) / (float)diff;
+				if (diff < 1) diff = 1;
+				
+				scrollMultiplier /= (bottomY - topY - length) / (float) diff;
 				shift((int) ((yClick - my) * scrollMultiplier));
 				yClick = my;
 			}
-		} else
-			yClick = -1;
+		} else yClick = -1;
 		
 		drawBoundary(x, topY, width, height);
-
-		int y = -offset * (bottomY - topY - length) / getHeightDifference() + (topY);
-		if (y < topY)
-			y = topY;
-
+		
+		int y = -offset * (bottomY - topY - length) / getHeightDifference() + topY;
+		if (y < topY) y = topY;
+		
 		drawScrollbar(x, y, width, length);
 	}
-
+	
 	@Override
-	public boolean click(int mx, int my) {
+	public boolean click(int mx, int my, int code) {
 		return false;
 	}
-
+	
 	@Override
 	public boolean shouldRender(int topY, int bottomY) {
 		return getHeightDifference() > 0;
 	}
-
+	
 	/**
 	 * Shifts this scrollbar relative to its size + contentHeight.
 	 * 
@@ -127,20 +118,17 @@ public abstract class Scrollbar extends Widget {
 	public void shiftRelative(int i) {
 		int heightDiff = getHeightDifference();
 		if (heightDiff > 0) {
-			i *= 1 + heightDiff/(float)(bottomY-topY);
-			//shift(i) inlined
+			i *= 1 + heightDiff / (float) (bottomY - topY);
+			// shift(i) inlined
 			int dif = offset + i;
-			if (dif > 0)
-				dif = 0;
-			if (dif < -heightDiff)
-				dif = -heightDiff;
+			if (dif > 0) dif = 0;
+			if (dif < -heightDiff) dif = -heightDiff;
 			int result = dif - offset;
-			if (result != 0)
-				shiftChildren(result);
+			if (result != 0) shiftChildren(result);
 			offset = dif;
 		}
 	}
-
+	
 	/**
 	 * Shifts the scrollbar by i pixels.
 	 * 
@@ -150,15 +138,12 @@ public abstract class Scrollbar extends Widget {
 		int heightDiff = getHeightDifference();
 		if (heightDiff > 0) {
 			int dif = offset + i;
-			if (dif > 0)
-				dif = 0;
-			if (dif < -heightDiff)
-				dif = -heightDiff;
+			if (dif > 0) dif = 0;
+			if (dif < -heightDiff) dif = -heightDiff;
 			int result = dif - offset;
-			if (result != 0)
-				shiftChildren(result);
+			if (result != 0) shiftChildren(result);
 			offset = dif;
 		}
 	}
-
+	
 }

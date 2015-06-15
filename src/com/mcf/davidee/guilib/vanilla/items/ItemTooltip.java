@@ -112,7 +112,7 @@ public class ItemTooltip extends Widget {
 	}
 	
 	@Override
-	public boolean click(int mx, int my) {
+	public boolean click(int mx, int my, int code) {
 		return false;
 	}
 	

@@ -101,10 +101,10 @@ public class StateButton extends ButtonVanilla implements Shiftable {
 	}
 	
 	@Override
-	public void handleClick(int mx, int my) {
+	public void handleClick(int mx, int my, int code) {
 		state++;
 		if (state >= format.stateCount()) state = 0;
-		super.handleClick(mx, my);
+		super.handleClick(mx, my, code);
 	}
 	
 	public static interface Format {
