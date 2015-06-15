@@ -1,7 +1,6 @@
-package net.maunium.Maunsic.Listeners;
+package net.maunium.Maunsic.Listeners.KeyHandling;
 
 import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
 
 import net.maunium.Maunsic.Maunsic;
 import net.maunium.Maunsic.Gui.GuiMaunsic;
@@ -26,6 +25,10 @@ public class InputHandler {
 	
 	public static void setHost(Maunsic newHost) {
 		host = newHost;
+		KeyRegistry.registerKeybind(Keybinds.config);
+		KeyRegistry.registerKeybind(Keybinds.fly);
+		KeyRegistry.registerKeybind(Keybinds.inc_speed);
+		KeyRegistry.registerKeybind(Keybinds.dec_speed);
 	}
 	
 	public static void input(int keycode, boolean pressed) {
@@ -78,50 +81,19 @@ public class InputHandler {
 		}
 	}
 	
-	public void enable() {
-		disabled = false;
+	public static boolean toggleDisable() {
+		disabled = !disabled;
+		return disabled;
 	}
 	
-	public void disable() {
-		disabled = true;
-	}
-	
-	public static class Keybind {
-		private int keyCode;
-		private final int defaultKeyCode;
-		private final String name;
-		
-		public Keybind(String name, int keyCode) {
-			this.keyCode = keyCode;
-			defaultKeyCode = keyCode;
-			this.name = name;
-		}
-		
-		public int getKeyCode() {
-			return keyCode;
-		}
-		
-		public int getDefaultKeyCode() {
-			return defaultKeyCode;
-		}
-		
-		public String getName() {
-			return name;
-		}
-		
-		public void setKeyCode(int keyCode) {
-			this.keyCode = keyCode;
-		}
-		
-		public boolean isDown() {
-			return Keyboard.isKeyDown(keyCode) || Mouse.isButtonDown(keyCode);
-		}
+	public static boolean isDisabled() {
+		return disabled;
 	}
 	
 	public static class Keybinds {
-		public static final Keybind config = new Keybind("Configuration", Keyboard.KEY_F4);
-		public static final Keybind fly = new Keybind("Fly", Keyboard.KEY_F);
-		public static final Keybind inc_speed = new Keybind("Increase Speed", Keyboard.KEY_PRIOR);
-		public static final Keybind dec_speed = new Keybind("Decrease Speed", Keyboard.KEY_NEXT);
+		public static final MauKeybind config = new MauKeybind("Configuration", Keyboard.KEY_F4);
+		public static final MauKeybind fly = new MauKeybind("Fly", Keyboard.KEY_F);
+		public static final MauKeybind inc_speed = new MauKeybind("Increase Speed", Keyboard.KEY_PRIOR);
+		public static final MauKeybind dec_speed = new MauKeybind("Decrease Speed", Keyboard.KEY_NEXT);
 	}
 }

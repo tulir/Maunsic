@@ -10,7 +10,7 @@ import org.objectweb.asm.tree.MethodNode;
 import org.objectweb.asm.tree.VarInsnNode;
 
 import net.maunium.Maunsic.Core.AbstractMauTransformer;
-import net.maunium.Maunsic.Listeners.InputHandler;
+import net.maunium.Maunsic.Listeners.KeyHandling.InputHandler;
 
 public class KeyBindingT extends AbstractMauTransformer {
 	public KeyBindingT() {

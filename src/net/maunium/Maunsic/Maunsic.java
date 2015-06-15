@@ -16,8 +16,8 @@ import com.google.common.io.ByteStreams;
 import com.google.gson.JsonParseException;
 
 import net.maunium.Maunsic.Listeners.InChatListener;
-import net.maunium.Maunsic.Listeners.InputHandler;
 import net.maunium.Maunsic.Listeners.OutChatListener;
+import net.maunium.Maunsic.Listeners.KeyHandling.InputHandler;
 import net.maunium.Maunsic.Logging.ChatLogger;
 import net.maunium.Maunsic.Logging.MaunsicLogger;
 import net.maunium.Maunsic.Server.ServerHandler;
