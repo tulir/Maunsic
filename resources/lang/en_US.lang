@@ -2,8 +2,15 @@ on=ON
 off=OFF
 
 conf.title=Maunsic {0} - Page {1}
+conf.back=Back
+
 conf.keys=Keybindings
 conf.keys.title=Maunsic Keybindings
+conf.keys.disableall=Disable All
+conf.keys.notset=Not set
+conf.keys.reset=Reset
+conf.keys.enable=Input Handler enabled.
+conf.keys.disable=Input Handler disabled. Use MAU to enable.
 
 action.amv.title=Alt. Movement
 action.amv.mode=Mode
