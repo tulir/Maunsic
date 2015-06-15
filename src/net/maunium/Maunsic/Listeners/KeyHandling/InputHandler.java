@@ -88,7 +88,7 @@ public class InputHandler {
 				if (Keybinds.inc_speed.isDown()) host.actionFly.setSpeed(ActionFly.DEFAULT_SPEED);
 				else host.actionFly.changeSpeed(false);
 			} else if (keycode == Keybinds.nofall.getKeyCode()) host.actionNofall.setActive(!host.actionNofall.isActive());
-			else if (keycode == Keybinds.antikb.getKeyCode()) host.actionAntiKB.setActive(!host.actionAntiKB.isActive());
+//			else if (keycode == Keybinds.antikb.getKeyCode()) host.actionAntiKB.setActive(!host.actionAntiKB.isActive());
 		}
 		
 		if (!disabled) for (KeyMaucro km : KeyMaucro.getKeyMaucros()) {
