@@ -20,7 +20,6 @@ import net.maunium.Maunsic.Listeners.OutChatListener;
 import net.maunium.Maunsic.Listeners.KeyHandling.InputHandler;
 import net.maunium.Maunsic.Server.ServerHandler;
 import net.maunium.Maunsic.Settings.AltAccounts;
-import net.maunium.Maunsic.TickActions.ActionAntiKB;
 import net.maunium.Maunsic.TickActions.ActionFly;
 import net.maunium.Maunsic.TickActions.ActionNofall;
 import net.maunium.Maunsic.TickActions.TickAction;
@@ -99,7 +98,7 @@ public class Maunsic {
 	private TickActionHandler tah;
 	/* Tick actions */
 	public ActionFly actionFly;
-	public TickAction actionNofall, actionAntiKB;
+	public TickAction actionNofall;
 	
 	/**
 	 * Constructor
@@ -179,7 +178,6 @@ public class Maunsic {
 		
 		actionFly = tah.registerAction(new ActionFly(this), TickEvent.Phase.END);
 		actionNofall = tah.registerAction(new ActionNofall(), TickEvent.Phase.END);
-		actionAntiKB = tah.registerAction(new ActionAntiKB(), TickEvent.Phase.END);
 		
 		getLogger().info("Init complete in " + (init = (int) (System.currentTimeMillis() - st)) + "ms.");
 	}
