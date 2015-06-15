@@ -27,14 +27,15 @@ public class EntityPlayerSPT extends AbstractMauTransformer {
 	
 	@Override
 	public byte[] transform(byte[] bytes, boolean obf) {
-		String methodName = obf ? "e" : "sendChatMessage";
+		String methodName1 = obf ? "e" : "sendChatMessage";// , methodName2 = obf ? "m" : "onLivingUpdate";
 		
 		ClassNode node = new ClassNode();
 		ClassReader cr = new ClassReader(bytes);
 		cr.accept(node, 0);
 		
+		int d = 0;
 		for (MethodNode m : node.methods) {
-			if (m.name.equals(methodName) && m.desc.equals("(Ljava/lang/String;)V")) {
+			if (m.name.equals(methodName1) && m.desc.equals("(Ljava/lang/String;)V")) {
 				AbstractInsnNode current;
 				
 				Iterator<AbstractInsnNode> iter = m.instructions.iterator();
@@ -49,7 +50,25 @@ public class EntityPlayerSPT extends AbstractMauTransformer {
 						i++;
 					}
 				}
-				break;
+				d++;
+				if (d == 2) break;
+//			} else if (m.name.equals(methodName2) && m.desc.equals("()V")) {
+//				AbstractInsnNode current;
+//				
+//				Iterator<AbstractInsnNode> iter = m.instructions.iterator();
+//				While: while (iter.hasNext()) {
+//					current = iter.next();
+//					if (current.getOpcode() == Opcodes.INVOKESPECIAL) {
+//						MethodInsnNode min = (MethodInsnNode) current;
+//						if (min.name.equals(obf ? "" : "onLivingUpdate")) {
+//							m.instructions.insert(current, new MethodInsnNode(Opcodes.INVOKESTATIC, PlayerUpdateEvent.class.getName().replace('.', '/'),
+//									"call", "()V", false));
+//							break While;
+//						}
+//					}
+//				}
+//				d++;
+//				if (d == 2) break;
 			}
 		}
 		
