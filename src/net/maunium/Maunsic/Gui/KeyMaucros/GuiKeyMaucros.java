@@ -13,13 +13,12 @@ import com.mcf.davidee.guilib.vanilla.extended.ShiftableButton;
 import com.mcf.davidee.guilib.vanilla.focusable.FocusableLabel;
 
 import net.maunium.Maunsic.Maunsic;
+import net.maunium.Maunsic.Gui.GuiMaunsic;
 import net.maunium.Maunsic.KeyMaucros.KeyMaucro;
 import net.maunium.Maunsic.Util.I18n;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
-
-import net.minecraftforge.fml.client.config.GuiConfig;
 
 /**
  * Gui for managing key maucros
@@ -38,7 +37,7 @@ public class GuiKeyMaucros extends BasicScreen {
 	private ShiftableButton[] buttons;
 	private FocusableLabel[] labels;
 	
-	public GuiKeyMaucros(GuiConfig parent, Maunsic host) {
+	public GuiKeyMaucros(GuiMaunsic parent, Maunsic host) {
 		super(parent);
 		this.host = host;
 	}

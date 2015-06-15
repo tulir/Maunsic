@@ -7,6 +7,9 @@ import com.mcf.davidee.guilib.core.Container;
 import com.mcf.davidee.guilib.vanilla.ButtonVanilla;
 
 import net.maunium.Maunsic.Maunsic;
+import net.maunium.Maunsic.Gui.Alts.GuiChangeUsername;
+import net.maunium.Maunsic.Gui.KeyMaucros.GuiKeyMaucros;
+import net.maunium.Maunsic.Gui.KeyMaucros.GuiLuaThreads;
 import net.maunium.Maunsic.Util.I18n;
 
 import net.minecraft.client.Minecraft;
@@ -24,7 +27,7 @@ public class GuiMaunsic extends BasicScreen {
 	private static int page = 0;
 	
 	private Label title;
-	private ButtonVanilla keys;
+	private ButtonVanilla keys, alts, keymaucros, luathreads;
 	
 	public GuiMaunsic(Maunsic host) {
 		super(null);
@@ -36,9 +39,12 @@ public class GuiMaunsic extends BasicScreen {
 		pages = new Container[] { new Container() };
 		
 		title = new Label("");
+		alts = new ButtonVanilla(I18n.translate("conf.alts"), this);
+		keymaucros = new ButtonVanilla(I18n.translate("conf.km"), this);
+		luathreads = new ButtonVanilla(I18n.translate("conf.lua.threads"), this);
 		keys = new ButtonVanilla(I18n.translate("conf.keys"), this);
 		
-		pages[0].addWidgets(keys);
+		pages[0].addWidgets(keys, alts, keymaucros, luathreads);
 	}
 	
 	@Override
@@ -51,6 +57,9 @@ public class GuiMaunsic extends BasicScreen {
 		pages[page].addWidgets(title);
 		
 		keys.setPosition(x(1), y(1));
+		alts.setPosition(x(2), y(1));
+		keymaucros.setPosition(x(1), y(2));
+		luathreads.setPosition(x(2), y(2));
 		
 		Maunsic.getLogger().trace("Revalidating container for page " + page, this);
 		pages[page].revalidate(0, 0, width, height);
@@ -61,6 +70,9 @@ public class GuiMaunsic extends BasicScreen {
 		if (code != 0) return;
 		// Yes, they are supposed to be the same instance, so using == is just fine.
 		if (b == keys) Minecraft.getMinecraft().displayGuiScreen(new GuiKeybinds(this, host));
+		else if (b == alts) Minecraft.getMinecraft().displayGuiScreen(new GuiChangeUsername(host));
+		else if (b == keymaucros) Minecraft.getMinecraft().displayGuiScreen(new GuiKeyMaucros(this, host));
+		else if (b == luathreads) Minecraft.getMinecraft().displayGuiScreen(new GuiLuaThreads(this));
 	}
 	
 	@Override

@@ -19,6 +19,56 @@ conf.keys.reset=Reset
 conf.keys.enable=Input Handler enabled. Use Konami to toggle.
 conf.keys.disable=Input Handler disabled. Use Konami to toggle.
 
+conf.username=Username Changer
+conf.username.title=Username Changer
+conf.username.unlabel=Username
+conf.username.pwlabel=Password
+conf.username.finish=Finish
+conf.username.cancel=Cancel
+
+conf.lua.threads.enter=Lua Threads
+conf.lua.threads.title=Lua Thread Manager
+conf.lua.threads.killall=Kill All Threads
+
+conf.km=Key Maucros
+conf.km.title=Key Maucros
+
+conf.km.editor.lua.title=Lua Key Maucro Editor
+conf.km.editor.lua.enter=New Lua KMaucro
+conf.km.editor.lua.file=Lua File
+
+conf.km.editor.cc.title=CC Key Maucro Editor
+conf.km.editor.cc.enter=New CC KMaucro
+conf.km.editor.cc.commands=Command(s)
+
+conf.km.editor.finish=Finish
+conf.km.editor.cancel=Cancel
+conf.km.editor.key=Maucro Key
+conf.km.editor.name=Maucro Name
+conf.km.editor.shiftkeys=Extra Keys
+conf.km.editor.phase=Execution
+conf.km.editor.phase.precheck=Before Checks
+conf.km.editor.phase.prekeys=Before Keybinds
+conf.km.editor.phase.postkeys=After Keybinds
+conf.km.editor.phase.precheck=Before Checks
+conf.km.editor.phase.prekeys=Before Keybinds
+conf.km.editor.phase.postkeys=After Keybinds
+conf.km.editor.ks=Key state
+conf.km.editor.ks.up=Unpress
+conf.km.editor.ks.down=Press
+
+conf.alts=Alts
+conf.alts.title=Alternate Accounts
+conf.alts.add=Add
+conf.alts.random=Randomize Name
+conf.alts.delete=Delete
+conf.alts.select=Select
+conf.alts.add.title=Add Alt
+conf.alts.add.username=Username
+conf.alts.add.password=Password
+conf.alts.add.add=Add
+conf.alts.add.cancel=Cancel
+
 action.amv.title=Alt. Movement
 action.amv.mode=Mode
 action.amv.fly=Fly
@@ -29,6 +79,12 @@ keymaucros.syntax.delay=The MaucroCommand Delay takes one integer.
 keymaucros.syntax.forward=The MaucroCommand Forward takes one integer.
 keymaucros.syntax.look=The MaucroCommand Look takes two integers.
 keymaucros.output.local={0}
+
+message.alt.username=Successfully changed username to {0}.
+message.alt.login=Successfully logged in as {0}.
+message.alt.failusername=Failed to change username.
+message.alt.faillogin=Failed to log in: {0}.
+message.alt.failsession=Failed to set session.
 
 message.calculator.on=Calculator enabled. Type a calculation into the chat.
 message.calculator.off=Calculator disabled. You can now chat normally.

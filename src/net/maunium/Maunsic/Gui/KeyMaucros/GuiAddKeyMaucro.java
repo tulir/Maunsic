@@ -27,7 +27,7 @@ public class GuiAddKeyMaucro extends BasicScreen {
 	private Label title, varLabel, keyLabel, shiftKeysLabel, nameLabel;
 	private TextFieldVanilla name, var;
 	private ButtonVanilla cancel, finish;
-	private StateButton phase;
+	private StateButton phase, keystatus;
 	private KeySelectButton key;
 	private MultiKeySelectButton shiftKeys;
 	private int index;
@@ -45,7 +45,8 @@ public class GuiAddKeyMaucro extends BasicScreen {
 		this.key.setKeycode(key);
 		this.shiftKeys.setKeycodes(shiftKeys);
 		this.shiftKeys.updateText();
-		this.phase.setState(phase.toInt());
+		this.phase.setState(phase.toInt() > 2 ? phase.toInt() - 3 : phase.toInt());
+		keystatus.setState(phase.toInt() > 2 ? 0 : 1);
 		this.index = index;
 		finish.setEnabled(true);
 	}
@@ -63,16 +64,18 @@ public class GuiAddKeyMaucro extends BasicScreen {
 		var = new TextFieldVanilla(200, 20, new TextFieldVanilla.VanillaFilter());
 		key = new KeySelectButton(200, 20, this);
 		shiftKeys = new MultiKeySelectButton(200, 20, this);
-		phase = new StateButton(200, 20, this, 1, new StateButton.GenericFormat(I18n.translate("conf.km.editor.phase"),
+		phase = new StateButton(100, 20, this, 1, new StateButton.GenericFormat(I18n.translate("conf.km.editor.phase"),
 				I18n.translate("conf.km.editor.phase.precheck"), I18n.translate("conf.km.editor.phase.prekeys"),
 				I18n.translate("conf.km.editor.phase.postkeys")));
+		keystatus = new StateButton(100, 20, this, 1, new StateButton.GenericFormat(I18n.translate("conf.km.editor.ks"),
+				I18n.translate("conf.km.editor.ks.down"), I18n.translate("conf.km.editor.ks.up")));
 		
 		finish = new ButtonVanilla(150, 20, I18n.translate("conf.km.editor.finish"), this);
 		finish.setEnabled(false);
 		cancel = new ButtonVanilla(150, 20, I18n.translate("conf.km.editor.cancel"), this);
 		
 		c = new Container();
-		c.addWidgets(title, nameLabel, varLabel, keyLabel, shiftKeysLabel, name, var, key, shiftKeys, phase, finish, cancel);
+		c.addWidgets(title, nameLabel, varLabel, keyLabel, shiftKeysLabel, name, var, key, shiftKeys, phase, keystatus, finish, cancel);
 		containers.add(c);
 	}
 	
@@ -85,6 +88,7 @@ public class GuiAddKeyMaucro extends BasicScreen {
 		keyLabel.setPosition(width / 6, 112);
 		shiftKeysLabel.setPosition(width / 6, 142);
 		phase.setPosition(width / 3, 170);
+		keystatus.setPosition(width / 3 + phase.getWidth() + 10, 170);
 		
 		name.setPosition(width / 3, 50);
 		var.setPosition(width / 3, 80);
@@ -100,13 +104,13 @@ public class GuiAddKeyMaucro extends BasicScreen {
 	@Override
 	public void save() {
 		if (lua) {
-			KeyMaucro km = new LuaKeyMaucro(name.getText(), var.getText(), key.getKeycode(), KeyMaucro.ExecPhase.fromInt(phase.getState()),
-					shiftKeys.getKeycodes());
+			KeyMaucro km = new LuaKeyMaucro(name.getText(), var.getText(), key.getKeycode(), KeyMaucro.ExecPhase.fromInt(phase.getState()
+					+ keystatus.getState() * 3), shiftKeys.getKeycodes());
 			if (index == -1) KeyMaucro.addKeyMaucro(km);
 			else KeyMaucro.modifyKeyMaucro(index, km);
 		} else {
-			KeyMaucro km = new CCKeyMaucro(name.getText(), var.getText(), key.getKeycode(), KeyMaucro.ExecPhase.fromInt(phase.getState()),
-					shiftKeys.getKeycodes());
+			KeyMaucro km = new CCKeyMaucro(name.getText(), var.getText(), key.getKeycode(), KeyMaucro.ExecPhase.fromInt(phase.getState() + keystatus.getState()
+					* 3), shiftKeys.getKeycodes());
 			if (index == -1) KeyMaucro.addKeyMaucro(km);
 			else KeyMaucro.modifyKeyMaucro(index, km);
 		}
