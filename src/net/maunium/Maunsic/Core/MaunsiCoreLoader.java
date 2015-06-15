@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 
 import net.maunium.Maunsic.Core.Transformers.EntityPlayerSPT;
 import net.maunium.Maunsic.Core.Transformers.KeyBindingT;
+import net.maunium.Maunsic.Core.Transformers.NetworkManagerT;
 import net.maunium.Maunsic.Server.ServerHandler;
 
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
@@ -32,7 +33,7 @@ public class MaunsiCoreLoader implements IFMLLoadingPlugin {
 	
 	@Override
 	public String[] getASMTransformerClass() {
-		return new String[] { EntityPlayerSPT.class.getName(), KeyBindingT.class.getName() };
+		return new String[] { EntityPlayerSPT.class.getName(), KeyBindingT.class.getName(), NetworkManagerT.class.getName() };
 	}
 	
 	@Override
