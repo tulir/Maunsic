@@ -42,7 +42,7 @@ public class MauKeybind implements Comparable<MauKeybind> {
 	}
 	
 	public static String getKeyName(int keyCode) {
-		return keyCode < 0 ? Mouse.getButtonName(keyCode + 100) : Keyboard.getKeyName(keyCode);
+		return keyCode < 0 ? Mouse.getButtonName(keyCode + 100) : keyCode > 256 ? Character.toString((char) keyCode) : Keyboard.getKeyName(keyCode);
 	}
 	
 	@Override
