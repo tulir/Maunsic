@@ -141,7 +141,7 @@ public class Container {
 			if (newIndex != -1) focusList.get(newIndex).focusGained();
 			
 			focusIndex = newIndex;
-		}
+		} else if (focusIndex != -1) focusList.get(focusIndex).focusGained();
 	}
 	
 	public boolean inBounds(int mx, int my) {
