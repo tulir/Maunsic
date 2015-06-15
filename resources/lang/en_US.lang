@@ -1,6 +1,13 @@
 on=ON
 off=OFF
 
+key.conf=Configuration
+key.fly=Fly
+key.nofall=Nofall
+key.inc_speed=Increase Speed
+key.dec_speed=Decrease Speed
+key.antikb=Antiknockback
+
 conf.title=Maunsic {0} - Page {1}
 conf.back=Back
 
