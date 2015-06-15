@@ -11,8 +11,8 @@ import net.minecraft.network.Packet;
 import net.minecraft.util.EnumChatFormatting;
 
 public class ActionBlink implements StatusAction {
-	private static boolean active, automated;
-	private static int safetyLevel;
+	public static boolean active, automated;
+	public static int safetyLevel;
 	
 	private static List<Packet> packets = new ArrayList<Packet>();
 	private static long blinkStart = 0;
