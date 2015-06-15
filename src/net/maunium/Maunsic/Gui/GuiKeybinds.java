@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
-
 import com.mcf.davidee.guilib.basic.BasicScreen;
 import com.mcf.davidee.guilib.basic.FocusedContainer;
 import com.mcf.davidee.guilib.basic.Label;
@@ -37,7 +34,7 @@ public class GuiKeybinds extends BasicScreen {
 	private ButtonVanilla back;
 	private StateButton disableAll;
 	private ShiftableLabel[] keybindTitles;
-	private KeySelectButtonWithDefault[] keybindKeys;
+	private KeySelectButtonForMaunsic[] keybindKeys;
 	private ShiftableButtonWithMeta[] keybindReset;
 	
 	public GuiKeybinds(GuiScreen parent) {
@@ -75,13 +72,13 @@ public class GuiKeybinds extends BasicScreen {
 		Collections.sort(kbs);
 		
 		keybindTitles = new ShiftableLabel[kbs.size()];
-		keybindKeys = new KeySelectButtonWithDefault[kbs.size()];
+		keybindKeys = new KeySelectButtonForMaunsic[kbs.size()];
 		keybindReset = new ShiftableButtonWithMeta[kbs.size()];
 		
 		for (int i = 0; i < kbs.size(); i++) {
 			MauKeybind kb = kbs.get(i);
 			keybindTitles[i] = new ShiftableLabel(I18n.translate("key." + kb.getName()), false);
-			keybindKeys[i] = new KeySelectButtonWithDefault(100, 20, this, kb.getKeyCode(), new KSBF(), kb.getDefaultKeyCode());
+			keybindKeys[i] = new KeySelectButtonForMaunsic(100, 20, this, kb.getKeyCode(), new KSBF(), kb);
 			keybindReset[i] = new ShiftableButtonWithMeta(50, 20, I18n.translate("conf.keys.reset"), this, i);
 			keybindTitles[i].setPosition(width / 2 - 150, 40 + i * 25);
 			keybindKeys[i].setPosition(width / 2 - keybindKeys[i].getWidth() / 2 + 50, 40 + i * 25);
@@ -100,8 +97,8 @@ public class GuiKeybinds extends BasicScreen {
 		else if (b == back) close();
 		else if (b instanceof ShiftableButtonWithMeta) {
 			ShiftableButtonWithMeta sbwm = (ShiftableButtonWithMeta) b;
-			KeySelectButtonWithDefault ksb = keybindKeys[sbwm.meta];
-			ksb.setKeycode(ksb.default_);
+			KeySelectButtonForMaunsic ksb = keybindKeys[sbwm.meta];
+			ksb.setKeycode(ksb.mkb.getDefaultKeyCode());
 		}
 	}
 	
@@ -119,15 +116,8 @@ public class GuiKeybinds extends BasicScreen {
 		}
 		
 		private String getName(int kc) {
-			try {
-				String s = Keyboard.getKeyName(kc);
-				if (s != null && !s.isEmpty()) return s;
-			} catch (Throwable t) {}
-			try {
-				String s = Mouse.getButtonName(kc);
-				if (s != null && !s.isEmpty()) return s;
-			} catch (Throwable t) {}
-			return I18n.translate("conf.keys.notset");
+			String s = MauKeybind.getKeyName(kc);
+			return s == null ? I18n.translate("conf.keys.notset") : s;
 		}
 	}
 	
@@ -147,28 +137,32 @@ public class GuiKeybinds extends BasicScreen {
 	}
 	
 	/**
-	 * Key Select Button with default keycode
+	 * Key Select Button for Maunsic
 	 * 
 	 * @author Tulir293
 	 * @since 0.1
 	 */
-	public static class KeySelectButtonWithDefault extends KeySelectButton {
-		public int default_;
+	public static class KeySelectButtonForMaunsic extends KeySelectButton {
+		public MauKeybind mkb;
 		
-		public KeySelectButtonWithDefault(int width, int height, ButtonHandler h, int keycode, KeySelectButton.KSBFormat format, int default_) {
+		public KeySelectButtonForMaunsic(int width, int height, ButtonHandler h, int keycode, KeySelectButton.KSBFormat format, MauKeybind mkb) {
 			super(width, height, h, keycode, format);
-			this.default_ = default_;
+			this.mkb = mkb;
+		}
+		
+		@Override
+		public void setKeycode(int kc) {
+			super.setKeycode(kc);
+			mkb.setKeyCode(kc);
 		}
 	}
 	
 	@Override
 	protected void mouseClicked(int mx, int my, int code) {
-		if (code == 0) {
-			if (kc.mouseClicked(mx, my, code)) selectedContainer = kc;
-			else if (c.mouseClicked(mx, my, code)) selectedContainer = c;
-			
-			for (Container c : containers)
-				if (c != selectedContainer) c.setFocused(null);
-		}
+		if (kc.mouseClicked(mx, my, code)) selectedContainer = kc;
+		else if (c.mouseClicked(mx, my, code)) selectedContainer = c;
+		
+		if (code == 0) for (Container c : containers)
+			if (c != selectedContainer) c.setFocused(null);
 	}
 }
