@@ -6,37 +6,48 @@ import org.lwjgl.opengl.GL11;
 import com.mcf.davidee.guilib.core.Button.ButtonHandler;
 import com.mcf.davidee.guilib.vanilla.focusable.FocusableButton;
 
+import net.maunium.Maunsic.Util.I18n;
+
 import net.minecraft.util.ResourceLocation;
 
 public class KeySelectButton extends FocusableButton {
 	private static final ResourceLocation TEXTURE = new ResourceLocation("textures/gui/widgets.png");
 	
 	private int kc;
-	private String pre = "", suf = "";
+	private KSBFormat format;
 	
 	public KeySelectButton(ButtonHandler handler, int keycode) {
-		this(150, 20, handler, keycode);
+		this(150, 20, handler, keycode, new DefaultKSBFormat());
 	}
 	
 	public KeySelectButton(int width, int height, ButtonHandler handler, int keycode) {
-		super(width, height, "Not set", handler);
-		kc = keycode;
+		this(width, height, handler, keycode, new DefaultKSBFormat());
 	}
 	
 	public KeySelectButton(int width, int height, ButtonHandler handler) {
-		this(width, height, handler, -1);
+		this(width, height, handler, -1, new DefaultKSBFormat());
 	}
 	
 	public KeySelectButton(ButtonHandler handler) {
-		this(150, 20, handler, -1);
+		this(150, 20, handler, -1, new DefaultKSBFormat());
 	}
 	
-	public void setPrefix(String s) {
-		pre = s;
+	public KeySelectButton(ButtonHandler handler, int keycode, KSBFormat format) {
+		this(150, 20, handler, keycode, format);
 	}
 	
-	public void setSuffix(String s) {
-		suf = s;
+	public KeySelectButton(int width, int height, ButtonHandler handler, int keycode, KSBFormat format) {
+		super(width, height, format.format(keycode, false), handler);
+		kc = keycode;
+		this.format = format;
+	}
+	
+	public KeySelectButton(int width, int height, ButtonHandler handler, KSBFormat format) {
+		this(width, height, handler, -1, format);
+	}
+	
+	public KeySelectButton(ButtonHandler handler, KSBFormat format) {
+		this(150, 20, handler, -1, format);
 	}
 	
 	@Override
@@ -44,14 +55,8 @@ public class KeySelectButton extends FocusableButton {
 		mc.renderEngine.bindTexture(KeySelectButton.TEXTURE);
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		boolean hover;
-		if (isFocused()) {
-			hover = true;
-			str = pre + "Press a key" + suf;
-		} else {
-			if (kc == -1) str = pre + "Not set" + suf;
-			else str = pre + Keyboard.getKeyName(kc) + suf;
-			hover = inBounds(mx, my);
-		}
+		str = format.format(kc, isFocused());
+		hover = isFocused() ? true : inBounds(mx, my);
 		int u = 0, v = 46 + getStateOffset(hover);
 		
 		if (width == 200 && height == 20) drawTexturedModalRect(x, y, u, v, width, height);
@@ -87,5 +92,18 @@ public class KeySelectButton extends FocusableButton {
 			focusLost();
 			return true;
 		} else return false;
+	}
+	
+	public static interface KSBFormat {
+		public String format(int keyCode, boolean pressed);
+	}
+	
+	public static class DefaultKSBFormat implements KSBFormat {
+		@Override
+		public String format(int keyCode, boolean pressed) {
+			if (keyCode < 1) return I18n.translate("conf.keys.notset");
+			else if (pressed) return "> " + Keyboard.getKeyName(keyCode) + " <";
+			else return Keyboard.getKeyName(keyCode);
+		}
 	}
 }
