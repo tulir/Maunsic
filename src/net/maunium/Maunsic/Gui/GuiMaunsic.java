@@ -56,6 +56,11 @@ public class GuiMaunsic extends BasicScreen {
 		if (b == keys) Minecraft.getMinecraft().displayGuiScreen(new GuiKeybinds(this));
 	}
 	
+	@Override
+	protected void save() {
+		host.saveConfig();
+	}
+	
 	private int y(int y) {
 		return 25 + y * 25;
 	}
