@@ -19,8 +19,11 @@ import net.maunium.Maunsic.Listeners.InChatListener;
 import net.maunium.Maunsic.Listeners.OutChatListener;
 import net.maunium.Maunsic.Listeners.KeyHandling.InputHandler;
 import net.maunium.Maunsic.Server.ServerHandler;
+import net.maunium.Maunsic.Settings.AltAccounts;
+import net.maunium.Maunsic.TickActions.ActionAntiKB;
 import net.maunium.Maunsic.TickActions.ActionFly;
 import net.maunium.Maunsic.TickActions.ActionNofall;
+import net.maunium.Maunsic.TickActions.TickAction;
 import net.maunium.Maunsic.TickActions.TickActionHandler;
 import net.maunium.Maunsic.Util.I18n;
 import net.maunium.Maunsic.Util.MaunsiConfig;
@@ -91,10 +94,12 @@ public class Maunsic {
 	private MaunsiConfig conf;
 	private File confFile = new File(getConfDir(), "conf.maudat");
 	
+	private AltAccounts alts;
 	/** The TickActionHandler for Maucros */
 	private TickActionHandler tah;
+	/* Tick actions */
 	public ActionFly actionFly;
-	public ActionNofall actionNofall;
+	public TickAction actionNofall, actionAntiKB;
 	
 	/**
 	 * Constructor
@@ -167,10 +172,14 @@ public class Maunsic {
 		MinecraftForge.EVENT_BUS.register(new InChatListener());
 		MinecraftForge.EVENT_BUS.register(new OutChatListener());
 		
+		alts = new AltAccounts();
+		alts.load(getConfig());
+		
 		InputHandler.setHost(this);
 		
 		actionFly = tah.registerAction(new ActionFly(this), TickEvent.Phase.END);
 		actionNofall = tah.registerAction(new ActionNofall(), TickEvent.Phase.END);
+		actionAntiKB = tah.registerAction(new ActionAntiKB(), TickEvent.Phase.END);
 		
 		getLogger().info("Init complete in " + (init = (int) (System.currentTimeMillis() - st)) + "ms.");
 	}
@@ -235,6 +244,10 @@ public class Maunsic {
 	
 	public TickActionHandler getTickActionHandler() {
 		return tah;
+	}
+	
+	public AltAccounts getAlts() {
+		return alts;
 	}
 	
 	/*
