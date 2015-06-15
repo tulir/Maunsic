@@ -18,13 +18,13 @@ import com.google.gson.JsonParseException;
 import net.maunium.Maunsic.Listeners.InChatListener;
 import net.maunium.Maunsic.Listeners.OutChatListener;
 import net.maunium.Maunsic.Listeners.KeyHandling.InputHandler;
-import net.maunium.Maunsic.Logging.ChatLogger;
-import net.maunium.Maunsic.Logging.MaunsicLogger;
 import net.maunium.Maunsic.Server.ServerHandler;
 import net.maunium.Maunsic.TickActions.ActionFly;
 import net.maunium.Maunsic.TickActions.TickActionHandler;
 import net.maunium.Maunsic.Util.I18n;
 import net.maunium.Maunsic.Util.MaunsiConfig;
+import net.maunium.Maunsic.Util.Logging.ChatLogger;
+import net.maunium.Maunsic.Util.Logging.MaunsicLogger;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ChatComponentText;

@@ -1,4 +1,4 @@
-package net.maunium.Maunsic.Logging;
+package net.maunium.Maunsic.Util.Logging;
 
 import java.io.BufferedWriter;
 import java.io.File;
