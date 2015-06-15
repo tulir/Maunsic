@@ -38,6 +38,12 @@ public class ActionFly implements TickAction {
 		return type > TYPE_DISABLED;
 	}
 	
+	@Override
+	public void setActive(boolean active) {
+		if (isActive()) setType(TYPE_DISABLED);
+		else setType(TYPE_FLY);
+	}
+	
 	public void setType(int type) {
 		if (type == TYPE_DISABLED && this.type == TYPE_FLY) {
 			Minecraft.getMinecraft().gameSettings.viewBobbing = viewBobbing;
