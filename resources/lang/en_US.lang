@@ -9,8 +9,8 @@ conf.keys.title=Maunsic Keybindings
 conf.keys.disableall=Disable All
 conf.keys.notset=Not set
 conf.keys.reset=Reset
-conf.keys.enable=Input Handler enabled.
-conf.keys.disable=Input Handler disabled. Use MAU to enable.
+conf.keys.enable=Input Handler enabled. Use Konami to toggle.
+conf.keys.disable=Input Handler disabled. Use Konami to toggle.
 
 action.amv.title=Alt. Movement
 action.amv.mode=Mode
