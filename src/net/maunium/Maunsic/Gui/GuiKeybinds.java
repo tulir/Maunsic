@@ -19,6 +19,7 @@ import com.mcf.davidee.guilib.vanilla.extended.ShiftableButton;
 import com.mcf.davidee.guilib.vanilla.extended.ShiftableLabel;
 import com.mcf.davidee.guilib.vanilla.extended.StateButton;
 
+import net.maunium.Maunsic.Maunsic;
 import net.maunium.Maunsic.Listeners.KeyHandling.InputHandler;
 import net.maunium.Maunsic.Listeners.KeyHandling.KeyRegistry;
 import net.maunium.Maunsic.Listeners.KeyHandling.MauKeybind;
@@ -28,6 +29,7 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiScreen;
 
 public class GuiKeybinds extends BasicScreen {
+	private Maunsic host;
 	private Label title;
 	private Container c, kc;
 	private Scrollbar s;
@@ -37,8 +39,9 @@ public class GuiKeybinds extends BasicScreen {
 	private KeySelectButtonForMaunsic[] keybindKeys;
 	private ShiftableButtonWithMeta[] keybindReset;
 	
-	public GuiKeybinds(GuiScreen parent) {
+	public GuiKeybinds(GuiScreen parent, Maunsic host) {
 		super(parent);
+		this.host = host;
 	}
 	
 	@Override
@@ -100,6 +103,11 @@ public class GuiKeybinds extends BasicScreen {
 			KeySelectButtonForMaunsic ksb = keybindKeys[sbwm.meta];
 			ksb.setKeycode(ksb.mkb.getDefaultKeyCode());
 		}
+	}
+	
+	@Override
+	protected void save() {
+		KeyRegistry.save(host.getConfig());
 	}
 	
 	@Override

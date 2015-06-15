@@ -54,7 +54,7 @@ public class GuiMaunsic extends BasicScreen {
 	protected void onButtonClicked(Button b, int code) {
 		if (code != 0) return;
 		// Yes, they are supposed to be the same instance, so using == is just fine.
-		if (b == keys) Minecraft.getMinecraft().displayGuiScreen(new GuiKeybinds(this));
+		if (b == keys) Minecraft.getMinecraft().displayGuiScreen(new GuiKeybinds(this, host));
 	}
 	
 	@Override
