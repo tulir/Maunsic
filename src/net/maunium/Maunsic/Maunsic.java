@@ -174,7 +174,6 @@ public class Maunsic {
 		
 		alts = new AltAccounts();
 		alts.load(getConfig());
-		KeyRegistry.load(getConfig());
 		
 		InputHandler.setHost(this);
 		
@@ -193,6 +192,7 @@ public class Maunsic {
 		long st = Minecraft.getSystemTime();
 		
 		I18n.refreshCachedI18n(this);
+		KeyRegistry.load(getConfig());
 		
 		getLogger().info("PostInit complete in " + (init = (int) (System.currentTimeMillis() - st)) + "ms.");
 		getLogger().info(name + " v" + longVersion + " for Minecraft " + forMC + " enabled in " + (construct + preInit + init + postInit) + "ms.");
