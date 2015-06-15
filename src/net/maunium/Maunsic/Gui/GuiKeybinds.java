@@ -146,6 +146,12 @@ public class GuiKeybinds extends BasicScreen {
 		}
 	}
 	
+	/**
+	 * Key Select Button with default keycode
+	 * 
+	 * @author Tulir293
+	 * @since 0.1
+	 */
 	public static class KeySelectButtonWithDefault extends KeySelectButton {
 		public int default_;
 		
