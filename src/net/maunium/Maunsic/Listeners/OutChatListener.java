@@ -37,7 +37,7 @@ public class OutChatListener {
 			evt.setCanceled(true);
 			String s = Calculator.processCalculation(evt.getMessage().split(" ", 2)[1]);
 			if (s.equals("varname")) Maunsic.printChatError("message.calculator.variable.spacename");
-			else if (!s.equals("syntax")) Maunsic.printChat_static(s);
+			else if (!s.equals("syntax")) Maunsic.printChatError("message.calculator.unknownerror", s);
 			return;
 		}
 		Maunsic.getChatLogger().out(evt.getMessage());

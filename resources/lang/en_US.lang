@@ -20,4 +20,5 @@ message.calculator.on=Calculator enabled. Type a calculation into the chat.
 message.calculator.off=Calculator disabled. You can now chat normally.
 message.calculator.variable.spacename=Variable names can't contain spaces.
 message.calculator.variable.setvalue=Set value of {0} to {1}.
+message.calculator.unknownerror={0}
 message.calculator.result={0} = {1}
