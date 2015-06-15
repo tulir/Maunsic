@@ -18,6 +18,7 @@ import com.google.gson.JsonParseException;
 import net.maunium.Maunsic.Listeners.InChatListener;
 import net.maunium.Maunsic.Listeners.OutChatListener;
 import net.maunium.Maunsic.Listeners.KeyHandling.InputHandler;
+import net.maunium.Maunsic.Listeners.KeyHandling.KeyRegistry;
 import net.maunium.Maunsic.Server.ServerHandler;
 import net.maunium.Maunsic.Settings.AltAccounts;
 import net.maunium.Maunsic.TickActions.ActionFly;
@@ -173,6 +174,7 @@ public class Maunsic {
 		
 		alts = new AltAccounts();
 		alts.load(getConfig());
+		KeyRegistry.load(getConfig());
 		
 		InputHandler.setHost(this);
 		
