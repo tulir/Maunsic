@@ -67,10 +67,9 @@ public class InputHandler {
 		}
 		
 		if (konamiStatus == 10) {
-			disabled = !disabled;
+			Minecraft.getMinecraft().displayGuiScreen(new GuiMaunsic(host));
 			konamiStatus = 0;
 			konamiDown = true;
-			Maunsic.printChat("conf.keys." + (disabled ? "disable" : "enable"));
 			return;
 		}
 		
