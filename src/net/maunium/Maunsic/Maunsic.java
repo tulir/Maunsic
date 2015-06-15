@@ -21,10 +21,14 @@ import net.maunium.Maunsic.Listeners.KeyHandling.InputHandler;
 import net.maunium.Maunsic.Listeners.KeyHandling.KeyRegistry;
 import net.maunium.Maunsic.Server.ServerHandler;
 import net.maunium.Maunsic.Settings.AltAccounts;
+import net.maunium.Maunsic.TickActions.ActionAttackaura;
+import net.maunium.Maunsic.TickActions.ActionBlink;
 import net.maunium.Maunsic.TickActions.ActionFly;
 import net.maunium.Maunsic.TickActions.ActionNofall;
-import net.maunium.Maunsic.TickActions.TickAction;
-import net.maunium.Maunsic.TickActions.TickActionHandler;
+import net.maunium.Maunsic.TickActions.ActionPhase;
+import net.maunium.Maunsic.TickActions.ActionSpammer;
+import net.maunium.Maunsic.TickActions.Util.ActionHandler;
+import net.maunium.Maunsic.TickActions.Util.StatusAction;
 import net.maunium.Maunsic.Util.I18n;
 import net.maunium.Maunsic.Util.MaunsiConfig;
 import net.maunium.Maunsic.Util.Logging.ChatLogger;
@@ -95,11 +99,12 @@ public class Maunsic {
 	private File confFile = new File(getConfDir(), "conf.maudat");
 	
 	private AltAccounts alts;
-	/** The TickActionHandler for Maucros */
-	private TickActionHandler tah;
+	/** The ActionHandler for Maucros */
+	private ActionHandler ach;
 	/* Tick actions */
 	public ActionFly actionFly;
-	public TickAction actionNofall;
+	public ActionPhase actionPhase;
+	public StatusAction actionNofall, actionBlink, actionSpammer, actionAttackaura;
 	
 	/**
 	 * Constructor
@@ -166,9 +171,9 @@ public class Maunsic {
 		if (!ServerHandler.canUse()) return;
 		long st = Minecraft.getSystemTime();
 		
-		getLogger().trace("Creating and Registering TickListener");
-		FMLCommonHandler.instance().bus().register(tah = new TickActionHandler());
-		MinecraftForge.EVENT_BUS.register(tah);
+		getLogger().trace("Creating and Registering ActionHandler");
+		FMLCommonHandler.instance().bus().register(ach = new ActionHandler());
+		MinecraftForge.EVENT_BUS.register(ach);
 		MinecraftForge.EVENT_BUS.register(new InChatListener());
 		MinecraftForge.EVENT_BUS.register(new OutChatListener());
 		
@@ -177,8 +182,12 @@ public class Maunsic {
 		
 		InputHandler.setHost(this);
 		
-		actionFly = tah.registerAction(new ActionFly(this), TickEvent.Phase.END);
-		actionNofall = tah.registerAction(new ActionNofall(), TickEvent.Phase.END);
+		actionFly = ach.registerTickAction(new ActionFly(this), TickEvent.Phase.END);
+		actionNofall = ach.registerTickAction(new ActionNofall(), TickEvent.Phase.END);
+		actionBlink = ach.registerAction(new ActionBlink());
+		actionPhase = ach.registerAction(new ActionPhase());
+		actionAttackaura = ach.registerTickAction(new ActionAttackaura(), TickEvent.Phase.START);
+		actionSpammer = ach.registerTickAction(new ActionSpammer(), TickEvent.Phase.START);
 		
 		getLogger().info("Init complete in " + (init = (int) (System.currentTimeMillis() - st)) + "ms.");
 	}
@@ -242,8 +251,8 @@ public class Maunsic {
 		return ChatLogger.getChatLogger();
 	}
 	
-	public TickActionHandler getTickActionHandler() {
-		return tah;
+	public ActionHandler getTickActionHandler() {
+		return ach;
 	}
 	
 	public AltAccounts getAlts() {

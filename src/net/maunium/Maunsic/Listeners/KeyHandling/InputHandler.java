@@ -35,6 +35,10 @@ public class InputHandler {
 		KeyRegistry.registerKeybind(Keybinds.inc_speed);
 		KeyRegistry.registerKeybind(Keybinds.dec_speed);
 		KeyRegistry.registerKeybind(Keybinds.antikb);
+		KeyRegistry.registerKeybind(Keybinds.blink);
+		KeyRegistry.registerKeybind(Keybinds.spammer);
+		KeyRegistry.registerKeybind(Keybinds.phase);
+		KeyRegistry.registerKeybind(Keybinds.attackaura);
 	}
 	
 	public static void input(int keycode, boolean pressed) {
@@ -87,6 +91,7 @@ public class InputHandler {
 				if (Keybinds.inc_speed.isDown()) host.actionFly.setSpeed(ActionFly.DEFAULT_SPEED);
 				else host.actionFly.changeSpeed(false);
 			} else if (keycode == Keybinds.nofall.getKeyCode()) host.actionNofall.setActive(!host.actionNofall.isActive());
+//			else if (keycode == Keybinds.blink.getKeyCode()) host
 //			else if (keycode == Keybinds.antikb.getKeyCode()) host.actionAntiKB.setActive(!host.actionAntiKB.isActive());
 		}
 		
@@ -112,5 +117,9 @@ public class InputHandler {
 		public static final MauKeybind inc_speed = new MauKeybind("inc_speed", Keyboard.KEY_PRIOR);
 		public static final MauKeybind dec_speed = new MauKeybind("dec_speed", Keyboard.KEY_NEXT);
 		public static final MauKeybind antikb = new MauKeybind("antikb", Keyboard.KEY_NONE);
+		public static final MauKeybind blink = new MauKeybind("blink", Keyboard.KEY_B);
+		public static final MauKeybind spammer = new MauKeybind("spammer", Keyboard.KEY_NONE);
+		public static final MauKeybind phase = new MauKeybind("phase", Keyboard.KEY_V);
+		public static final MauKeybind attackaura = new MauKeybind("attackaura", Keyboard.KEY_L);
 	}
 }

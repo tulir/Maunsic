@@ -3,6 +3,7 @@ package net.maunium.Maunsic.TickActions;
 import org.lwjgl.input.Keyboard;
 
 import net.maunium.Maunsic.Maunsic;
+import net.maunium.Maunsic.TickActions.Util.TickAction;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.GameSettings;

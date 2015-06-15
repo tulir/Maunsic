@@ -1,4 +1,4 @@
-package net.maunium.Maunsic.TickActions;
+package net.maunium.Maunsic.TickActions.Util;
 
 import java.util.HashSet;
 import java.util.List;
@@ -16,25 +16,22 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
  * @author Tulir293
  * @since 0.1
  */
-public class TickActionHandler {
+public class ActionHandler {
 //	private Maunsic host;
 	private Set<TickAction> startActions = new HashSet<TickAction>(), endActions = new HashSet<TickAction>();
+	private Set<StatusAction> allActions = new HashSet<StatusAction>();
 	
 //	public TickActionHandler(Maunsic host) {
 //		this.host = host;
 //	}
 	
-	public Set<TickAction> ga() {
-		return startActions;
-	}
-	
 	/**
-	 * Register an action.
+	 * Register a tick action.
 	 * 
 	 * @param ta The action to register.
 	 * @param phase The tick event phase to execute this action at.
 	 */
-	public <T extends TickAction> T registerAction(T ta, TickEvent.Phase phase) {
+	public <T extends TickAction> T registerTickAction(T ta, TickEvent.Phase phase) {
 		switch (phase) {
 			case START:
 				startActions.add(ta);
@@ -43,16 +40,16 @@ public class TickActionHandler {
 				endActions.add(ta);
 				break;
 		}
-		return ta;
+		return registerAction(ta);
 	}
 	
 	/**
-	 * Unregister an action.
+	 * Unregister a tick action.
 	 * 
 	 * @param ta The action to unregister.
 	 * @param phase The value used when registering the action.
 	 */
-	public void unregisterAction(TickAction ta, TickEvent.Phase phase) {
+	public <T extends TickAction> void unregisterTickAction(T ta, TickEvent.Phase phase) {
 		switch (phase) {
 			case START:
 				startActions.remove(ta);
@@ -61,6 +58,28 @@ public class TickActionHandler {
 				endActions.remove(ta);
 				break;
 		}
+		unregisterAction(ta);
+	}
+	
+	/**
+	 * Register a tick action.
+	 * 
+	 * @param ta The action to register.
+	 * @param phase The tick event phase to execute this action at.
+	 */
+	public <T extends StatusAction> T registerAction(T sa) {
+		allActions.add(sa);
+		return sa;
+	}
+	
+	/**
+	 * Unregister a tick action.
+	 * 
+	 * @param ta The action to unregister.
+	 * @param phase The value used when registering the action.
+	 */
+	public <T extends StatusAction> void unregisterAction(T sa) {
+		allActions.add(sa);
 	}
 	
 	@SubscribeEvent
@@ -77,10 +96,8 @@ public class TickActionHandler {
 	@SubscribeEvent
 	public void renderOverlay(RenderGameOverlayEvent.Text evt) {
 		if (Minecraft.getMinecraft().gameSettings.showDebugInfo) return;
-		for (TickAction ta : startActions)
-			if (ta.isActive()) add(evt.left, ta.getStatusText());
-		for (TickAction ta : endActions)
-			if (ta.isActive()) add(evt.left, ta.getStatusText());
+		for (StatusAction sa : allActions)
+			if (sa.isActive()) add(evt.left, sa.getStatusText());
 	}
 	
 	/**

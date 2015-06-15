@@ -1,5 +1,7 @@
 package net.maunium.Maunsic.TickActions;
 
+import net.maunium.Maunsic.TickActions.Util.TickAction;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.play.client.C03PacketPlayer;
 

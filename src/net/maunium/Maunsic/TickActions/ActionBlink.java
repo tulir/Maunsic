@@ -3,17 +3,16 @@ package net.maunium.Maunsic.TickActions;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.maunium.Maunsic.TickActions.Util.StatusAction;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.network.Packet;
 import net.minecraft.util.EnumChatFormatting;
 
-public class ActionBlink implements TickAction {
+public class ActionBlink implements StatusAction {
 	private static boolean active, automated;
 	private static int safetyLevel;
-	
-	@Override
-	public void execute() {}
 	
 	private static List<Packet> packets = new ArrayList<Packet>();
 	private static long blinkStart = 0;

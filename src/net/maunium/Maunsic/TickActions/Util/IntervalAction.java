@@ -1,4 +1,4 @@
-package net.maunium.Maunsic.TickActions;
+package net.maunium.Maunsic.TickActions.Util;
 
 import net.minecraft.client.Minecraft;
 
