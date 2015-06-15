@@ -64,6 +64,14 @@ public abstract class KeyMaucro implements Serializable, Comparable<KeyMaucro> {
 		return keymaucros;
 	}
 	
+	public static void save() {
+		
+	}
+	
+	public static void load() {
+		
+	}
+	
 	protected String name;
 	protected int keyCode;
 	protected int[] shiftKeys;
