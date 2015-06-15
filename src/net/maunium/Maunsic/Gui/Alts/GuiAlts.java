@@ -139,7 +139,8 @@ public class GuiAlts extends BasicScreen {
 	}
 	
 	@Override
-	public void onButtonClicked(Button button) {
+	public void onButtonClicked(Button button, int code) {
+		if (code != 0) return;
 		if (button.equals(select)) select();
 		else if (button.equals(delete)) delete();
 		else if (button.equals(back)) close();

@@ -70,7 +70,8 @@ public class GuiLuaThreads extends BasicScreen {
 	}
 	
 	@Override
-	public void onButtonClicked(Button b) {
+	public void onButtonClicked(Button b, int code) {
+		if (code != 0) return;
 		if (b.equals(back)) close();
 		else if (b.equals(killAll)) {
 			MauThreadLib.stopThreads();
@@ -81,8 +82,8 @@ public class GuiLuaThreads extends BasicScreen {
 	@Override
 	protected void mouseClicked(int mx, int my, int code) {
 		if (code == 0) {
-			c.mouseClicked(mx, my);
-			c2.mouseClicked(mx, my);
+			c.mouseClicked(mx, my, code);
+			c2.mouseClicked(mx, my, code);
 		}
 	}
 	
@@ -146,8 +147,8 @@ public class GuiLuaThreads extends BasicScreen {
 		}
 		
 		@Override
-		public boolean click(int mx, int my) {
-			if (inBounds(mx, my)) {
+		public boolean click(int mx, int my, int code) {
+			if (code == 0 && inBounds(mx, my)) {
 				if (selected) selected = false;
 				else selected = true;
 				return true;

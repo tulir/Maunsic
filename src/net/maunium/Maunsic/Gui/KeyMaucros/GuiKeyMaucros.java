@@ -119,7 +119,8 @@ public class GuiKeyMaucros extends BasicScreen {
 	}
 	
 	@Override
-	public void onButtonClicked(Button button) {
+	public void onButtonClicked(Button button, int code) {
+		if (code != 0) return;
 		if (button.equals(newCC)) Minecraft.getMinecraft().displayGuiScreen(new GuiAddKeyMaucro(this, false));
 		else if (button.equals(newLua)) Minecraft.getMinecraft().displayGuiScreen(new GuiAddKeyMaucro(this, true));
 		else if (button.equals(back)) close();

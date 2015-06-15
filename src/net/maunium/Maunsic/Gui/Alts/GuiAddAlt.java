@@ -32,7 +32,8 @@ public class GuiAddAlt extends BasicScreen {
 	}
 	
 	@Override
-	public void onButtonClicked(Button button) {
+	public void onButtonClicked(Button button, int code) {
+		if (code != 0) return;
 		if (username.getText().trim().isEmpty() || password.getText().trim().isEmpty()) add.setEnabled(false);
 		else add.setEnabled(true);
 		if (button.equals(add)) add();

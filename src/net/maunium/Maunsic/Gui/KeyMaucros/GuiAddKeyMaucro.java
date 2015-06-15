@@ -125,7 +125,8 @@ public class GuiAddKeyMaucro extends BasicScreen {
 	}
 	
 	@Override
-	public void onButtonClicked(Button button) {
+	public void onButtonClicked(Button button, int code) {
+		if (code != 0) return;
 		if (button.equals(cancel)) close(false);
 		else if (button.equals(finish)) close(true);
 	}

@@ -134,7 +134,8 @@ public class GuiChangeUsername extends BasicScreen {
 	}
 	
 	@Override
-	public void onButtonClicked(Button button) {
+	public void onButtonClicked(Button button, int code) {
+		if (code != 0) return;
 		if (button.equals(finish)) trySave();
 		else if (button.equals(cancel)) close();
 		else if (button.equals(alts)) Minecraft.getMinecraft().displayGuiScreen(new GuiAlts(this, host));

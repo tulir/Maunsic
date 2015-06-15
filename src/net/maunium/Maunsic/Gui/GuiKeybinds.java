@@ -58,7 +58,6 @@ public class GuiKeybinds extends BasicScreen {
 		
 		containers.add(c);
 		containers.add(kc);
-		selectedContainer = kc;
 	}
 	
 	@Override
@@ -95,16 +94,14 @@ public class GuiKeybinds extends BasicScreen {
 	}
 	
 	@Override
-	public void onButtonClicked(Button b) {
+	public void onButtonClicked(Button b, int code) {
+		if (code != 0) return;
 		if (b == disableAll) disableAll.setState(InputHandler.toggleDisable() ? 1 : 0);
 		else if (b == back) close();
 		else if (b instanceof ShiftableButtonWithMeta) {
 			ShiftableButtonWithMeta sbwm = (ShiftableButtonWithMeta) b;
 			KeySelectButtonWithDefault ksb = keybindKeys[sbwm.meta];
 			ksb.setKeycode(ksb.default_);
-//		} else if (b instanceof KeySelectButton) {
-//			KeySelectButton ksb = (KeySelectButton) b;
-//			ksb.focusGained();
 		}
 	}
 	
@@ -161,6 +158,17 @@ public class GuiKeybinds extends BasicScreen {
 		public KeySelectButtonWithDefault(int width, int height, ButtonHandler h, int keycode, KeySelectButton.KSBFormat format, int default_) {
 			super(width, height, h, keycode, format);
 			this.default_ = default_;
+		}
+	}
+	
+	@Override
+	protected void mouseClicked(int mx, int my, int code) {
+		if (code == 0) {
+			if (kc.mouseClicked(mx, my, code)) selectedContainer = kc;
+			else if (c.mouseClicked(mx, my, code)) selectedContainer = c;
+			
+			for (Container c : containers)
+				if (c != selectedContainer) c.setFocused(null);
 		}
 	}
 }
