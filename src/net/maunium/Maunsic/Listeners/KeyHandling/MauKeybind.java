@@ -33,7 +33,15 @@ public class MauKeybind implements Comparable<MauKeybind> {
 	}
 	
 	public boolean isDown() {
-		return Keyboard.isKeyDown(keyCode) || Mouse.isButtonDown(keyCode);
+		return keyCode < 0 ? Mouse.isButtonDown(keyCode + 100) : Keyboard.isKeyDown(keyCode);
+	}
+	
+	public String getKeyName() {
+		return getKeyName(getKeyCode());
+	}
+	
+	public static String getKeyName(int keyCode) {
+		return keyCode < 0 ? Mouse.getButtonName(keyCode + 100) : Keyboard.getKeyName(keyCode);
 	}
 	
 	@Override
