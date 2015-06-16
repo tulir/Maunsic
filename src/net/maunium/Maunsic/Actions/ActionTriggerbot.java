@@ -13,7 +13,7 @@ public class ActionTriggerbot implements TickAction {
 	private boolean active = false;
 	private long lastAttack = 0;
 	private Random r = new Random(System.nanoTime());
-	private int delay = r.nextInt(250);
+	private int delay = 0, minDelay = 50, maxDelay = 125;
 	
 	@Override
 	public boolean isActive() {
@@ -32,7 +32,7 @@ public class ActionTriggerbot implements TickAction {
 		if (Minecraft.getSystemTime() - lastAttack > delay && moprt != null && moprt.entityHit != null) {
 			mc.playerController.attackEntity(mc.thePlayer, moprt.entityHit);
 			mc.thePlayer.swingItem();
-			delay = r.nextInt(200) + 50;
+			delay = r.nextInt(maxDelay - minDelay) + minDelay;
 			lastAttack = Minecraft.getSystemTime();
 		}
 	}
@@ -43,8 +43,14 @@ public class ActionTriggerbot implements TickAction {
 	}
 	
 	@Override
-	public void saveData(MaunsiConfig conf) {}
+	public void saveData(MaunsiConfig conf) {
+		conf.set("actions.triggerbot.mindelay", minDelay);
+		conf.set("actions.triggerbot.maxdelay", maxDelay);
+	}
 	
 	@Override
-	public void loadData(MaunsiConfig conf) {}
+	public void loadData(MaunsiConfig conf) {
+		minDelay = conf.getInt("actions.triggerbot.mindelay", minDelay);
+		maxDelay = conf.getInt("actions.triggerbot.maxdelay", maxDelay);
+	}
 }
