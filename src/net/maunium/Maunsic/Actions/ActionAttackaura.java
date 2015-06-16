@@ -15,6 +15,13 @@ import net.minecraft.entity.projectile.EntityFireball;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.EnumChatFormatting;
 
+/**
+ * Attack aura.
+ * 
+ * @author Tulir293
+ * @since 0.1
+ * @from Maucros
+ */
 public class ActionAttackaura extends IntervalAction {
 	private boolean active = false, swing = true;
 	private double range = 4.0D;

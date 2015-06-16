@@ -9,6 +9,12 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MovingObjectPosition;
 
+/**
+ * Attack if looking at an entity.
+ * 
+ * @author Tulir293
+ * @since 0.1
+ */
 public class ActionTriggerbot implements TickAction {
 	private boolean active = false;
 	private long lastAttack = 0;

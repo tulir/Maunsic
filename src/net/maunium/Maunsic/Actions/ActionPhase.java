@@ -14,6 +14,13 @@ import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MathHelper;
 
+/**
+ * Phasing through nonsolid blocks
+ * 
+ * @author Tulir293
+ * @since 0.1
+ * @from Maucros
+ */
 public class ActionPhase implements StatusAction {
 	private boolean active = false, automated = true, autoforward = true;
 	

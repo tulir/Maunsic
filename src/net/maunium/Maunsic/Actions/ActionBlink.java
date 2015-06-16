@@ -11,6 +11,13 @@ import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.network.Packet;
 import net.minecraft.util.EnumChatFormatting;
 
+/**
+ * Don't even blink
+ * 
+ * @author Tulir293
+ * @since 0.1
+ * @from Maucros
+ */
 public class ActionBlink implements StatusAction {
 	public static boolean active = false, automated = true;
 	public static int safetyLevel = 3;
