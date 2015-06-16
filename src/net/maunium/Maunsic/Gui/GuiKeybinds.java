@@ -62,8 +62,8 @@ public class GuiKeybinds extends BasicScreen {
 		
 		c.addWidgets(title, back, disableAll);
 		
-		containers.add(c);
 		containers.add(kc);
+		containers.add(c);
 	}
 	
 	@Override
@@ -169,14 +169,5 @@ public class GuiKeybinds extends BasicScreen {
 			super.setKeycode(kc);
 			mkb.setKeyCode(kc);
 		}
-	}
-	
-	@Override
-	protected void mouseClicked(int mx, int my, int code) {
-		if (kc.mouseClicked(mx, my, code)) selectedContainer = kc;
-		else if (c.mouseClicked(mx, my, code)) selectedContainer = c;
-		
-		if (code == 0) for (Container c : containers)
-			if (c != selectedContainer) c.setFocused(null);
 	}
 }
