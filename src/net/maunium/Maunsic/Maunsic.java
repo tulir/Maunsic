@@ -28,6 +28,7 @@ import net.maunium.Maunsic.Actions.Util.ActionHandler;
 import net.maunium.Maunsic.Actions.Util.StatusAction;
 import net.maunium.Maunsic.Listeners.InChatListener;
 import net.maunium.Maunsic.Listeners.OutChatListener;
+import net.maunium.Maunsic.Listeners.TickListener;
 import net.maunium.Maunsic.Listeners.KeyHandling.InputHandler;
 import net.maunium.Maunsic.Listeners.KeyHandling.KeyRegistry;
 import net.maunium.Maunsic.Server.ServerHandler;
@@ -180,6 +181,8 @@ public class Maunsic {
 		getLogger().trace("Creating and Registering ActionHandler");
 		FMLCommonHandler.instance().bus().register(ach = new ActionHandler(this));
 		MinecraftForge.EVENT_BUS.register(ach);
+		
+		FMLCommonHandler.instance().bus().register(new TickListener(this));
 		
 		getLogger().trace("Creating and registering chat listeners...");
 		MinecraftForge.EVENT_BUS.register(new InChatListener());
