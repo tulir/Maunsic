@@ -6,7 +6,7 @@ import java.util.Locale;
 import org.apache.commons.codec.binary.Base64;
 
 import net.maunium.Maunsic.Maunsic;
-import net.maunium.Maunsic.Core.ClientChatSendEvent;
+import net.maunium.Maunsic.Events.ClientChatSendEvent;
 import net.maunium.Maunsic.Util.Calculator;
 
 import net.minecraftforge.fml.common.eventhandler.EventPriority;

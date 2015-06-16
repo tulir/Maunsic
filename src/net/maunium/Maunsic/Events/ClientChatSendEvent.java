@@ -1,4 +1,4 @@
-package net.maunium.Maunsic.Core;
+package net.maunium.Maunsic.Events;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.play.client.C01PacketChatMessage;
@@ -19,7 +19,7 @@ public class ClientChatSendEvent extends Event {
 	/**
 	 * This method is what the transformer tells the player class to use.
 	 */
-	public static void sendChatMessage(String message) {
+	public static void call(String message) {
 		// Create a ClientChatSendEvent
 		ClientChatSendEvent ccse = new ClientChatSendEvent(message);
 		// Post it to the Forge event bus, and return if it was cancelled.

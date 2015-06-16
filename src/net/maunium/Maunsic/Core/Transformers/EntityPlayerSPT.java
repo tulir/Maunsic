@@ -11,7 +11,7 @@ import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 
 import net.maunium.Maunsic.Core.AbstractMauTransformer;
-import net.maunium.Maunsic.Core.ClientChatSendEvent;
+import net.maunium.Maunsic.Events.ClientChatSendEvent;
 
 /**
  * Transformer to add a caller for the ClientChatSendEvent.
@@ -45,7 +45,7 @@ public class EntityPlayerSPT extends AbstractMauTransformer {
 					if (current.getOpcode() == Opcodes.INVOKESPECIAL || current.getOpcode() == Opcodes.INVOKEVIRTUAL) {
 						if (i > 0)
 							m.instructions.insert(current, new MethodInsnNode(Opcodes.INVOKESTATIC, ClientChatSendEvent.class.getName().replace(".", "/"),
-									"sendChatMessage", "(Ljava/lang/String;)V", false));
+									"call", "(Ljava/lang/String;)V", false));
 						m.instructions.remove(current);
 						i++;
 					}
