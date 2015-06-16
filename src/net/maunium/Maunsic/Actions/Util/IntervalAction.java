@@ -7,7 +7,7 @@ public abstract class IntervalAction implements TickAction {
 	protected long previousExec = 0;
 	
 	public IntervalAction() {
-		this(10);
+		this(20);
 	}
 	
 	public IntervalAction(int interval) {
