@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.maunium.Maunsic.Actions.Util.StatusAction;
+import net.maunium.Maunsic.Util.MaunsiConfig;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetHandlerPlayClient;
@@ -11,8 +12,8 @@ import net.minecraft.network.Packet;
 import net.minecraft.util.EnumChatFormatting;
 
 public class ActionBlink implements StatusAction {
-	public static boolean active, automated;
-	public static int safetyLevel;
+	public static boolean active = false, automated = true;
+	public static int safetyLevel = 3;
 	
 	private static List<Packet> packets = new ArrayList<Packet>();
 	private static long blinkStart = 0;
@@ -68,5 +69,17 @@ public class ActionBlink implements StatusAction {
 	public void setActive(boolean active) {
 		if (active) startBlinking();
 		else releaseBlink();
+	}
+	
+	@Override
+	public void saveData(MaunsiConfig conf) {
+		conf.set("actions.blink.automated", automated);
+		conf.set("actions.blink.safetylevel", safetyLevel);
+	}
+	
+	@Override
+	public void loadData(MaunsiConfig conf) {
+		automated = conf.getBoolean("actions.blink.automated", automated);
+		safetyLevel = conf.getInt("actions.blink.safetylevel", safetyLevel);
 	}
 }

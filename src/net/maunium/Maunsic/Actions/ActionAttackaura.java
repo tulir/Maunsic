@@ -4,6 +4,7 @@ import java.util.List;
 
 import net.maunium.Maunsic.Actions.Util.IntervalAction;
 import net.maunium.Maunsic.Settings.Friends;
+import net.maunium.Maunsic.Util.MaunsiConfig;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -16,7 +17,7 @@ import net.minecraft.util.EnumChatFormatting;
 
 public class ActionAttackaura extends IntervalAction {
 	private boolean active = false, swing = true;
-	private double range = 4.5D;
+	private double range = 4.0D;
 	
 	@Override
 	public void executeInterval() {
@@ -70,5 +71,19 @@ public class ActionAttackaura extends IntervalAction {
 	
 	public void setInterval(int interval) {
 		this.interval = interval;
+	}
+	
+	@Override
+	public void saveData(MaunsiConfig conf) {
+		conf.set("actions.attackaura.swing", swing);
+		conf.set("actions.attackaura.range", range);
+		conf.set("actions.attackaura.interval", interval);
+	}
+	
+	@Override
+	public void loadData(MaunsiConfig conf) {
+		swing = conf.getBoolean("actions.attackaura.swing", swing);
+		range = conf.getDouble("actions.attackaura.range", range);
+		interval = conf.getInt("actions.attackaura.interval", interval);
 	}
 }

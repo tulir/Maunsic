@@ -3,6 +3,7 @@ package net.maunium.Maunsic.Actions;
 import java.util.Random;
 
 import net.maunium.Maunsic.Actions.Util.TickAction;
+import net.maunium.Maunsic.Util.MaunsiConfig;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.EnumChatFormatting;
@@ -40,4 +41,10 @@ public class ActionTriggerbot implements TickAction {
 	public String[] getStatusText() {
 		return new String[] { "Trigger bot" + EnumChatFormatting.GREEN + " ON" };
 	}
+	
+	@Override
+	public void saveData(MaunsiConfig conf) {}
+	
+	@Override
+	public void loadData(MaunsiConfig conf) {}
 }

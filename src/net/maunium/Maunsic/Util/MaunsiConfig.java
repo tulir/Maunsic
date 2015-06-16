@@ -61,6 +61,34 @@ public class MaunsiConfig {
 	}
 	
 	/**
+	 * Get the value in the path as an boolean. If the value is not an boolean, return false.
+	 * 
+	 * @param path The path to search.
+	 * @return The boolean in the given path, or false if there was no valid boolean in the given path.
+	 */
+	public boolean getBoolean(String path) {
+		return getBoolean(path, false);
+	}
+	
+	/**
+	 * Get the value in the path as an boolean. If the value is not an boolean, return the given value.
+	 * 
+	 * @param path The path to search.
+	 * @param def The default value to return if there is no valid boolean in the given path.
+	 * @return The boolean in the given path, or the given default value if there was no valid boolean in the given path.
+	 */
+	public boolean getBoolean(String path, boolean def) {
+		JsonElement e = get(json, path);
+		if (e == null) return def;
+		if (!e.isJsonPrimitive()) return def;
+		try {
+			return e.getAsBoolean();
+		} catch (ClassCastException | IllegalStateException ex) {
+			return def;
+		}
+	}
+	
+	/**
 	 * Get the value in the path as an integer. If the value is not an integer, return 0.
 	 * 
 	 * @param path The path to search.

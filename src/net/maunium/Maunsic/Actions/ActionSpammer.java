@@ -1,8 +1,12 @@
 package net.maunium.Maunsic.Actions;
 
+import java.util.List;
+
 import net.maunium.Maunsic.Maunsic;
 import net.maunium.Maunsic.Actions.Util.IntervalAction;
+import net.maunium.Maunsic.Util.MaunsiConfig;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.util.EnumChatFormatting;
 
 /**
@@ -37,10 +41,22 @@ public class ActionSpammer extends IntervalAction {
 	
 	@Override
 	public void setActive(boolean active) {
+		List<?> msgs = Minecraft.getMinecraft().ingameGUI.getChatGUI().getSentMessages();
+		spam = (String) msgs.get(msgs.size());
 		this.active = active;
 	}
 	
 	public void setInterval(int interval) {
 		this.interval = interval;
+	}
+	
+	@Override
+	public void saveData(MaunsiConfig conf) {
+		conf.set("actions.spammer.interval", interval);
+	}
+	
+	@Override
+	public void loadData(MaunsiConfig conf) {
+		interval = conf.getInt("actions.spammer.interval", interval);
 	}
 }

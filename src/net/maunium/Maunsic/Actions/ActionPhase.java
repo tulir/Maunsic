@@ -5,6 +5,7 @@ import org.lwjgl.input.Keyboard;
 import net.maunium.Maunsic.Maunsic;
 import net.maunium.Maunsic.Actions.Util.StatusAction;
 import net.maunium.Maunsic.Server.ServerHandler;
+import net.maunium.Maunsic.Util.MaunsiConfig;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -163,5 +164,17 @@ public class ActionPhase implements StatusAction {
 	@Override
 	public void setActive(boolean active) {
 		this.active = active;
+	}
+	
+	@Override
+	public void saveData(MaunsiConfig conf) {
+		conf.set("actions.phase.automated", automated);
+		conf.set("actions.phase.autoforward", autoforward);
+	}
+	
+	@Override
+	public void loadData(MaunsiConfig conf) {
+		automated = conf.getBoolean("actions.phase.automated", automated);
+		autoforward = conf.getBoolean("actions.phase.autoforward", autoforward);
 	}
 }

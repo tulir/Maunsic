@@ -1,5 +1,7 @@
 package net.maunium.Maunsic.Actions.Util;
 
+import net.maunium.Maunsic.Util.MaunsiConfig;
+
 /**
  * The base class for all Maunsic actions.
  * 
@@ -24,4 +26,8 @@ public interface StatusAction {
 	 * @param active True if the action should be activated, false if it should be deactivated.
 	 */
 	public void setActive(boolean active);
+	
+	public void saveData(MaunsiConfig conf);
+	
+	public void loadData(MaunsiConfig conf);
 }

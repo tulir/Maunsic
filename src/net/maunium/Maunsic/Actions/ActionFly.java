@@ -4,6 +4,7 @@ import org.lwjgl.input.Keyboard;
 
 import net.maunium.Maunsic.Maunsic;
 import net.maunium.Maunsic.Actions.Util.TickAction;
+import net.maunium.Maunsic.Util.MaunsiConfig;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.GameSettings;
@@ -25,8 +26,7 @@ public class ActionFly implements TickAction {
 	
 	public ActionFly(Maunsic host) {
 		this.host = host;
-		setSpeed(host.getConfig().getInt("altmovement.speed", DEFAULT_SPEED));
-		setJump(host.getConfig().getInt("altmovement.jump", 0));
+		loadData(host.getConfig());
 	}
 	
 	@Override
@@ -52,13 +52,13 @@ public class ActionFly implements TickAction {
 	
 	public void setJump(int jump) {
 		this.jump = jump;
-		host.getConfig().set("altmovement.jump", jump);
+		saveData(host.getConfig());
 	}
 	
 	public void setSpeed(int speed) {
 		if (MIN_SPEED <= speed && speed <= MAX_SPEED) {
 			this.speed = speed;
-			host.getConfig().set("altmovement.speed", speed);
+			saveData(host.getConfig());
 		}
 	}
 	
@@ -189,5 +189,17 @@ public class ActionFly implements TickAction {
 		}
 		
 		p.setVelocity(mX, mY, mZ);
+	}
+	
+	@Override
+	public void saveData(MaunsiConfig conf) {
+		conf.set("actions.altmovement.jump", jump);
+		conf.set("actions.altmovement.speed", speed);
+	}
+	
+	@Override
+	public void loadData(MaunsiConfig conf) {
+		speed = host.getConfig().getInt("actions.altmovement.speed", speed);
+		jump = host.getConfig().getInt("actions.altmovement.jump", jump);
 	}
 }
