@@ -40,6 +40,8 @@ public class InputHandler {
 		KeyRegistry.registerKeybind(Keybinds.phase);
 		KeyRegistry.registerKeybind(Keybinds.attackaura);
 		KeyRegistry.registerKeybind(Keybinds.triggerbot);
+		KeyRegistry.registerKeybind(Keybinds.autosoup);
+		KeyRegistry.registerKeybind(Keybinds.aimbot);
 	}
 	
 	public static void input(int keycode, boolean pressed) {
@@ -96,6 +98,8 @@ public class InputHandler {
 			else if (keycode == Keybinds.attackaura.getKeyCode()) host.actionAttackaura.setActive(!host.actionAttackaura.isActive());
 			else if (keycode == Keybinds.spammer.getKeyCode()) host.actionSpammer.setActive(!host.actionSpammer.isActive());
 			else if (keycode == Keybinds.triggerbot.getKeyCode()) host.actionTriggerbot.setActive(!host.actionTriggerbot.isActive());
+			else if (keycode == Keybinds.autosoup.getKeyCode()) host.actionAutosoup.setActive(!host.actionAutosoup.isActive());
+			else if (keycode == Keybinds.aimbot.getKeyCode()) host.actionAimbot.setActive(!host.actionAimbot.isActive());
 			else if (keycode == Keybinds.phase.getKeyCode()) host.actionPhase.phase();
 //			else if (keycode == Keybinds.antikb.getKeyCode()) host.actionAntiKB.setActive(!host.actionAntiKB.isActive());
 		}
@@ -125,7 +129,9 @@ public class InputHandler {
 		public static final MauKeybind blink = new MauKeybind("blink", Keyboard.KEY_B);
 		public static final MauKeybind spammer = new MauKeybind("spammer", Keyboard.KEY_NONE);
 		public static final MauKeybind phase = new MauKeybind("phase", Keyboard.KEY_V);
-		public static final MauKeybind attackaura = new MauKeybind("attackaura", Keyboard.KEY_L);
+		public static final MauKeybind attackaura = new MauKeybind("attackaura", Keyboard.KEY_R);
 		public static final MauKeybind triggerbot = new MauKeybind("triggerbot", Keyboard.KEY_C);
+		public static final MauKeybind autosoup = new MauKeybind("autosoup", Keyboard.KEY_O);
+		public static final MauKeybind aimbot = new MauKeybind("aimbot", Keyboard.KEY_G);
 	}
 }

@@ -15,7 +15,9 @@ import org.apache.logging.log4j.Logger;
 import com.google.common.io.ByteStreams;
 import com.google.gson.JsonParseException;
 
+import net.maunium.Maunsic.Actions.ActionAimbot;
 import net.maunium.Maunsic.Actions.ActionAttackaura;
+import net.maunium.Maunsic.Actions.ActionAutosoup;
 import net.maunium.Maunsic.Actions.ActionBlink;
 import net.maunium.Maunsic.Actions.ActionFly;
 import net.maunium.Maunsic.Actions.ActionNofall;
@@ -104,7 +106,7 @@ public class Maunsic {
 	/* Tick actions */
 	public ActionFly actionFly;
 	public ActionPhase actionPhase;
-	public StatusAction actionNofall, actionBlink, actionSpammer, actionAttackaura, actionTriggerbot;
+	public StatusAction actionNofall, actionBlink, actionSpammer, actionAttackaura, actionTriggerbot, actionAutosoup, actionAimbot;
 	
 	/**
 	 * Constructor
@@ -197,6 +199,8 @@ public class Maunsic {
 		actionAttackaura = ach.registerAction(new ActionAttackaura(), ActionHandler.Phase.LIVING);
 		actionSpammer = ach.registerAction(new ActionSpammer(), ActionHandler.Phase.TICKSTART);
 		actionTriggerbot = ach.registerAction(new ActionTriggerbot(), ActionHandler.Phase.LIVING);
+		actionAutosoup = ach.registerAction(new ActionAutosoup(), ActionHandler.Phase.LIVING);
+		actionAimbot = ach.registerAction(new ActionAimbot(), ActionHandler.Phase.LIVING);
 		
 		getLogger().info("Init complete in " + (init = (int) (System.currentTimeMillis() - st)) + "ms.");
 	}
