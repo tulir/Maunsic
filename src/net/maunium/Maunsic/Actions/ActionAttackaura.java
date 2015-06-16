@@ -15,8 +15,8 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.EnumChatFormatting;
 
 public class ActionAttackaura extends IntervalAction {
-	private boolean active = false;
-	private double range;
+	private boolean active = false, swing = true;
+	private double range = 4.5D;
 	
 	@Override
 	public void executeInterval() {
@@ -24,16 +24,17 @@ public class ActionAttackaura extends IntervalAction {
 		List<Entity> entities = getEntitiesAABB(EntityFireball.class, range);
 		for (Class<? extends EntityLivingBase> c : Friends.getTargets())
 			entities.addAll(getEntitiesAABB(c, range));
-		boolean swing = false;
+		boolean hasSwung = false;
 		for (Entity e : entities) {
 			if (e instanceof EntityPlayer) {
 				EntityPlayer b = (EntityPlayer) e;
 				if (Friends.isFriend(b.getName()) || b == p) continue;
 			}
+			if (!p.canEntityBeSeen(e)) continue;
 			Minecraft.getMinecraft().playerController.attackEntity(p, e);
-			if (!swing) {
+			if (!hasSwung && swing) {
 				p.swingItem();
-				swing = true;
+				hasSwung = true;
 			}
 		}
 	}
@@ -52,7 +53,6 @@ public class ActionAttackaura extends IntervalAction {
 		rtrn[0] = "Attack Aura " + EnumChatFormatting.GREEN + "ON";
 		if (range <= 6) rtrn[1] = " Range: " + EnumChatFormatting.GREEN + range;
 		else rtrn[1] = " Range: " + EnumChatFormatting.GREEN + EnumChatFormatting.ITALIC + range;
-		
 		if (interval >= 20) rtrn[2] = " Speed (ms/hit): " + EnumChatFormatting.GREEN + interval;
 		else rtrn[2] = " Speed (ms/hit): " + EnumChatFormatting.GREEN + EnumChatFormatting.ITALIC + interval;
 		return rtrn;
