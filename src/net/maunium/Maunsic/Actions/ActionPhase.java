@@ -22,15 +22,10 @@ import net.minecraft.util.MathHelper;
  * @from Maucros
  */
 public class ActionPhase implements StatusAction {
-	private boolean active = false, automated = true, autoforward = true;
+	private boolean automated = true, autoforward = true;
 	
 	public void phase() {
-		// Is shift down? If yes, stop phasing
-		if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) stopPhase();
-		// Start automated phasing
-		else if (automated) autophase();
-		// Do a single manual phase
-		else manualphase();
+		setActive(!Keyboard.isKeyDown(Keyboard.KEY_LSHIFT));
 	}
 	
 	public void manualphase() {
@@ -41,7 +36,8 @@ public class ActionPhase implements StatusAction {
 	
 	private PhaseThread pt = null;
 	
-	public boolean isPhasing() {
+	@Override
+	public boolean isActive() {
 		return pt != null && pt.isAlive();
 	}
 	
@@ -74,7 +70,6 @@ public class ActionPhase implements StatusAction {
 		
 		@Override
 		public void run() {
-			active = true;
 			EntityPlayerSP p = Minecraft.getMinecraft().thePlayer;
 			int look = MathHelper.floor_double(p.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
 			double target;
@@ -106,7 +101,6 @@ public class ActionPhase implements StatusAction {
 			}
 			KeyBinding.setKeyBindState(Minecraft.getMinecraft().gameSettings.keyBindForward.getKeyCode(), false);
 			Maunsic.getLogger().trace("Phasing complete", this);
-			active = true;
 		}
 		
 		private void phase2() {
@@ -165,13 +159,10 @@ public class ActionPhase implements StatusAction {
 	}
 	
 	@Override
-	public boolean isActive() {
-		return active;
-	}
-	
-	@Override
 	public void setActive(boolean active) {
-		this.active = active;
+		if (!active) stopPhase();
+		else if (automated) autophase();
+		else manualphase();
 	}
 	
 	@Override
