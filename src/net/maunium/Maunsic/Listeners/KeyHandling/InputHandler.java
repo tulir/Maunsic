@@ -5,6 +5,7 @@ import org.lwjgl.input.Keyboard;
 import net.maunium.Maunsic.Maunsic;
 import net.maunium.Maunsic.Actions.ActionFly;
 import net.maunium.Maunsic.Gui.GuiMaunsic;
+import net.maunium.Maunsic.Gui.Alts.GuiChangeUsername;
 import net.maunium.Maunsic.KeyMaucros.KeyMaucro;
 import net.maunium.Maunsic.Server.ServerHandler;
 
@@ -42,6 +43,7 @@ public class InputHandler {
 		KeyRegistry.registerKeybind(Keybinds.triggerbot);
 		KeyRegistry.registerKeybind(Keybinds.autosoup);
 		KeyRegistry.registerKeybind(Keybinds.aimbot);
+		KeyRegistry.registerKeybind(Keybinds.alts);
 	}
 	
 	public static void input(int keycode, boolean pressed) {
@@ -93,7 +95,8 @@ public class InputHandler {
 			} else if (keycode == Keybinds.dec_speed.getKeyCode()) {
 				if (Keybinds.inc_speed.isDown()) host.actionFly.setSpeed(ActionFly.DEFAULT_SPEED);
 				else host.actionFly.changeSpeed(false);
-			} else if (keycode == Keybinds.nofall.getKeyCode()) host.actionNofall.setActive(!host.actionNofall.isActive());
+			} else if (keycode == Keybinds.alts.getKeyCode()) Minecraft.getMinecraft().displayGuiScreen(new GuiChangeUsername(host));
+			else if (keycode == Keybinds.nofall.getKeyCode()) host.actionNofall.setActive(!host.actionNofall.isActive());
 			else if (keycode == Keybinds.blink.getKeyCode()) host.actionBlink.setActive(!host.actionBlink.isActive());
 			else if (keycode == Keybinds.attackaura.getKeyCode()) host.actionAttackaura.setActive(!host.actionAttackaura.isActive());
 			else if (keycode == Keybinds.spammer.getKeyCode()) host.actionSpammer.setActive(!host.actionSpammer.isActive());
@@ -133,5 +136,6 @@ public class InputHandler {
 		public static final MauKeybind triggerbot = new MauKeybind("triggerbot", Keyboard.KEY_C);
 		public static final MauKeybind autosoup = new MauKeybind("autosoup", Keyboard.KEY_O);
 		public static final MauKeybind aimbot = new MauKeybind("aimbot", Keyboard.KEY_G);
+		public static final MauKeybind alts = new MauKeybind("alts", Keyboard.KEY_U);
 	}
 }
