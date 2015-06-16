@@ -31,11 +31,6 @@ public class ActionSpammer extends IntervalAction {
 	}
 	
 	@Override
-	public String getName() {
-		return "Spammer";
-	}
-	
-	@Override
 	public boolean isActive() {
 		return active;
 	}

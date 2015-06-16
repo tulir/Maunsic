@@ -60,11 +60,6 @@ public class ActionBlink implements StatusAction {
 	}
 	
 	@Override
-	public String getName() {
-		return "Blink";
-	}
-	
-	@Override
 	public boolean isActive() {
 		return active;
 	}

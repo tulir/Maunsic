@@ -103,7 +103,7 @@ public class ActionHandler {
 	private void add(List<String> list, String[] objects) {
 		if (objects == null) return;
 		for (String s : objects)
-			list.add(s);
+			if (s != null) list.add(s);
 	}
 	
 	public static enum Phase {

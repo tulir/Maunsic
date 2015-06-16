@@ -30,11 +30,6 @@ public class ActionFly implements TickAction {
 	}
 	
 	@Override
-	public String getName() {
-		return "Fly";
-	}
-	
-	@Override
 	public boolean isActive() {
 		return type > TYPE_DISABLED;
 	}

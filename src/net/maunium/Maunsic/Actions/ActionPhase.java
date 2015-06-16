@@ -156,11 +156,6 @@ public class ActionPhase implements StatusAction {
 	}
 	
 	@Override
-	public String getName() {
-		return "Phase";
-	}
-	
-	@Override
 	public boolean isActive() {
 		return active;
 	}

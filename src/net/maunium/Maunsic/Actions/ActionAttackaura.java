@@ -59,11 +59,6 @@ public class ActionAttackaura extends IntervalAction {
 	}
 	
 	@Override
-	public String getName() {
-		return "Attack Aura";
-	}
-	
-	@Override
 	public boolean isActive() {
 		return active;
 	}

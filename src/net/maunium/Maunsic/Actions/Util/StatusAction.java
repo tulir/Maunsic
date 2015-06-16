@@ -1,7 +1,5 @@
 package net.maunium.Maunsic.Actions.Util;
 
-import net.minecraft.util.EnumChatFormatting;
-
 /**
  * The base class for all Maunsic actions.
  * 
@@ -10,18 +8,10 @@ import net.minecraft.util.EnumChatFormatting;
  */
 public interface StatusAction {
 	/**
-	 * @return The name of the action.
+	 * @return The text to render on the left side of the screen when this action is active. An empty string will render an empty line and a null string will be
+	 *         ignored. To render no text, return null.
 	 */
-	public String getName();
-	
-	/**
-	 * @return The text to render on the left side of the screen when this action is active. An empty string will render an empty line. To render no text,
-	 *         return null.
-	 */
-	public default String[] getStatusText() {
-		// Default implementation returns the name and a green "ON" text
-		return new String[] { getName() + EnumChatFormatting.GREEN + " ON" };
-	}
+	public String[] getStatusText();
 	
 	/**
 	 * @return True if this action is active and should be executed on the next tick. False otherwise.

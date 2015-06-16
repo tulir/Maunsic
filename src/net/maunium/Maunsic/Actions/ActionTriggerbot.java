@@ -5,6 +5,7 @@ import java.util.Random;
 import net.maunium.Maunsic.Actions.Util.TickAction;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MovingObjectPosition;
 
 public class ActionTriggerbot implements TickAction {
@@ -12,11 +13,6 @@ public class ActionTriggerbot implements TickAction {
 	private long lastAttack = 0;
 	private Random r = new Random(System.nanoTime());
 	private int delay = r.nextInt(250);
-	
-	@Override
-	public String getName() {
-		return "Triggerbot";
-	}
 	
 	@Override
 	public boolean isActive() {
@@ -38,5 +34,10 @@ public class ActionTriggerbot implements TickAction {
 			delay = r.nextInt(200) + 50;
 			lastAttack = Minecraft.getSystemTime();
 		}
+	}
+	
+	@Override
+	public String[] getStatusText() {
+		return new String[] { "Trigger bot" + EnumChatFormatting.GREEN + " ON" };
 	}
 }
