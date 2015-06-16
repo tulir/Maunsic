@@ -7,6 +7,7 @@ import java.util.Set;
 import net.minecraft.client.Minecraft;
 
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
@@ -18,7 +19,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
  */
 public class ActionHandler {
 //	private Maunsic host;
-	private Set<TickAction> startActions = new HashSet<TickAction>(), endActions = new HashSet<TickAction>();
+	private Set<TickAction> startActions = new HashSet<TickAction>(), endActions = new HashSet<TickAction>(), livingActions = new HashSet<TickAction>();
 	private Set<StatusAction> allActions = new HashSet<StatusAction>();
 	
 //	public TickActionHandler(Maunsic host) {
@@ -26,60 +27,56 @@ public class ActionHandler {
 //	}
 	
 	/**
-	 * Register a tick action.
+	 * Register an action.
 	 * 
 	 * @param ta The action to register.
 	 * @param phase The tick event phase to execute this action at.
 	 */
-	public <T extends TickAction> T registerTickAction(T ta, TickEvent.Phase phase) {
+	public <T extends StatusAction> T registerAction(T ta, Phase phase) {
 		switch (phase) {
-			case START:
-				startActions.add(ta);
+			case TICKSTART:
+				startActions.add((TickAction) ta);
 				break;
-			case END:
-				endActions.add(ta);
+			case TICKEND:
+				endActions.add((TickAction) ta);
 				break;
+			case LIVING:
+				livingActions.add((TickAction) ta);
+				break;
+			default:
 		}
-		return registerAction(ta);
+		allActions.add(ta);
+		return ta;
 	}
 	
 	/**
-	 * Unregister a tick action.
+	 * Unregister an action.
 	 * 
 	 * @param ta The action to unregister.
 	 * @param phase The value used when registering the action.
 	 */
-	public <T extends TickAction> void unregisterTickAction(T ta, TickEvent.Phase phase) {
+	public <T extends StatusAction> void unregisterAction(T ta, Phase phase) {
 		switch (phase) {
-			case START:
+			case TICKSTART:
 				startActions.remove(ta);
 				break;
-			case END:
+			case TICKEND:
 				endActions.remove(ta);
 				break;
+			case LIVING:
+				livingActions.remove(ta);
+				break;
+			default:
 		}
-		unregisterAction(ta);
+		allActions.remove(ta);
 	}
 	
-	/**
-	 * Register a tick action.
-	 * 
-	 * @param ta The action to register.
-	 * @param phase The tick event phase to execute this action at.
-	 */
-	public <T extends StatusAction> T registerAction(T sa) {
-		allActions.add(sa);
-		return sa;
-	}
-	
-	/**
-	 * Unregister a tick action.
-	 * 
-	 * @param ta The action to unregister.
-	 * @param phase The value used when registering the action.
-	 */
-	public <T extends StatusAction> void unregisterAction(T sa) {
-		allActions.add(sa);
+	@SubscribeEvent
+	public void onEntityUpdate(LivingEvent.LivingUpdateEvent evt) {
+		if (evt.entity == Minecraft.getMinecraft().thePlayer) {
+			for (TickAction ta : livingActions)
+				if (ta.isActive()) ta.execute();
+		}
 	}
 	
 	@SubscribeEvent
@@ -107,5 +104,9 @@ public class ActionHandler {
 		if (objects == null) return;
 		for (String s : objects)
 			list.add(s);
+	}
+	
+	public static enum Phase {
+		TICKSTART, TICKEND, LIVING, STATUS;
 	}
 }

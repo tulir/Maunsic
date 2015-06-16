@@ -49,7 +49,6 @@ import net.minecraftforge.fml.common.ModMetadata;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 /**
  * The main class of Maunsic.
@@ -182,12 +181,12 @@ public class Maunsic {
 		
 		InputHandler.setHost(this);
 		
-		actionFly = ach.registerTickAction(new ActionFly(this), TickEvent.Phase.END);
-		actionNofall = ach.registerTickAction(new ActionNofall(), TickEvent.Phase.END);
-		actionBlink = ach.registerAction(new ActionBlink());
-		actionPhase = ach.registerAction(new ActionPhase());
-		actionAttackaura = ach.registerTickAction(new ActionAttackaura(), TickEvent.Phase.START);
-		actionSpammer = ach.registerTickAction(new ActionSpammer(), TickEvent.Phase.START);
+		actionFly = ach.registerAction(new ActionFly(this), ActionHandler.Phase.LIVING);
+		actionNofall = ach.registerAction(new ActionNofall(), ActionHandler.Phase.LIVING);
+		actionBlink = ach.registerAction(new ActionBlink(), ActionHandler.Phase.STATUS);
+		actionPhase = ach.registerAction(new ActionPhase(), ActionHandler.Phase.STATUS);
+		actionAttackaura = ach.registerAction(new ActionAttackaura(), ActionHandler.Phase.LIVING);
+		actionSpammer = ach.registerAction(new ActionSpammer(), ActionHandler.Phase.TICKSTART);
 		
 		getLogger().info("Init complete in " + (init = (int) (System.currentTimeMillis() - st)) + "ms.");
 	}
