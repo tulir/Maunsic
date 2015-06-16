@@ -59,7 +59,6 @@ public class ActionPhase implements StatusAction {
 	}
 	
 	public class PhaseThread extends Thread {
-		
 		public PhaseThread() {
 			super("Phase Thread");
 		}
@@ -68,6 +67,7 @@ public class ActionPhase implements StatusAction {
 		
 		@Override
 		public void run() {
+			active = true;
 			EntityPlayerSP p = Minecraft.getMinecraft().thePlayer;
 			int look = MathHelper.floor_double(p.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
 			double target;
@@ -99,6 +99,7 @@ public class ActionPhase implements StatusAction {
 			}
 			KeyBinding.setKeyBindState(Minecraft.getMinecraft().gameSettings.keyBindForward.getKeyCode(), false);
 			Maunsic.getLogger().trace("Phasing complete", this);
+			active = true;
 		}
 		
 		private void phase2() {
