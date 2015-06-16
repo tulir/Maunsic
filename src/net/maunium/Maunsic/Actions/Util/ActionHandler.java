@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import net.maunium.Maunsic.Maunsic;
+
 import net.minecraft.client.Minecraft;
 
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -18,13 +20,13 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
  * @since 0.1
  */
 public class ActionHandler {
-//	private Maunsic host;
+	private Maunsic host;
 	private Set<TickAction> startActions = new HashSet<TickAction>(), endActions = new HashSet<TickAction>(), livingActions = new HashSet<TickAction>();
 	private Set<StatusAction> allActions = new HashSet<StatusAction>();
 	
-//	public TickActionHandler(Maunsic host) {
-//		this.host = host;
-//	}
+	public ActionHandler(Maunsic host) {
+		this.host = host;
+	}
 	
 	/**
 	 * Register an action.
@@ -69,6 +71,16 @@ public class ActionHandler {
 			default:
 		}
 		allActions.remove(ta);
+	}
+	
+	public void saveAll() {
+		for (StatusAction a : allActions)
+			a.saveData(host.getConfig());
+	}
+	
+	public void loadAll() {
+		for (StatusAction a : allActions)
+			a.loadData(host.getConfig());
 	}
 	
 	@SubscribeEvent
