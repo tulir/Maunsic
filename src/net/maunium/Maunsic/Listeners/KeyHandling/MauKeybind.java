@@ -53,11 +53,12 @@ public class MauKeybind implements Comparable<MauKeybind> {
 	}
 	
 	/**
-	 * Check if this key binding is currently pressed. Please note that this does NOT check the key bind status if it has been bound to a key that LWJGL does
-	 * not directly recognize (raw key code over 256).
+	 * Check if this key binding is currently pressed. Please note that this does not properly check the key bind status if it has been bound to a key that
+	 * LWJGL does not directly recognize (raw key code over 256).
 	 */
 	public boolean isDown() {
-		return keyCode < 0 ? Mouse.isButtonDown(keyCode + 100) : Keyboard.isKeyDown(keyCode);
+		return keyCode < 0 ? Mouse.isButtonDown(keyCode + 100) : keyCode > 256 ? Keyboard.getEventKeyState() && Keyboard.getEventCharacter() + 256 == keyCode
+				: Keyboard.isKeyDown(keyCode);
 	}
 	
 	/**
