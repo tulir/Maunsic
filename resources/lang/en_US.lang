@@ -7,6 +7,10 @@ key.nofall=Nofall
 key.inc_speed=Increase Speed
 key.dec_speed=Decrease Speed
 key.antikb=Antiknockback
+key.phase=Phase
+key.attackaura=Attack Aura
+key.blink=Blink
+key.spammer=Spammer
 
 conf.title=Maunsic {0} - Page {1}
 conf.back=Back
@@ -26,7 +30,7 @@ conf.username.pwlabel=Password
 conf.username.finish=Finish
 conf.username.cancel=Cancel
 
-conf.lua.threads.enter=Lua Threads
+conf.lua.threads=Lua Threads
 conf.lua.threads.title=Lua Thread Manager
 conf.lua.threads.killall=Kill All Threads
 
