@@ -16,7 +16,7 @@ import com.google.common.io.ByteStreams;
 import com.google.gson.JsonParseException;
 
 import net.maunium.Maunsic.Actions.ActionAttackaura;
-import net.maunium.Maunsic.Actions.ActionAutoattack;
+import net.maunium.Maunsic.Actions.ActionTriggerbot;
 import net.maunium.Maunsic.Actions.ActionBlink;
 import net.maunium.Maunsic.Actions.ActionFly;
 import net.maunium.Maunsic.Actions.ActionNofall;
@@ -104,7 +104,7 @@ public class Maunsic {
 	/* Tick actions */
 	public ActionFly actionFly;
 	public ActionPhase actionPhase;
-	public StatusAction actionNofall, actionBlink, actionSpammer, actionAttackaura, actionAutoattack;
+	public StatusAction actionNofall, actionBlink, actionSpammer, actionAttackaura, actionTriggerbot;
 	
 	/**
 	 * Constructor
@@ -188,7 +188,7 @@ public class Maunsic {
 		actionPhase = ach.registerAction(new ActionPhase(), ActionHandler.Phase.STATUS);
 		actionAttackaura = ach.registerAction(new ActionAttackaura(), ActionHandler.Phase.LIVING);
 		actionSpammer = ach.registerAction(new ActionSpammer(), ActionHandler.Phase.TICKSTART);
-		actionAutoattack = ach.registerAction(new ActionAutoattack(), ActionHandler.Phase.LIVING);
+		actionTriggerbot = ach.registerAction(new ActionTriggerbot(), ActionHandler.Phase.LIVING);
 		
 		getLogger().info("Init complete in " + (init = (int) (System.currentTimeMillis() - st)) + "ms.");
 	}
