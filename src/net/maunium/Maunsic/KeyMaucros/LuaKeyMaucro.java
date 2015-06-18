@@ -1,7 +1,9 @@
 package net.maunium.Maunsic.KeyMaucros;
 
 import java.io.File;
-import java.util.regex.Pattern;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 import mauluam.LuaExecutionThread;
 import mauluam.MauThreadLib;
@@ -32,22 +34,39 @@ public class LuaKeyMaucro extends KeyMaucro {
 	
 	@Override
 	public String getData() {
-		return file.getName();
+		return file.getAbsolutePath();
 	}
 	
 	public String getScriptPath() {
 		return file.getPath();
 	}
 	
-	public String getAbsoluteScriptPath() {
-		return file.getAbsolutePath();
+	@Override
+	public JsonObject toJson() {
+		JsonObject jo = new JsonObject();
+		jo.addProperty("type", getType().toGuiState());
+		jo.addProperty("name", getName());
+		jo.addProperty("keycode", getKeyCode());
+		jo.addProperty("file", file.getAbsolutePath());
+		jo.addProperty("phase", phase.toInt());
+		jo.add("shiftkeys", getShiftKeysAsJson());
+		return jo;
 	}
 	
-	@Override
-	public String toString() {
-		if (shiftKeys.length > 0) return getType() + "|" + getName() + "\\~~\\" + getKeyCode() + "\\~~\\" + file.getAbsolutePath() + "\\~~\\" + phase.toInt();
-		else return getType() + "|" + getName() + "\\~~\\" + getKeyCode() + "\\~~\\" + file.getPath() + "\\~~\\" + phase.toInt() + "\\~~\\"
-				+ getShiftKeysAsString();
+	public static LuaKeyMaucro fromJson(JsonObject jo) {
+		try {
+			String name = jo.get("name").getAsString();
+			int keycode = jo.get("keycode").getAsInt();
+			File file = new File(jo.get("file").getAsString());
+			ExecPhase ep = ExecPhase.fromInt(jo.get("phase").getAsInt());
+			JsonArray ska = jo.get("shiftkeys").getAsJsonArray();
+			int[] shiftkeys = new int[ska.size()];
+			for (int i = 0; i < ska.size(); i++)
+				shiftkeys[i] = ska.get(i).getAsInt();
+			return new LuaKeyMaucro(name, file, keycode, ep, shiftkeys);
+		} catch (Throwable t) {
+			return null;
+		}
 	}
 	
 	@Override
@@ -57,59 +76,6 @@ public class LuaKeyMaucro extends KeyMaucro {
 			LuaExecutionThread t = new LuaExecutionThread(getName(), file);
 			MauThreadLib.startThread(t);
 		}
-	}
-	
-	public static KeyMaucro parseKeyMaucro(String s) {
-		String[] temp = s.split(Pattern.quote("\\~~\\"));
-		String name = temp[0];
-		int kc = -1;
-		try {
-			kc = Integer.parseInt(temp[1]);
-		} catch (NumberFormatException e) {
-			Maunsic.getLogger().error("Error while parsing KeyMaucro: \"" + s + "\"");
-			throw new KeyMaucroFormatException("Failed to parse main key code: " + temp[1] + " (" + e.getMessage() + ")");
-		}
-		if (kc < 0) {
-			Maunsic.getLogger().error("Error while parsing KeyMaucro: \"" + s + "\"");
-			throw new KeyMaucroFormatException("Key code can't be under 0: " + kc);
-		}
-		String file = temp[2];
-		ExecPhase phase;
-		try {
-			phase = ExecPhase.fromInt(Integer.parseInt(temp[3]));
-		} catch (NumberFormatException e) {
-			Maunsic.getLogger().error("Error while parsing KeyMaucro: \"" + s + "\"");
-			throw new KeyMaucroFormatException("Failed to parse main key code: " + temp[1] + " (" + e.getMessage() + ")");
-		}
-		
-		int[] shiftKeys;
-		if (temp.length == 5) {
-			if (temp[4].contains("-~-")) {
-				String[] temp2 = temp[3].split(Pattern.quote("-~-"));
-				shiftKeys = new int[temp2.length];
-				for (int i = 0; i < temp2.length; i++)
-					try {
-						shiftKeys[i] = Integer.parseInt(temp2[i]);
-					} catch (NumberFormatException e) {
-						Maunsic.getLogger().error("Error while parsing KeyMaucro: \"" + s + "\"");
-						throw new KeyMaucroFormatException("Failed to parse shift key code: " + temp2[i] + " (" + e.getMessage() + ")");
-					}
-			} else try {
-				shiftKeys = new int[] { Integer.parseInt(temp[4]) };
-			} catch (NumberFormatException e) {
-				Maunsic.getLogger().error("Error while parsing KeyMaucro: \"" + s + "\"");
-				throw new KeyMaucroFormatException("Failed to parse shift key code: " + temp[3] + " (" + e.getMessage() + ")");
-			}
-		} else shiftKeys = new int[0];
-		return new LuaKeyMaucro(name, new File(file), kc, phase, shiftKeys);
-	}
-	
-	@Override
-	public boolean equals(KeyMaucro km) {
-		if (!(km instanceof LuaKeyMaucro)) return false;
-		if (!super.equals(km)) return false;
-		if (!getAbsoluteScriptPath().equals(((LuaKeyMaucro) km).getAbsoluteScriptPath())) return false;
-		return true;
 	}
 	
 	@Override

@@ -4,10 +4,16 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.regex.Pattern;
+import java.util.Locale;
 
 import org.lwjgl.input.Keyboard;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
+
+import net.maunium.Maunsic.Listeners.KeyHandling.MauKeybind;
 import net.maunium.Maunsic.Util.MaunsiConfig;
 
 /**
@@ -85,14 +91,26 @@ public abstract class KeyMaucro implements Serializable, Comparable<KeyMaucro> {
 	 * Save the key maucros to the given MaunsiConfig.
 	 */
 	public static void save(MaunsiConfig conf) {
-		
+		sort();
+		JsonArray ja = new JsonArray();
+		for (KeyMaucro km : getKeyMaucros())
+			ja.add(km.toJson());
+		conf.set("keymaucros", ja);
 	}
 	
 	/**
 	 * Load all key maucros from the given MaunsiConfig.
 	 */
 	public static void load(MaunsiConfig conf) {
-		
+		JsonElement jae = conf.get("keymaucros");
+		if (!jae.isJsonArray()) return;
+		JsonArray ja = jae.getAsJsonArray();
+		for (JsonElement je : ja) {
+			if (!je.isJsonObject()) continue;
+			KeyMaucro km = fromJson(je.getAsJsonObject());
+			if (km != null) keymaucros.add(km);
+		}
+		sort();
 	}
 	
 	protected String name;
@@ -117,9 +135,6 @@ public abstract class KeyMaucro implements Serializable, Comparable<KeyMaucro> {
 	public static int compare(KeyMaucro km1, KeyMaucro km2) {
 		return km1.compareTo(km2);
 	}
-	
-	@Override
-	public abstract String toString();
 	
 	/**
 	 * Execute this Key Maucro
@@ -194,14 +209,6 @@ public abstract class KeyMaucro implements Serializable, Comparable<KeyMaucro> {
 		this.shiftKeys = shiftKeys;
 	}
 	
-	public String getShiftKeysToSave() {
-		String s = "";
-		for (int i : shiftKeys)
-			if (s.equals("")) s = i + "";
-			else s = s + "-~-" + i;
-		return s;
-	}
-	
 	public String getShiftKeysAsString() {
 		String s = "";
 		for (int i : shiftKeys)
@@ -210,26 +217,41 @@ public abstract class KeyMaucro implements Serializable, Comparable<KeyMaucro> {
 		return s;
 	}
 	
-	private String toNaturalCase(String s) {
-		return s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase();
+	/**
+	 * Get all the shift keys in a Json Array.
+	 */
+	public JsonArray getShiftKeysAsJson() {
+		JsonArray ja = new JsonArray();
+		for (int i : shiftKeys)
+			ja.add(new JsonPrimitive(i));
+		return ja;
 	}
 	
 	/**
-	 * Parse a Key Maucro from a String.
-	 * 
-	 * @param s The String to parse the Key Maucro from.
-	 * @param t The type of the Key Maucro
-	 * @return The parsed Key Maucro
-	 * @throws KeyMaucroFormatException If parsing fails
+	 * First letter upper case, rest lower case.
 	 */
-	public static KeyMaucro parseKeyMaucro(String s) throws KeyMaucroFormatException {
-		if (s == null) throw new KeyMaucroFormatException("You can't parse a Key Maucro from a null String!");
-		String[] ss = s.split(Pattern.quote("|"));
-		Type t = Type.fromString(ss[0]);
-		if (t == null) throw new KeyMaucroFormatException("You can't parse a Key Maucro with Type null!");
-		else if (t.equals(Type.COMMANDCHAIN)) return CCKeyMaucro.parseKeyMaucro(ss[1]);
-		else if (t.equals(Type.LUA)) return LuaKeyMaucro.parseKeyMaucro(ss[1]);
-		else throw new KeyMaucroFormatException("The type " + t.toString() + " can't be recognized.");
+	private String toNaturalCase(String s) {
+		return s.substring(0, 1).toUpperCase(Locale.ENGLISH) + s.substring(1).toLowerCase(Locale.ENGLISH);
+	}
+	
+	/**
+	 * Save this key maucro to a json object.
+	 */
+	public abstract JsonObject toJson();
+	
+	/**
+	 * Parse a key maucro from the given json object.
+	 */
+	public static KeyMaucro fromJson(JsonObject jo) {
+		Type t = Type.fromGuiState(jo.get("type").getAsInt());
+		switch (t) {
+			case LUA:
+				return LuaKeyMaucro.fromJson(jo);
+			case COMMANDCHAIN:
+				return CCKeyMaucro.fromJson(jo);
+			default:
+				return null;
+		}
 	}
 	
 	/**
@@ -257,8 +279,8 @@ public abstract class KeyMaucro implements Serializable, Comparable<KeyMaucro> {
 	 */
 	public boolean isMacroDown() {
 		for (int i : shiftKeys)
-			if (!Keyboard.isKeyDown(i)) return false;
-		return Keyboard.isKeyDown(keyCode);
+			if (!MauKeybind.isDown(i)) return false;
+		return MauKeybind.isDown(keyCode);
 	}
 	
 	/**
@@ -274,13 +296,15 @@ public abstract class KeyMaucro implements Serializable, Comparable<KeyMaucro> {
 	}
 	
 	/**
-	 * Check if this Key Maucro is equal to the given one. This should be overridden by each subclass if they have extra data to check.
+	 * Check if this Key Maucro is equal to the given one.
 	 */
 	public boolean equals(KeyMaucro km) {
 		if (!name.equals(km.name)) return false;
+		if (!getType().equals(km.getType())) return false;
 		if (keyCode != km.keyCode) return false;
 		if (!shiftKeys.equals(km.shiftKeys)) return false;
 		if (!phase.equals(km.phase)) return false;
+		if (!getData().equals(km.getData())) return false;
 		return true;
 	}
 	

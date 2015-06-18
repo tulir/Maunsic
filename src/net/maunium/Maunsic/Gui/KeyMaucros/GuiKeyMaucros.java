@@ -105,7 +105,6 @@ public class GuiKeyMaucros extends BasicScreen {
 	@Override
 	public void save() {
 		Maunsic.getLogger().trace("Saving Key Maunsic to file", this);
-		KeyMaucro.sort();
 		KeyMaucro.save(host.getConfig());
 	}
 	

@@ -26,6 +26,7 @@ import net.maunium.Maunsic.Actions.ActionSpammer;
 import net.maunium.Maunsic.Actions.ActionTriggerbot;
 import net.maunium.Maunsic.Actions.Util.ActionHandler;
 import net.maunium.Maunsic.Actions.Util.StatusAction;
+import net.maunium.Maunsic.KeyMaucros.KeyMaucro;
 import net.maunium.Maunsic.Listeners.InChatListener;
 import net.maunium.Maunsic.Listeners.OutChatListener;
 import net.maunium.Maunsic.Listeners.TickListener;
@@ -191,6 +192,9 @@ public class Maunsic {
 		getLogger().trace("Creating alt manager and loading alts...");
 		alts = new AltAccounts();
 		alts.load(getConfig());
+		
+		getLogger().trace("Loading Key Maucros");
+		KeyMaucro.load(getConfig());
 		
 		InputHandler.setHost(this);
 		
