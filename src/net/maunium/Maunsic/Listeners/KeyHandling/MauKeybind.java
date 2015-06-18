@@ -57,6 +57,10 @@ public class MauKeybind implements Comparable<MauKeybind> {
 	 * LWJGL does not directly recognize (raw key code over 256).
 	 */
 	public boolean isDown() {
+		return isDown(keyCode);
+	}
+	
+	public static boolean isDown(int keyCode) {
 		return keyCode < 0 ? Mouse.isButtonDown(keyCode + 100) : keyCode > 256 ? Keyboard.getEventKeyState() && Keyboard.getEventCharacter() + 256 == keyCode
 				: Keyboard.isKeyDown(keyCode);
 	}
