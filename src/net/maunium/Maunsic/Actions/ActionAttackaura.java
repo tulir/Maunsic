@@ -3,7 +3,7 @@ package net.maunium.Maunsic.Actions;
 import java.util.List;
 
 import net.maunium.Maunsic.Actions.Util.IntervalAction;
-import net.maunium.Maunsic.Settings.Friends;
+import net.maunium.Maunsic.Settings.Attacking;
 import net.maunium.Maunsic.Util.MaunsiConfig;
 
 import net.minecraft.client.Minecraft;
@@ -30,13 +30,13 @@ public class ActionAttackaura extends IntervalAction {
 	public void executeInterval() {
 		EntityPlayerSP p = Minecraft.getMinecraft().thePlayer;
 		List<Entity> entities = getEntitiesAABB(EntityFireball.class, range);
-		for (Class<? extends EntityLivingBase> c : Friends.getTargets())
+		for (Class<? extends EntityLivingBase> c : Attacking.getTargets())
 			entities.addAll(getEntitiesAABB(c, range));
 		boolean hasSwung = false;
 		for (Entity e : entities) {
 			if (e instanceof EntityPlayer) {
 				EntityPlayer b = (EntityPlayer) e;
-				if (Friends.isFriend(b.getName()) || b == p) continue;
+				if (Attacking.isFriend(b.getName()) || b == p) continue;
 			}
 			if (!p.canEntityBeSeen(e)) continue;
 			Minecraft.getMinecraft().playerController.attackEntity(p, e);

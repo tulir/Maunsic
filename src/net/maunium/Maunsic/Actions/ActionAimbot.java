@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.maunium.Maunsic.Actions.Util.IntervalAction;
-import net.maunium.Maunsic.Settings.Friends;
+import net.maunium.Maunsic.Settings.Attacking;
 import net.maunium.Maunsic.Util.MaunsiConfig;
 
 import net.minecraft.client.Minecraft;
@@ -31,14 +31,14 @@ public class ActionAimbot extends IntervalAction {
 	public void executeInterval() {
 		EntityPlayerSP p = Minecraft.getMinecraft().thePlayer;
 		List<Entity> entities = getEntitiesAABB(EntityFireball.class, range);
-		for (Class<? extends EntityLivingBase> c : Friends.getTargets())
+		for (Class<? extends EntityLivingBase> c : Attacking.getTargets())
 			entities.addAll(getEntitiesAABB(c, range));
 		Entity c = null;
 		double cd = Double.MAX_VALUE;
 		for (Entity e : entities) {
 			if (e instanceof EntityPlayer) {
 				EntityPlayer b = (EntityPlayer) e;
-				if (Friends.isFriend(b.getName()) || b.equals(p)) continue;
+				if (Attacking.isFriend(b.getName()) || b.equals(p)) continue;
 			}
 			double dX = p.posX - e.posX, dY = p.posY - e.posY, dZ = p.posZ - e.posZ;
 			double d = dX * dX + dY * dY + dZ * dZ;
