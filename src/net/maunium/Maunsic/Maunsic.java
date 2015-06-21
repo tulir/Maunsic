@@ -99,12 +99,13 @@ public class Maunsic {
 			.appendSibling(new ChatComponentText(" ").setChatStyle(errStyle));
 	/** Initialization time or -1 if the initialization has not finished. */
 	private int construct = -1, preInit = -1, init = -1, postInit = -1;
-	/** Maucros Configuration */
+	/** Maunsic Configuration */
 	private MaunsiConfig conf;
 	private File confFile = new File(getConfDir(), "conf.maudat");
 	
+	/** Alt list for Maunsic */
 	private AltAccounts alts;
-	/** The ActionHandler for Maucros */
+	/** The ActionHandler for Maunsic */
 	private ActionHandler ach;
 	/* Tick actions */
 	public ActionFly actionFly;
@@ -119,10 +120,9 @@ public class Maunsic {
 		long st = Minecraft.getSystemTime();
 		log = LogManager.getLogger("Maunsic");
 		log.info("Loading Maunsic Logger (see logs/Maunsic/ for log files)");
-		// Create the Maucros Logger.
 		MaunsicLogger.create();
+		log.info("Loading Chat Logger (see logs/Chat/ for log files)");
 		ChatLogger.create();
-		// From here on, the debug and trace logger calls describe everything.
 		getLogger().info("Maunsic Loggers opened from constructor in " + (construct = (int) (Minecraft.getSystemTime() - st)) + "ms.");
 	}
 	
