@@ -24,10 +24,9 @@ public class Attacking {
 		JsonArray targetsa = new JsonArray();
 		for (Class<?> c : targets)
 			targetsa.add(new JsonPrimitive(c.getName()));
+		
 		conf.set("attacking.targets", targetsa);
-		
 		conf.set("attacking.friends", friends);
-		
 		conf.set("attacking.range", range);
 	}
 	
@@ -54,12 +53,16 @@ public class Attacking {
 		return friends.contains(name.toLowerCase(Locale.ENGLISH));
 	}
 	
+	public static boolean isTarget(Class<? extends EntityLivingBase> c) {
+		return targets.contains(c);
+	}
+	
 	public static void addFriend(String name) {
 		friends.add(name);
 	}
 	
-	public static void addTarget(Class<? extends EntityLivingBase> name) {
-		targets.add(name);
+	public static void addTarget(Class<? extends EntityLivingBase> c) {
+		targets.add(c);
 	}
 	
 	public static void clearFriends() {
