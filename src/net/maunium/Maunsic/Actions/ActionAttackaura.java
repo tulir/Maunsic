@@ -24,14 +24,13 @@ import net.minecraft.util.EnumChatFormatting;
  */
 public class ActionAttackaura extends IntervalAction {
 	private boolean active = false, swing = true;
-	private double range = 4.0D;
 	
 	@Override
 	public void executeInterval() {
 		EntityPlayerSP p = Minecraft.getMinecraft().thePlayer;
-		List<Entity> entities = getEntitiesAABB(EntityFireball.class, range);
+		List<Entity> entities = getEntitiesAABB(EntityFireball.class, Attacking.range);
 		for (Class<? extends EntityLivingBase> c : Attacking.getTargets())
-			entities.addAll(getEntitiesAABB(c, range));
+			entities.addAll(getEntitiesAABB(c, Attacking.range));
 		boolean hasSwung = false;
 		for (Entity e : entities) {
 			if (e instanceof EntityPlayer) {
@@ -59,8 +58,8 @@ public class ActionAttackaura extends IntervalAction {
 	public String[] getStatusText() {
 		String[] rtrn = new String[3];
 		rtrn[0] = "Attack Aura " + EnumChatFormatting.GREEN + "ON";
-		if (range <= 6) rtrn[1] = " Range: " + EnumChatFormatting.GREEN + range;
-		else rtrn[1] = " Range: " + EnumChatFormatting.GREEN + EnumChatFormatting.ITALIC + range;
+		if (Attacking.range <= 6) rtrn[1] = " Range: " + EnumChatFormatting.GREEN + Attacking.range;
+		else rtrn[1] = " Range: " + EnumChatFormatting.GREEN + EnumChatFormatting.ITALIC + Attacking.range;
 		if (interval >= 20) rtrn[2] = " Speed (ms/hit): " + EnumChatFormatting.GREEN + interval;
 		else rtrn[2] = " Speed (ms/hit): " + EnumChatFormatting.GREEN + EnumChatFormatting.ITALIC + interval;
 		return rtrn;
@@ -83,14 +82,12 @@ public class ActionAttackaura extends IntervalAction {
 	@Override
 	public void saveData(MaunsiConfig conf) {
 		conf.set("actions.attackaura.swing", swing);
-		conf.set("actions.attackaura.range", range);
 		conf.set("actions.attackaura.interval", interval);
 	}
 	
 	@Override
 	public void loadData(MaunsiConfig conf) {
 		swing = conf.getBoolean("actions.attackaura.swing", swing);
-		range = conf.getDouble("actions.attackaura.range", range);
 		interval = conf.getInt("actions.attackaura.interval", interval);
 	}
 }

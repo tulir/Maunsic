@@ -25,14 +25,13 @@ import net.minecraft.util.EnumChatFormatting;
  */
 public class ActionAimbot extends IntervalAction {
 	private boolean active = false;
-	private double range = 4.0D;
 	
 	@Override
 	public void executeInterval() {
 		EntityPlayerSP p = Minecraft.getMinecraft().thePlayer;
-		List<Entity> entities = getEntitiesAABB(EntityFireball.class, range);
+		List<Entity> entities = getEntitiesAABB(EntityFireball.class, Attacking.range);
 		for (Class<? extends EntityLivingBase> c : Attacking.getTargets())
-			entities.addAll(getEntitiesAABB(c, range));
+			entities.addAll(getEntitiesAABB(c, Attacking.range));
 		Entity c = null;
 		double cd = Double.MAX_VALUE;
 		for (Entity e : entities) {
@@ -71,8 +70,8 @@ public class ActionAimbot extends IntervalAction {
 	public String[] getStatusText() {
 		String[] rtrn = new String[3];
 		rtrn[0] = "Aimbot " + EnumChatFormatting.GREEN + "ON";
-		if (range <= 6) rtrn[1] = " Range: " + EnumChatFormatting.GREEN + range;
-		else rtrn[1] = " Range: " + EnumChatFormatting.GREEN + EnumChatFormatting.ITALIC + range;
+		if (Attacking.range <= 6) rtrn[1] = " Range: " + EnumChatFormatting.GREEN + Attacking.range;
+		else rtrn[1] = " Range: " + EnumChatFormatting.GREEN + EnumChatFormatting.ITALIC + Attacking.range;
 		
 		if (interval >= 40) rtrn[2] = " Speed (ms/ref): " + EnumChatFormatting.GREEN + interval;
 		else rtrn[2] = " Speed (ms/ref): " + EnumChatFormatting.GREEN + EnumChatFormatting.ITALIC + interval;
@@ -91,11 +90,11 @@ public class ActionAimbot extends IntervalAction {
 	
 	@Override
 	public void saveData(MaunsiConfig conf) {
-		conf.set("actions.aimbot.range", range);
+		conf.set("actions.aimbot.interval", interval);
 	}
 	
 	@Override
 	public void loadData(MaunsiConfig conf) {
-		range = conf.getDouble("actions.aimbot.range", range);
+		interval = conf.getInt("actions.aimbot.interval", interval);
 	}
 }
