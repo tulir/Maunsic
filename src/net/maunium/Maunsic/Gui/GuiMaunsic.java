@@ -180,6 +180,8 @@ public class GuiMaunsic extends BasicScreen {
 		host.actionPhase.autoforward = autophasesprint.getState() == 1;
 		
 		InChatListener.antispam = antispam.getState();
+		host.getConfig().set("antispam", InChatListener.antispam);
+		
 		// Save all the action configs to RAM
 		host.getActionHandler().saveAll();
 		// Save config to disk.

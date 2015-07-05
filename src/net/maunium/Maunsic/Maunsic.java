@@ -191,7 +191,7 @@ public class Maunsic {
 		FMLCommonHandler.instance().bus().register(new TickListener(this));
 		
 		getLogger().trace("Creating and registering chat listeners");
-		MinecraftForge.EVENT_BUS.register(new InChatListener());
+		MinecraftForge.EVENT_BUS.register(new InChatListener(this));
 		MinecraftForge.EVENT_BUS.register(new OutChatListener());
 		
 		getLogger().trace("Creating alt manager and loading alts");

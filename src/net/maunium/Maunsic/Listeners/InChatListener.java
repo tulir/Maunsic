@@ -28,6 +28,10 @@ public class InChatListener {
 	private int countOfSpam = 1, prevId = 0;
 	public static int antispam = 0;
 	
+	public InChatListener(Maunsic host) {
+		antispam = host.getConfig().getInt("antispam");
+	}
+	
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public void onChat(ClientChatReceivedEvent evt) {
 		if (evt.message.getUnformattedText().contains("Ⅿᴮ")) {
