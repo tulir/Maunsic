@@ -145,6 +145,11 @@ public class GuiMaunsic extends BasicScreen {
 	protected void save() {
 		host.actionFly.setSpeed(speed.getIntValue());
 		host.actionFly.setJump(jump.getIntValue());
+		
+		ActionBlink.automated = autoblink.getState() == 1;
+		ActionBlink.safetyLevel = blinksafety.getIntValue();
+		host.actionPhase.automated = autophase.getState() == 1;
+		host.actionPhase.autoforward = autophasesprint.getState() == 1;
 		// Save all the action configs to RAM
 		host.getActionHandler().saveAll();
 		// Save config to disk.
