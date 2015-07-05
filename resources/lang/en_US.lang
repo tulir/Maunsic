@@ -18,6 +18,7 @@ key.xray=X-Ray
 key.autouse=Autouse
 key.esp=Player ESP
 key.tracer=Tracer
+key.fastbow=Fastbow
 
 conf.title=Maunsic {0} - Page {1}
 conf.back=Back
