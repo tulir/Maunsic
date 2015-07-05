@@ -9,6 +9,7 @@ import net.maunium.Maunsic.Maunsic;
 import net.minecraft.client.Minecraft;
 
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -21,7 +22,8 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
  */
 public class ActionHandler {
 	private Maunsic host;
-	private Set<TickAction> startActions = new HashSet<TickAction>(), endActions = new HashSet<TickAction>(), livingActions = new HashSet<TickAction>();
+	private Set<TickAction> startActions = new HashSet<TickAction>(), endActions = new HashSet<TickAction>(), livingActions = new HashSet<TickAction>(),
+			worldActions = new HashSet<TickAction>();
 	private Set<StatusAction> allActions = new HashSet<StatusAction>();
 	
 	public ActionHandler(Maunsic host) {
@@ -45,6 +47,9 @@ public class ActionHandler {
 			case LIVING:
 				livingActions.add((TickAction) ta);
 				break;
+			case WORLD:
+				worldActions.add((TickAction) ta);
+				break;
 			default:
 		}
 		allActions.add(ta);
@@ -67,6 +72,9 @@ public class ActionHandler {
 				break;
 			case LIVING:
 				livingActions.remove(ta);
+				break;
+			case WORLD:
+				worldActions.remove(ta);
 				break;
 			default:
 		}
@@ -103,6 +111,12 @@ public class ActionHandler {
 	}
 	
 	@SubscribeEvent
+	public void onWorldRender(RenderWorldLastEvent evt) {
+		for (TickAction ta : worldActions)
+			if (ta.isActive()) ta.execute();
+	}
+	
+	@SubscribeEvent
 	public void renderOverlay(RenderGameOverlayEvent.Text evt) {
 		if (Minecraft.getMinecraft().gameSettings.showDebugInfo) return;
 		for (StatusAction sa : allActions)
@@ -119,6 +133,6 @@ public class ActionHandler {
 	}
 	
 	public static enum Phase {
-		TICKSTART, TICKEND, LIVING, STATUS;
+		TICKSTART, TICKEND, LIVING, WORLD, STATUS;
 	}
 }
