@@ -81,11 +81,17 @@ public class ActionHandler {
 		allActions.remove(ta);
 	}
 	
+	/**
+	 * Save the configurations of all actions to RAM by calling the saveData method of each action.
+	 */
 	public void saveAll() {
 		for (StatusAction a : allActions)
 			a.saveData(host.getConfig());
 	}
 	
+	/**
+	 * Load the configurations of all actions to RAM by calling the saveData method of each action.
+	 */
 	public void loadAll() {
 		for (StatusAction a : allActions)
 			a.loadData(host.getConfig());
@@ -132,6 +138,12 @@ public class ActionHandler {
 			if (s != null) list.add(s);
 	}
 	
+	/**
+	 * Contains the phase at which an action is to be executed.
+	 * 
+	 * @author Tulir293
+	 * @since 0.1
+	 */
 	public static enum Phase {
 		TICKSTART, TICKEND, LIVING, WORLD, STATUS;
 	}

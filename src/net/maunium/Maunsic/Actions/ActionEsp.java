@@ -12,6 +12,13 @@ import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.AxisAlignedBB;
 
+/**
+ * Action for displaying a box around players even if they're behind a wall. Code in execute() was imported from Maucros.
+ * 
+ * @author Tulir293
+ * @since 0.1
+ * @from Maucros
+ */
 public class ActionEsp implements TickAction {
 	private boolean active = false;
 	

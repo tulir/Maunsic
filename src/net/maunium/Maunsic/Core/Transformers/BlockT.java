@@ -15,8 +15,14 @@ import org.objectweb.asm.tree.VarInsnNode;
 import net.maunium.Maunsic.Actions.ActionXray;
 import net.maunium.Maunsic.Core.AbstractMauTransformer;
 
+/**
+ * Transformer for X-Ray vision. Allows blocks that would normally be behind a block be rendered if the block they're behind has been made invisible with x-ray
+ * 
+ * @author Tulir293
+ * @since 0.1
+ * @from Maucros
+ */
 public class BlockT extends AbstractMauTransformer {
-	
 	public BlockT() {
 		super("net.minecraft.block.Block", "atr");
 	}

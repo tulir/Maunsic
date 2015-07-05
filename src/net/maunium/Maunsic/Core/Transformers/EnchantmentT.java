@@ -12,8 +12,15 @@ import org.objectweb.asm.tree.MethodNode;
 
 import net.maunium.Maunsic.Core.AbstractMauTransformer;
 
+/**
+ * Allows higher enchantment levels be displayed as roman numerals. Also displays "Maximum" if the enchantment is the highest level possible (
+ * {@link Short#MAX_VALUE}) or "Minimum" if the enchantment is the lowest level possible ({@link Short#MIN_VALUE})
+ * 
+ * @author Tulir293
+ * @since 0.1
+ * @from Maucros
+ */
 public class EnchantmentT extends AbstractMauTransformer {
-	
 	public EnchantmentT() {
 		super("net.minecraft.enchantment.Enchantment", "apf");
 	}

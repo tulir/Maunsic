@@ -11,6 +11,13 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.player.EntityPlayer;
 
+/**
+ * Action for displaying lines from self to players within render distance. Code in execute() was imported from Maucros.
+ * 
+ * @author Tulir293
+ * @since 0.1
+ * @from Maucros
+ */
 public class ActionTracer implements TickAction {
 	private boolean active = false;
 	

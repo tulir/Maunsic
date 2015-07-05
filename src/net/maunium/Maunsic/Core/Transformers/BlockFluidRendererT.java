@@ -16,8 +16,14 @@ import org.objectweb.asm.tree.VarInsnNode;
 import net.maunium.Maunsic.Actions.ActionXray;
 import net.maunium.Maunsic.Core.AbstractMauTransformer;
 
+/**
+ * Transformer for X-Ray vision. Allows fluidic blocks to be made invisible.
+ * 
+ * @author Tulir293
+ * @since 0.1
+ * @from Maucros
+ */
 public class BlockFluidRendererT extends AbstractMauTransformer {
-	
 	public BlockFluidRendererT() {
 		super("net.minecraft.client.renderer.BlockFluidRenderer", "clm");
 	}
