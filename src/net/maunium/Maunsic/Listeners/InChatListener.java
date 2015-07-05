@@ -7,9 +7,11 @@ import org.apache.commons.codec.binary.Base64;
 
 import net.maunium.Maunsic.Maunsic;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatStyle;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.IChatComponent;
 
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
@@ -22,6 +24,10 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
  * @since 0.1
  */
 public class InChatListener {
+	private String lastMessage = "";
+	private int countOfSpam = 1, prevId = 0;
+	public static int antispam = 0;
+	
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public void onChat(ClientChatReceivedEvent evt) {
 		if (evt.message.getUnformattedText().contains("Ⅿᴮ")) {
@@ -33,6 +39,24 @@ public class InChatListener {
 			evt.message.appendText(decoded.replace("&", "§"));
 			evt.message.appendSibling(new ChatComponentText(" [B64]").setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GRAY).setItalic(true)));
 		}
-		Maunsic.getChatLogger().in(evt.message.getUnformattedText());
+		
+		String message = evt.message.getUnformattedText();
+		if (antispam == 2) {
+			evt.setCanceled(true);
+			if (message.equalsIgnoreCase(lastMessage)) {
+				countOfSpam++;
+				IChatComponent spamCount = new ChatComponentText(" [" + countOfSpam + "]").setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GRAY)
+						.setItalic(true));
+				evt.message = evt.message.appendSibling(spamCount);
+			} else {
+				prevId++;
+				countOfSpam = 1;
+			}
+			Minecraft.getMinecraft().ingameGUI.getChatGUI().setChatLine(evt.message, prevId, Minecraft.getMinecraft().ingameGUI.getUpdateCounter(), false);
+		} else if (antispam == 1 && message.equalsIgnoreCase(lastMessage)) evt.setCanceled(true);
+		
+		Maunsic.getChatLogger().in(message);
+		// Set the last message to this message.
+		lastMessage = message;
 	}
 }
