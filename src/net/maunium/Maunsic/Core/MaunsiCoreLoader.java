@@ -5,6 +5,10 @@ import java.util.Map;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import net.maunium.Maunsic.Core.Transformers.BlockFluidRendererT;
+import net.maunium.Maunsic.Core.Transformers.BlockModelRendererT;
+import net.maunium.Maunsic.Core.Transformers.BlockT;
+import net.maunium.Maunsic.Core.Transformers.EnchantmentT;
 import net.maunium.Maunsic.Core.Transformers.EntityPlayerSPT;
 import net.maunium.Maunsic.Core.Transformers.KeyBindingT;
 import net.maunium.Maunsic.Core.Transformers.NetworkManagerT;
@@ -33,7 +37,8 @@ public class MaunsiCoreLoader implements IFMLLoadingPlugin {
 	
 	@Override
 	public String[] getASMTransformerClass() {
-		return new String[] { EntityPlayerSPT.class.getName(), KeyBindingT.class.getName(), NetworkManagerT.class.getName() };
+		return new String[] { EntityPlayerSPT.class.getName(), KeyBindingT.class.getName(), NetworkManagerT.class.getName(), BlockT.class.getName(),
+				BlockFluidRendererT.class.getName(), BlockModelRendererT.class.getName(), EnchantmentT.class.getName() };
 	}
 	
 	@Override
