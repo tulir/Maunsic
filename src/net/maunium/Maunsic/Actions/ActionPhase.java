@@ -22,7 +22,7 @@ import net.minecraft.util.MathHelper;
  * @from Maucros
  */
 public class ActionPhase implements StatusAction {
-	private boolean automated = true, autoforward = true;
+	public boolean automated = true, autoforward = true;
 	
 	public void phase() {
 		setActive(!Keyboard.isKeyDown(Keyboard.KEY_LSHIFT));
