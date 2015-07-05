@@ -15,6 +15,9 @@ key.aimbot=Aimbot
 key.alts=Alt Accounts
 key.triggerbot=Triggerbot
 key.xray=X-Ray
+key.autouse=Autouse
+key.esp=Player ESP
+key.tracer=Tracer
 
 conf.title=Maunsic {0} - Page {1}
 conf.back=Back
