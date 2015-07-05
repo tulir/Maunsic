@@ -11,6 +11,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.EnumChatFormatting;
 
 /**
  * Action for displaying a box around players even if they're behind a wall. Code in execute() was imported from Maucros.
@@ -40,8 +41,7 @@ public class ActionEsp implements TickAction {
 	
 	@Override
 	public String[] getStatusText() {
-		// TODO Auto-generated method stub
-		return null;
+		return new String[] { "Player ESP " + EnumChatFormatting.GREEN + "ON" };
 	}
 	
 	@SuppressWarnings("unchecked")

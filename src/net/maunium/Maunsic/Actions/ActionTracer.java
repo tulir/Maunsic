@@ -10,6 +10,7 @@ import net.maunium.Maunsic.Util.MaunsiConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.EnumChatFormatting;
 
 /**
  * Action for displaying lines from self to players within render distance. Code in execute() was imported from Maucros.
@@ -39,8 +40,7 @@ public class ActionTracer implements TickAction {
 	
 	@Override
 	public String[] getStatusText() {
-		// TODO Auto-generated method stub
-		return null;
+		return new String[] { "Tracer " + EnumChatFormatting.GREEN + "ON" };
 	}
 	
 	@SuppressWarnings("unchecked")
