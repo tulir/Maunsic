@@ -42,7 +42,7 @@ public class ActionSpammer extends IntervalAction {
 	@Override
 	public void setActive(boolean active) {
 		List<?> msgs = Minecraft.getMinecraft().ingameGUI.getChatGUI().getSentMessages();
-		spam = (String) msgs.get(msgs.size());
+		spam = (String) msgs.get(msgs.size() - 1);
 		this.active = active;
 	}
 	
