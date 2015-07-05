@@ -111,6 +111,9 @@ conf.antispam.disabled=Antispam: Disabled
 conf.antispam.simple=Antispam: Hide count
 conf.antispam.count=Antispam: Show count
 
+conf.triggerbot.min=Triggerbot Min delay
+conf.triggerbot.max=Triggerbot Max delay
+
 action.amv.title=Alt. Movement
 action.amv.mode=Mode
 action.amv.fly=Fly
