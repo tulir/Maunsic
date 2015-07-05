@@ -52,12 +52,26 @@ public class BlockSelectButton extends Button implements Shiftable {
 	}
 	
 	public String getBlockName(Block b) {
-		if (b.getUnlocalizedName().equals("tile.null")) {
+		if (b.getLocalizedName().equals("tile.null.name")) {
 			if (Block.getIdFromBlock(b) == 119) return "End Portal";
 			else if (Block.getIdFromBlock(b) == 34) return "Piston Part";
-			else if (Block.getIdFromBlock(b) == 34) return "Piston Part";
+			else if (Block.getIdFromBlock(b) == 36) return "Piston Part";
 			else return "Unknown";
-		} else return b.getLocalizedName();
+		} else if (b.getLocalizedName().equals("tile.brewingStand.name")) return "Brewing Stand";
+		else if (b.getLocalizedName().equals("tile.pumpkinStem.name")) return "Pumpkin Stem";
+		else if (b.getLocalizedName().equals("tile.diode.name")) return "Redstone Repeater";
+		else if (b.getLocalizedName().equals("tile.doorOak.name")) return "Oak Door";
+		else if (b.getLocalizedName().equals("tile.doorSpruce.name")) return "Spruce Door";
+		else if (b.getLocalizedName().equals("tile.doorBirch.name")) return "Birch Door";
+		else if (b.getLocalizedName().equals("tile.doorJungle.name")) return "Jungle Door";
+		else if (b.getLocalizedName().equals("tile.doorAcacia.name")) return "Acacia Door";
+		else if (b.getLocalizedName().equals("tile.doorDarkOak.name")) return "Dark Oak Door";
+		else if (b.getLocalizedName().equals("tile.flowerPot.name")) return "Flower Pot";
+		else if (b.getLocalizedName().equals("tile.skull.name")) return "Skull";
+		else if (b.getLocalizedName().equals("tile.comparator.name")) return "Redstone Comparator";
+		else if (b.getLocalizedName().equals("tile.banner.name")) return "Banner";
+		else if (b.getLocalizedName().equals("tile.stoneSlab2.name")) return "Stone Slab";
+		else return b.getLocalizedName();
 	}
 	
 	public BlockSelectButton(Block b, ButtonHandler handler) {
@@ -89,7 +103,7 @@ public class BlockSelectButton extends Button implements Shiftable {
 		}
 		
 		if (item != null && item.getItem() != null) mc.fontRendererObj.drawString(item.getDisplayName(), x + 24, y + 5, 0xffffff);
-		else mc.fontRendererObj.drawString(base.getLocalizedName(), x + 24, y + 5, 0xffffff);
+		else mc.fontRendererObj.drawString(getBlockName(base), x + 24, y + 5, 0xffffff);
 	}
 	
 	@Override
