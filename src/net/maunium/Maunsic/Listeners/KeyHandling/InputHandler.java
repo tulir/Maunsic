@@ -50,6 +50,7 @@ public class InputHandler {
 		KeyRegistry.registerKeybind(Keybinds.esp);
 		KeyRegistry.registerKeybind(Keybinds.autouse);
 		KeyRegistry.registerKeybind(Keybinds.fastbow);
+		KeyRegistry.registerKeybind(Keybinds.regen);
 	}
 	
 	public static void input(int keycode, boolean pressed) {
@@ -119,6 +120,7 @@ public class InputHandler {
 			else if (keycode == Keybinds.esp.getKeyCode()) host.actionEsp.setActive(!host.actionEsp.isActive());
 			else if (keycode == Keybinds.autouse.getKeyCode()) host.actionAutouse.setActive(!host.actionAutouse.isActive());
 			else if (keycode == Keybinds.fastbow.getKeyCode()) host.actionFastbow.setActive(!host.actionFastbow.isActive());
+			else if (keycode == Keybinds.regen.getKeyCode()) host.actionRegen.setActive(!host.actionRegen.isActive());
 			else if (keycode == Keybinds.phase.getKeyCode()) host.actionPhase.phase();
 //			else if (keycode == Keybinds.antikb.getKeyCode()) host.actionAntiKB.setActive(!host.actionAntiKB.isActive());
 		}
@@ -158,5 +160,6 @@ public class InputHandler {
 		public static final MauKeybind esp = new MauKeybind("esp", Keyboard.KEY_NONE);
 		public static final MauKeybind autouse = new MauKeybind("autouse", Keyboard.KEY_PERIOD);
 		public static final MauKeybind fastbow = new MauKeybind("fastbow", Keyboard.KEY_J);
+		public static final MauKeybind regen = new MauKeybind("regen", Keyboard.KEY_P);
 	}
 }
