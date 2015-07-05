@@ -6,6 +6,7 @@ import net.maunium.Maunsic.Maunsic;
 import net.maunium.Maunsic.Actions.ActionFly;
 import net.maunium.Maunsic.Gui.GuiMaunsic;
 import net.maunium.Maunsic.Gui.Alts.GuiChangeUsername;
+import net.maunium.Maunsic.Gui.XRay.GuiXrayBlocks;
 import net.maunium.Maunsic.KeyMaucros.KeyMaucro;
 import net.maunium.Maunsic.Server.ServerHandler;
 
@@ -44,6 +45,7 @@ public class InputHandler {
 		KeyRegistry.registerKeybind(Keybinds.autosoup);
 		KeyRegistry.registerKeybind(Keybinds.aimbot);
 		KeyRegistry.registerKeybind(Keybinds.alts);
+		KeyRegistry.registerKeybind(Keybinds.xray);
 	}
 	
 	public static void input(int keycode, boolean pressed) {
@@ -75,7 +77,7 @@ public class InputHandler {
 			konamiDown = true;
 		}
 		
-		if (konamiStatus == 10) {
+		if (konamiStatus == konami.length + 1) {
 			Minecraft.getMinecraft().displayGuiScreen(new GuiMaunsic(host));
 			konamiStatus = 0;
 			konamiDown = true;
@@ -95,6 +97,12 @@ public class InputHandler {
 			} else if (keycode == Keybinds.dec_speed.getKeyCode()) {
 				if (Keybinds.inc_speed.isDown()) host.actionFly.setSpeed(ActionFly.DEFAULT_SPEED);
 				else host.actionFly.changeSpeed(false);
+			} else if (keycode == Keybinds.xray.getKeyCode()) {
+				if (Keyboard.isKeyDown(Keyboard.KEY_LCONTROL)) Minecraft.getMinecraft().displayGuiScreen(new GuiXrayBlocks(host));
+				else {
+					if (host.actionXray.isActive()) host.actionXray.setActive(false);
+					else host.actionXray.setActive(true);
+				}
 			} else if (keycode == Keybinds.alts.getKeyCode()) Minecraft.getMinecraft().displayGuiScreen(new GuiChangeUsername(host));
 			else if (keycode == Keybinds.nofall.getKeyCode()) host.actionNofall.setActive(!host.actionNofall.isActive());
 			else if (keycode == Keybinds.blink.getKeyCode()) host.actionBlink.setActive(!host.actionBlink.isActive());
@@ -137,5 +145,6 @@ public class InputHandler {
 		public static final MauKeybind autosoup = new MauKeybind("autosoup", Keyboard.KEY_O);
 		public static final MauKeybind aimbot = new MauKeybind("aimbot", Keyboard.KEY_G);
 		public static final MauKeybind alts = new MauKeybind("alts", Keyboard.KEY_U);
+		public static final MauKeybind xray = new MauKeybind("xray", Keyboard.KEY_X);
 	}
 }
