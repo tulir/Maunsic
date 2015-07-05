@@ -10,6 +10,8 @@ import com.mcf.davidee.guilib.core.Button;
 import com.mcf.davidee.guilib.core.Scrollbar.Shiftable;
 import com.mcf.davidee.guilib.core.Widget;
 
+import net.maunium.Maunsic.Util.GLHelper;
+
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
@@ -64,8 +66,8 @@ public class BlockSelectButton extends Button implements Shiftable {
 	
 	@Override
 	public void draw(int mx, int my) {
-		int red = toInt(255, 25, 25, 200);
-		int def = toInt(100, 100, 100, 100);
+		int red = GLHelper.toInt(255, 25, 25, 200);
+		int def = GLHelper.toInt(100, 100, 100, 100);
 		if (selected) Gui.drawRect(x, y, x + width, y + height, red);
 		else Gui.drawRect(x, y, x + width, y + height, def);
 		
@@ -88,10 +90,6 @@ public class BlockSelectButton extends Button implements Shiftable {
 		
 		if (item != null && item.getItem() != null) mc.fontRendererObj.drawString(item.getDisplayName(), x + 24, y + 5, 0xffffff);
 		else mc.fontRendererObj.drawString(base.getLocalizedName(), x + 24, y + 5, 0xffffff);
-	}
-	
-	private int toInt(int red, int green, int blue, int alpha) {
-		return (alpha & 0xFF) << 24 | (red & 0xFF) << 16 | (green & 0xFF) << 8 | (blue & 0xFF) << 0;
 	}
 	
 	@Override

@@ -14,6 +14,7 @@ import com.mcf.davidee.guilib.vanilla.ScrollbarVanilla;
 import mauluam.MauThreadLib;
 
 import net.maunium.Maunsic.Gui.GuiMaunsic;
+import net.maunium.Maunsic.Util.GLHelper;
 import net.maunium.Maunsic.Util.I18n;
 
 import net.minecraft.client.gui.Gui;
@@ -124,13 +125,9 @@ public class GuiLuaThreads extends BasicScreen {
 		@Override
 		public void draw(int mx, int my) {
 			hover = inBounds(mx, my);
-			Gui.drawRect(x, y, x + width, y + height, toInt(68, 68, 68, 155));
-			drawString(mc.fontRendererObj, name, x + 4, y + 4,
-					selected ? toInt(150, 255, 150, 255) : hover ? toInt(255, 255, 185, 230) : toInt(255, 255, 255, 255));
-		}
-		
-		private int toInt(int red, int green, int blue, int alpha) {
-			return (alpha & 0xFF) << 24 | (red & 0xFF) << 16 | (green & 0xFF) << 8 | (blue & 0xFF) << 0;
+			Gui.drawRect(x, y, x + width, y + height, GLHelper.toInt(68, 68, 68, 155));
+			drawString(mc.fontRendererObj, name, x + 4, y + 4, selected ? GLHelper.toInt(150, 255, 150, 255) : hover ? GLHelper.toInt(255, 255, 185, 230)
+					: GLHelper.toInt(255, 255, 255, 255));
 		}
 		
 		public boolean isSelected() {

@@ -6,6 +6,8 @@ import org.lwjgl.opengl.GL11;
 import com.mcf.davidee.guilib.core.Button.ButtonHandler;
 import com.mcf.davidee.guilib.vanilla.focusable.FocusableButton;
 
+import net.maunium.Maunsic.Util.GLHelper;
+
 import net.minecraft.util.ResourceLocation;
 
 public class MultiKeySelectButton extends FocusableButton {
@@ -67,13 +69,8 @@ public class MultiKeySelectButton extends FocusableButton {
 	
 	private int getTextColor(boolean hover) {
 		if (isFocused()) {
-			return toInt(100, 200, 100, 255);
-		} else return enabled ? hover ? toInt(255, 255, 160, 255) : toInt(224, 224, 224, 255) : toInt(95, 95, 95, 255);
-		
-	}
-	
-	private int toInt(int red, int green, int blue, int alpha) {
-		return (alpha & 0xFF) << 24 | (red & 0xFF) << 16 | (green & 0xFF) << 8 | (blue & 0xFF) << 0;
+			return GLHelper.toInt(100, 200, 100, 255);
+		} else return enabled ? hover ? GLHelper.toInt(255, 255, 160, 255) : GLHelper.toInt(224, 224, 224, 255) : GLHelper.toInt(95, 95, 95, 255);
 	}
 	
 	public int[] getKeycodes() {
