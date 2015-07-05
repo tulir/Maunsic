@@ -19,10 +19,12 @@ import net.maunium.Maunsic.Actions.ActionAimbot;
 import net.maunium.Maunsic.Actions.ActionAttackaura;
 import net.maunium.Maunsic.Actions.ActionAutosoup;
 import net.maunium.Maunsic.Actions.ActionBlink;
+import net.maunium.Maunsic.Actions.ActionEsp;
 import net.maunium.Maunsic.Actions.ActionFly;
 import net.maunium.Maunsic.Actions.ActionNofall;
 import net.maunium.Maunsic.Actions.ActionPhase;
 import net.maunium.Maunsic.Actions.ActionSpammer;
+import net.maunium.Maunsic.Actions.ActionTracer;
 import net.maunium.Maunsic.Actions.ActionTriggerbot;
 import net.maunium.Maunsic.Actions.ActionXray;
 import net.maunium.Maunsic.Actions.Util.ActionHandler;
@@ -111,7 +113,8 @@ public class Maunsic {
 	/* Tick actions */
 	public ActionFly actionFly;
 	public ActionPhase actionPhase;
-	public StatusAction actionNofall, actionBlink, actionSpammer, actionAttackaura, actionTriggerbot, actionAutosoup, actionAimbot, actionXray;
+	public ActionTriggerbot actionTriggerbot;
+	public StatusAction actionNofall, actionBlink, actionSpammer, actionAttackaura, actionAutosoup, actionAimbot, actionXray, actionTracer, actionEsp;
 	
 	/**
 	 * Constructor
@@ -215,6 +218,8 @@ public class Maunsic {
 		actionAutosoup = ach.registerAction(new ActionAutosoup(), ActionHandler.Phase.LIVING);
 		actionAimbot = ach.registerAction(new ActionAimbot(), ActionHandler.Phase.LIVING);
 		actionXray = ach.registerAction(new ActionXray(), ActionHandler.Phase.STATUS);
+		actionTracer = ach.registerAction(new ActionTracer(), ActionHandler.Phase.WORLD);
+		actionEsp = ach.registerAction(new ActionEsp(), ActionHandler.Phase.WORLD);
 		
 		getLogger().info("Init complete in " + (init = (int) (System.currentTimeMillis() - st)) + "ms.");
 	}
