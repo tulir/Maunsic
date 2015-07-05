@@ -11,6 +11,10 @@ key.phase=Phase
 key.attackaura=Attack Aura
 key.blink=Blink
 key.spammer=Spammer
+key.aimbot=Aimbot
+key.alts=Alt Accounts
+key.triggerbot=Triggerbot
+key.xray=X-Ray
 
 conf.title=Maunsic {0} - Page {1}
 conf.back=Back
@@ -72,6 +76,11 @@ conf.alts.add.username=Username
 conf.alts.add.password=Password
 conf.alts.add.add=Add
 conf.alts.add.cancel=Cancel
+
+conf.xray=X-Ray Blocks
+conf.xray.title=X-Ray Blocks
+conf.xray.deselectall=Deselect All
+conf.xray.selectall=Select All
 
 action.amv.title=Alt. Movement
 action.amv.mode=Mode
