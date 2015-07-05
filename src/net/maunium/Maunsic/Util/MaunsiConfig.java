@@ -209,10 +209,10 @@ public class MaunsiConfig {
 	 * Get the value in the path as a String. If the value is not a String, return null.
 	 * 
 	 * @param path The path to search.
-	 * @return The String in the given path, or null if there was no valid String in the given path.
+	 * @return The String in the given path, or an empty string if there was no valid String in the given path.
 	 */
 	public String getString(String path) {
-		return getString(path, null);
+		return getString(path, "");
 	}
 	
 	/**
@@ -237,10 +237,10 @@ public class MaunsiConfig {
 	 * Get the value in the path as a List. If the value is not a List, return null.
 	 * 
 	 * @param path The path to search.
-	 * @return The List in the given path, or null if there was no valid List in the given path.
+	 * @return The List in the given path, or an empty list if there was no valid List in the given path.
 	 */
 	public List<JsonElement> getList(String path) {
-		return getList(path, null);
+		return getList(path, new ArrayList<JsonElement>());
 	}
 	
 	/**
@@ -265,10 +265,10 @@ public class MaunsiConfig {
 	 * Get the value in the path as a List. If the value is not a List, return null.
 	 * 
 	 * @param path The path to search.
-	 * @return The List in the given path, or null if there was no valid List in the given path.
+	 * @return The List in the given path, or an empty list if there was no valid List in the given path.
 	 */
 	public List<String> getStringList(String path) {
-		return getStringList(path, null);
+		return getStringList(path, new ArrayList<String>());
 	}
 	
 	/**
@@ -388,7 +388,7 @@ public class MaunsiConfig {
 	 * @param path The path.
 	 * @param obj The collection.
 	 */
-	public void set(String path, Collection<Object> obj) {
+	public void set(String path, Collection<?> obj) {
 		JsonArray ja = new JsonArray();
 		for (Object o : obj) {
 			if (o instanceof String) ja.add(new JsonPrimitive((String) o));
@@ -396,6 +396,7 @@ public class MaunsiConfig {
 			else if (o instanceof Boolean) ja.add(new JsonPrimitive((Boolean) o));
 			else if (o instanceof Character) ja.add(new JsonPrimitive((Character) o));
 			else if (o instanceof JsonElement) ja.add((JsonElement) o);
+			else ja.add(new JsonPrimitive(o.toString()));
 		}
 		set(json, path, ja);
 	}
