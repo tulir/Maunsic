@@ -5,13 +5,12 @@ import java.util.List;
 
 import net.maunium.Maunsic.Actions.Util.IntervalAction;
 import net.maunium.Maunsic.Settings.Attacking;
+import net.maunium.Maunsic.Util.EntityUtils;
 import net.maunium.Maunsic.Util.MaunsiConfig;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityFireball;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.EnumChatFormatting;
@@ -28,32 +27,13 @@ public class ActionAimbot extends IntervalAction {
 	
 	@Override
 	public void executeInterval() {
-		EntityPlayerSP p = Minecraft.getMinecraft().thePlayer;
-		List<Entity> entities = getEntitiesAABB(EntityFireball.class, Attacking.range);
-		for (Class<? extends EntityLivingBase> c : Attacking.getTargets())
-			entities.addAll(getEntitiesAABB(c, Attacking.range));
-		Entity c = null;
-		double cd = Double.MAX_VALUE;
-		for (Entity e : entities) {
-			if (e instanceof EntityPlayer) {
-				EntityPlayer b = (EntityPlayer) e;
-				if (Attacking.isFriend(b.getName()) || b.equals(p)) continue;
-			}
-			double dX = p.posX - e.posX, dY = p.posY - e.posY, dZ = p.posZ - e.posZ;
-			double d = dX * dX + dY * dY + dZ * dZ;
-			if (d < cd) {
-				c = e;
-				cd = d;
-			}
-		}
-		if (c != null) {
-			double dX = Math.abs(c.posX) - Math.abs(p.posX), dY = Math.abs(c.posY) - Math.abs(p.posY), dZ = Math.abs(c.posZ) - Math.abs(p.posZ);
-			double yaw = Math.toDegrees(Math.atan(dY / dX));
-			double pitch = Math.toDegrees(Math.atan(Math.sqrt(dX * dX + dY * dY) / dZ));
-			if (c.posX < p.posX) yaw -= 180;
-			p.rotationYaw = (float) yaw - 90;
-			p.rotationPitch = (float) pitch - 90;
-		}
+		List<Entity> e = new ArrayList<Entity>(getEntitiesAABB(EntityFireball.class, Attacking.range));
+		for (Class<?> c : Attacking.getTargets())
+			e.addAll(getEntitiesAABB(c, Attacking.range));
+		
+		Entity c = EntityUtils.getClosestEntity(true, e);
+		if (c == null) return;
+		EntityUtils.faceEntityClient(c);
 	}
 	
 	private List<Entity> getEntitiesAABB(Class<?> c, double range) {
