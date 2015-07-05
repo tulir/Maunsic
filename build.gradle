@@ -16,7 +16,7 @@ buildscript {
 }
 apply plugin: 'forge'
 
-version = "0.1-A1"
+version = "0.1-A2"
 group = "net.maunium.Maunsic"
 archivesBaseName = "Maunsic-MC1.8"
 
@@ -32,7 +32,7 @@ jar {
 }
 
 minecraft {
-    version = "1.8-11.14.3.1446"
+    version = "1.8-11.14.3.1450"
     runDir = "MinecraftEnv"
     mappings = "snapshot_nodoc_20141130"
 }
