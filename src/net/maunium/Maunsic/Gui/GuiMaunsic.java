@@ -19,6 +19,7 @@ import net.maunium.Maunsic.Gui.Alts.GuiChangeUsername;
 import net.maunium.Maunsic.Gui.KeyMaucros.GuiKeyMaucros;
 import net.maunium.Maunsic.Gui.KeyMaucros.GuiLuaThreads;
 import net.maunium.Maunsic.Gui.XRay.GuiXrayBlocks;
+import net.maunium.Maunsic.Listeners.InChatListener;
 import net.maunium.Maunsic.Util.I18n;
 
 import net.minecraft.client.Minecraft;
@@ -39,7 +40,7 @@ public class GuiMaunsic extends BasicScreen {
 	
 	private Label title;
 	private ButtonVanilla keys, alts, keymaucros, luathreads, xray, fanda, prevPage, nextPage, close;
-	private StateButton autophase, autoblink, autophasesprint;
+	private StateButton autophase, autoblink, autophasesprint, antispam;
 	private ExtendedIntSlider speed, jump, blinksafety;
 	
 	public GuiMaunsic(Maunsic host) {
@@ -63,24 +64,51 @@ public class GuiMaunsic extends BasicScreen {
 		keys = new ButtonVanilla(I18n.translate("conf.keys"), this);
 		xray = new ButtonVanilla(I18n.translate("conf.xray"), this);
 		fanda = new ButtonVanilla(I18n.translate("conf.fanda"), this);
-		add(widgets, alts, keymaucros, luathreads, keys, xray, fanda);
+		add(alts, keymaucros, luathreads, keys, xray, fanda);
 		
 		speed = new ExtendedIntSlider(I18n.translate("conf.amv.speed"), host.actionFly.getSpeed(), ActionFly.MIN_SPEED, ActionFly.MAX_SPEED);
 		jump = new ExtendedIntSlider(amount -> amount == 0 ? I18n.translate("conf.amv.jump.default") : I18n.translate("conf.amv.jump", amount),
 				host.actionFly.getJump(), 0, 100);
-		add(widgets, speed, jump);
+		add(speed, jump);
 		
-		autoblink = new StateButton(150, 20, I18n.translate("conf.blink.automated"), this, ActionBlink.automated ? 1 : 0);
+		antispam = new StateButton(InChatListener.antispam, new StateButton.Format() {
+			@Override
+			public int stateCount() {
+				return 3;
+			}
+			
+			@Override
+			public String getText() {
+				return I18n.translate("conf.antispam");
+			}
+			
+			@Override
+			public String format(int state) {
+				switch (state) {
+					case 0:
+						return I18n.translate("conf.antispam.disabled");
+					case 1:
+						return I18n.translate("conf.antispam.simple");
+					case 2:
+						return I18n.translate("conf.antispam.count");
+					default:
+						return I18n.translate("conf.antispam");
+				}
+			}
+		});
+		add(antispam);
+		
+		autoblink = new StateButton(I18n.translate("conf.blink.automated"), ActionBlink.automated ? 1 : 0);
 		blinksafety = new ExtendedIntSlider(amount -> amount == 0 ? I18n.translate("conf.blink.safety") + ": " + I18n.translate("off")
 				: I18n.translate("conf.blink.safety") + ": " + amount + " " + I18n.translate("conf.blink.safety.level"), ActionBlink.safetyLevel, 0, 10);
-		autophase = new StateButton(150, 20, I18n.translate("conf.phase.automated"), this, host.actionPhase.automated ? 1 : 0);
-		autophasesprint = new StateButton(150, 20, I18n.translate("conf.phase.autoforward"), this, host.actionPhase.autoforward ? 1 : 0);
-		add(widgets, autoblink, blinksafety, autophase, autophasesprint);
+		autophase = new StateButton(I18n.translate("conf.phase.automated"), host.actionPhase.automated ? 1 : 0);
+		autophasesprint = new StateButton(I18n.translate("conf.phase.autoforward"), host.actionPhase.autoforward ? 1 : 0);
+		add(autoblink, blinksafety, autophase, autophasesprint);
 	}
 	
-	public void add(List<Widget> l, Widget... w) {
+	public void add(Widget... w) {
 		for (Widget ww : w)
-			l.add(ww);
+			widgets.add(ww);
 	}
 	
 	@Override
@@ -150,6 +178,8 @@ public class GuiMaunsic extends BasicScreen {
 		ActionBlink.safetyLevel = blinksafety.getIntValue();
 		host.actionPhase.automated = autophase.getState() == 1;
 		host.actionPhase.autoforward = autophasesprint.getState() == 1;
+		
+		InChatListener.antispam = antispam.getState();
 		// Save all the action configs to RAM
 		host.getActionHandler().saveAll();
 		// Save config to disk.
