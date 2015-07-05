@@ -46,6 +46,8 @@ public class InputHandler {
 		KeyRegistry.registerKeybind(Keybinds.aimbot);
 		KeyRegistry.registerKeybind(Keybinds.alts);
 		KeyRegistry.registerKeybind(Keybinds.xray);
+		KeyRegistry.registerKeybind(Keybinds.tracer);
+		KeyRegistry.registerKeybind(Keybinds.esp);
 	}
 	
 	public static void input(int keycode, boolean pressed) {
@@ -111,6 +113,8 @@ public class InputHandler {
 			else if (keycode == Keybinds.triggerbot.getKeyCode()) host.actionTriggerbot.setActive(!host.actionTriggerbot.isActive());
 			else if (keycode == Keybinds.autosoup.getKeyCode()) host.actionAutosoup.setActive(!host.actionAutosoup.isActive());
 			else if (keycode == Keybinds.aimbot.getKeyCode()) host.actionAimbot.setActive(!host.actionAimbot.isActive());
+			else if (keycode == Keybinds.tracer.getKeyCode()) host.actionTracer.setActive(!host.actionTracer.isActive());
+			else if (keycode == Keybinds.esp.getKeyCode()) host.actionEsp.setActive(!host.actionEsp.isActive());
 			else if (keycode == Keybinds.phase.getKeyCode()) host.actionPhase.phase();
 //			else if (keycode == Keybinds.antikb.getKeyCode()) host.actionAntiKB.setActive(!host.actionAntiKB.isActive());
 		}
@@ -146,5 +150,7 @@ public class InputHandler {
 		public static final MauKeybind aimbot = new MauKeybind("aimbot", Keyboard.KEY_G);
 		public static final MauKeybind alts = new MauKeybind("alts", Keyboard.KEY_U);
 		public static final MauKeybind xray = new MauKeybind("xray", Keyboard.KEY_X);
+		public static final MauKeybind tracer = new MauKeybind("tracer", Keyboard.KEY_NONE);
+		public static final MauKeybind esp = new MauKeybind("esp", Keyboard.KEY_NONE);
 	}
 }
