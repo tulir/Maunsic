@@ -41,7 +41,7 @@ public class GuiMaunsic extends BasicScreen {
 	private Label title;
 	private ButtonVanilla keys, alts, keymaucros, luathreads, xray, fanda, prevPage, nextPage, close;
 	private StateButton autophase, autoblink, autophasesprint, antispam;
-	private ExtendedIntSlider speed, jump, blinksafety;
+	private ExtendedIntSlider speed, jump, blinksafety, triggerMin, triggerMax;
 	
 	public GuiMaunsic(Maunsic host) {
 		super(null);
@@ -69,7 +69,9 @@ public class GuiMaunsic extends BasicScreen {
 		speed = new ExtendedIntSlider(I18n.translate("conf.amv.speed"), host.actionFly.getSpeed(), ActionFly.MIN_SPEED, ActionFly.MAX_SPEED);
 		jump = new ExtendedIntSlider(amount -> amount == 0 ? I18n.translate("conf.amv.jump.default") : I18n.translate("conf.amv.jump", amount),
 				host.actionFly.getJump(), 0, 100);
-		add(speed, jump);
+		triggerMin = new ExtendedIntSlider(I18n.translate("conf.triggerbot.min"), host.actionTriggerbot.minDelay, 10, 500);
+		triggerMax = new ExtendedIntSlider(I18n.translate("conf.triggerbot.max"), host.actionTriggerbot.maxDelay, 10, 500);
+		add(speed, jump, triggerMin, triggerMax);
 		
 		antispam = new StateButton(InChatListener.antispam, new StateButton.Format() {
 			@Override
@@ -173,6 +175,9 @@ public class GuiMaunsic extends BasicScreen {
 	protected void save() {
 		host.actionFly.setSpeed(speed.getIntValue());
 		host.actionFly.setJump(jump.getIntValue());
+		
+		host.actionTriggerbot.minDelay = triggerMin.getIntValue();
+		host.actionTriggerbot.maxDelay = triggerMax.getIntValue();
 		
 		ActionBlink.automated = autoblink.getState() == 1;
 		ActionBlink.safetyLevel = blinksafety.getIntValue();
