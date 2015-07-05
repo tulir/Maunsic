@@ -39,8 +39,8 @@ public class ActionFastbow implements TickAction {
 	@Override
 	public void execute() {
 		EntityPlayerSP p = Minecraft.getMinecraft().thePlayer;
-		if (p.getHealth() > 0 && (p.onGround || p.capabilities.isCreativeMode) && p.inventory.getCurrentItem() != null
-				&& p.inventory.getCurrentItem().getItem() instanceof ItemBow && Minecraft.getMinecraft().gameSettings.keyBindUseItem.isKeyDown()) {
+		if (p.inventory.getCurrentItem() != null && p.inventory.getCurrentItem().getItem() instanceof ItemBow
+				&& Minecraft.getMinecraft().gameSettings.keyBindUseItem.isKeyDown()) {
 			Minecraft.getMinecraft().playerController.sendUseItem(p, Minecraft.getMinecraft().theWorld, p.inventory.getCurrentItem());
 			p.inventory.getCurrentItem().getItem().onItemRightClick(p.inventory.getCurrentItem(), Minecraft.getMinecraft().theWorld, p);
 			for (int i = 0; i < 20; i++)
