@@ -20,6 +20,9 @@ version = "0.1-A1"
 group = "net.maunium.Maunsic"
 archivesBaseName = "Maunsic-MC1.8"
 
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
 jar {
     manifest {
         attributes 'FMLCorePlugin': 'net.maunium.Maunsic.Core.MaunsiCoreLoader'
@@ -34,9 +37,7 @@ minecraft {
     mappings = "snapshot_nodoc_20141130"
 }
 
-dependencies {
-#  compile files('lib/luaj-jse-3.0.jar')
-}
+dependencies { }
 
 processResources {
     from(sourceSets.main.resources.srcDirs) { }
