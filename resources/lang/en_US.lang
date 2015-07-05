@@ -18,6 +18,9 @@ key.xray=X-Ray
 
 conf.title=Maunsic {0} - Page {1}
 conf.back=Back
+conf.backtogame=Back to game
+conf.nextpage=Next Page
+conf.prevpage=Previous Page
 
 conf.keys=Keybindings
 conf.keys.title=Maunsic Keybindings
@@ -81,6 +84,27 @@ conf.xray=X-Ray Blocks
 conf.xray.title=X-Ray Blocks
 conf.xray.deselectall=Deselect All
 conf.xray.selectall=Select All
+
+conf.amv.speed=Speed
+conf.amv.jump=Jump Height: {0}
+conf.amv.jump.default=Jump Height: By speed
+
+conf.blink.automated=Auto Blink
+conf.blink.safety=Blink Safety
+conf.blink.safety.level=seconds
+
+conf.phase.automated=Auto Phase
+conf.phase.autoforward=Phase Autosprint
+
+conf.fanda=Friends & Attacking
+conf.fanda.title=Friends & Attacking Settings
+conf.fanda.tctitle=Targets
+conf.fanda.fctitle=Friends
+conf.fanda.range=Attack Range
+conf.fanda.addfriend=Add Friend
+conf.fanda.removefriend=Remove Selected Friend
+conf.fanda.addtarget=Add Target
+conf.fanda.removetarget=Remove Selected Target
 
 action.amv.title=Alt. Movement
 action.amv.mode=Mode
