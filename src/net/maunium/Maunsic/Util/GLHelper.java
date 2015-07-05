@@ -11,7 +11,7 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.AxisAlignedBB;
 
 /**
- * Most of the code by godshawk from CheatingEssentials, so credit to him.
+ * Most of the code from CheatingEssentials by godshawk.
  * 
  * @author Tulir293
  * @author godshawk
