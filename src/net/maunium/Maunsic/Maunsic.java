@@ -25,6 +25,7 @@ import net.maunium.Maunsic.Actions.ActionFastbow;
 import net.maunium.Maunsic.Actions.ActionFly;
 import net.maunium.Maunsic.Actions.ActionNofall;
 import net.maunium.Maunsic.Actions.ActionPhase;
+import net.maunium.Maunsic.Actions.ActionRegen;
 import net.maunium.Maunsic.Actions.ActionSpammer;
 import net.maunium.Maunsic.Actions.ActionTracer;
 import net.maunium.Maunsic.Actions.ActionTriggerbot;
@@ -117,7 +118,7 @@ public class Maunsic {
 	public ActionPhase actionPhase;
 	public ActionTriggerbot actionTriggerbot;
 	public StatusAction actionNofall, actionBlink, actionSpammer, actionAttackaura, actionAutosoup, actionAimbot, actionXray, actionTracer, actionEsp,
-			actionAutouse, actionFastbow;
+			actionAutouse, actionFastbow, actionRegen;
 	
 	/**
 	 * Constructor
@@ -225,6 +226,7 @@ public class Maunsic {
 		actionEsp = ach.registerAction(new ActionEsp(), ActionHandler.Phase.WORLD);
 		actionAutouse = ach.registerAction(new ActionAutouse(), ActionHandler.Phase.LIVING);
 		actionFastbow = ach.registerAction(new ActionFastbow(), ActionHandler.Phase.LIVING);
+		actionRegen = ach.registerAction(new ActionRegen(), ActionHandler.Phase.LIVING);
 		
 		getLogger().info("Init complete in " + (init = (int) (System.currentTimeMillis() - st)) + "ms.");
 	}
