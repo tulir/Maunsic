@@ -20,12 +20,12 @@ import net.maunium.Maunsic.Listeners.KeyHandling.InputHandler;
  */
 public class KeyBindingT extends AbstractMauTransformer {
 	public KeyBindingT() {
-		super("net.minecraft.client.settings.KeyBinding", "");
+		super("net.minecraft.client.settings.KeyBinding", "bsr");
 	}
 	
 	@Override
 	public byte[] transform(byte[] bytes, boolean obf) {
-		String methodName = obf ? "" : "setKeyBindState";
+		String methodName = obf ? "a" : "setKeyBindState";
 		
 		ClassNode node = new ClassNode();
 		ClassReader cr = new ClassReader(bytes);
