@@ -1,7 +1,9 @@
 package net.maunium.Maunsic.Settings;
 
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -10,7 +12,6 @@ import java.util.regex.Pattern;
 import org.apache.commons.codec.binary.Base64;
 
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
 
 import net.maunium.Maunsic.Util.MaunsiConfig;
@@ -39,14 +40,9 @@ public class AltAccounts {
 	 * Load the alt accounts from the given MaunsiConfig instance.
 	 */
 	public void load(MaunsiConfig conf) {
-		JsonArray ja;
-		JsonElement je = conf.get("alts", new JsonArray());
-		if (je.isJsonArray()) ja = je.getAsJsonArray();
-		else ja = new JsonArray();
-		for (JsonElement e : ja) {
-			if (!e.isJsonPrimitive()) continue;
-			String s = e.getAsString();
-			if (!s.contains("||")) continue;
+		List<String> l = conf.getStringList("alts", new ArrayList<String>());
+		for (String s : l) {
+			if (s == null || s.isEmpty() || !s.contains("||")) continue;
 			String[] ss = s.split(Pattern.quote("||"), 2);
 			byte[] passwd = Base64.decodeBase64(ss[1].getBytes(StandardCharsets.UTF_8));
 			addAlt(ss[0], passwd);

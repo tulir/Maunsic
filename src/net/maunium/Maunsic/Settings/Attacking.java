@@ -1,5 +1,6 @@
 package net.maunium.Maunsic.Settings;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -24,14 +25,12 @@ public class Attacking {
 			targetsa.add(new JsonPrimitive(c.getName()));
 		conf.set("attacking.targets", targetsa);
 		
-		JsonArray friendsa = new JsonArray();
-		for (String s : friends)
-			friendsa.add(new JsonPrimitive(s));
-		conf.set("attacking.friends", friendsa);
+		conf.set("attacking.friends", friends);
 	}
 	
 	@SuppressWarnings("unchecked")
 	public static void load(MaunsiConfig conf) {
+		targets = new ArrayList<Class<? extends EntityLivingBase>>();
 		JsonElement e1 = conf.get("attacking.targets");
 		if (e1.isJsonArray()) {
 			JsonArray ja = e1.getAsJsonArray();
@@ -43,6 +42,8 @@ public class Attacking {
 				}
 			}
 		}
+		
+		friends = new HashSet<String>(conf.getStringList("attacking.friends"));
 	}
 	
 	public static boolean isFriend(String name) {
