@@ -18,6 +18,7 @@ import net.minecraft.entity.EntityLivingBase;
 public class Attacking {
 	private static List<Class<? extends EntityLivingBase>> targets = Arrays.asList(EntityLivingBase.class);
 	private static Set<String> friends = new HashSet<String>();
+	public static double range = 4.0D;
 	
 	public static void save(MaunsiConfig conf) {
 		JsonArray targetsa = new JsonArray();
@@ -26,6 +27,8 @@ public class Attacking {
 		conf.set("attacking.targets", targetsa);
 		
 		conf.set("attacking.friends", friends);
+		
+		conf.set("attacking.range", range);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -44,10 +47,31 @@ public class Attacking {
 		}
 		
 		friends = new HashSet<String>(conf.getStringList("attacking.friends"));
+		range = conf.getDouble("attacking.range");
 	}
 	
 	public static boolean isFriend(String name) {
 		return friends.contains(name.toLowerCase(Locale.ENGLISH));
+	}
+	
+	public static void addFriend(String name) {
+		friends.add(name);
+	}
+	
+	public static void addTarget(Class<? extends EntityLivingBase> name) {
+		targets.add(name);
+	}
+	
+	public static void clearFriends() {
+		friends.clear();
+	}
+	
+	public static void clearTargets() {
+		targets.clear();
+	}
+	
+	public static Set<String> getFriends() {
+		return friends;
 	}
 	
 	public static List<Class<? extends EntityLivingBase>> getTargets() {
