@@ -34,11 +34,7 @@ public class LuaKeyMaucro extends KeyMaucro {
 	
 	@Override
 	public String getData() {
-		return file.getAbsolutePath();
-	}
-	
-	public String getScriptPath() {
-		return file.getPath();
+		return file.getName();
 	}
 	
 	@Override
