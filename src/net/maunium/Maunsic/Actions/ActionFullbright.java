@@ -15,10 +15,13 @@ public class ActionFullbright implements TickAction {
 		return true;
 	}
 	
+	public boolean isActuallyActive() {
+		return active;
+	}
+	
 	@Override
 	public void setActive(boolean active) {
-		if (!active) Minecraft.getMinecraft().gameSettings.gammaSetting = gamma;
-		else gamma = Minecraft.getMinecraft().gameSettings.gammaSetting;
+		if (gamma > 1.0F) gamma = 1.0F;
 		this.active = active;
 	}
 	
@@ -30,15 +33,15 @@ public class ActionFullbright implements TickAction {
 	
 	@Override
 	public String[] getStatusText() {
-		return active ? new String[] { "Fullbright " + EnumChatFormatting.GREEN + "ON" } : null;
+		return isActuallyActive() ? new String[] { "Fullbright " + EnumChatFormatting.GREEN + "ON" } : null;
 	}
 	
 	@Override
 	public void execute() {
-		if (active) {
-			if (Minecraft.getMinecraft().gameSettings.gammaSetting < 16F) Minecraft.getMinecraft().gameSettings.gammaSetting += 0.25F;
+		if (isActuallyActive()) {
+			if (Minecraft.getMinecraft().gameSettings.gammaSetting < 16F) Minecraft.getMinecraft().gameSettings.gammaSetting += 0.1F;
 		} else if (Minecraft.getMinecraft().gameSettings.gammaSetting > gamma) {
-			Minecraft.getMinecraft().gameSettings.gammaSetting -= 0.5F;
+			Minecraft.getMinecraft().gameSettings.gammaSetting -= 0.1F;
 		}
 	}
 	
