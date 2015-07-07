@@ -14,6 +14,10 @@ public class ActionFreecam implements TickAction {
 	private double oldX, oldY, oldZ;
 	private EntityOtherPlayerMP fake = null;
 	
+	public ActionFreecam(Maunsic host) {
+		this.host = host;
+	}
+	
 	@Override
 	public void setActive(boolean active) {
 		this.active = active;
@@ -41,13 +45,8 @@ public class ActionFreecam implements TickAction {
 	
 	@Override
 	public void execute() {
-//		Minecraft.getMinecraft().thePlayer.motionX = 0;
-//		Minecraft.getMinecraft().thePlayer.motionY = 0;
-//		Minecraft.getMinecraft().thePlayer.motionZ = 0;
-//		double speed = host.actionFly.getMCSpeed();
-//		Minecraft.getMinecraft().thePlayer.jumpMovementFactor = (float) (speed / 10.0);
-//		if (Minecraft.getMinecraft().gameSettings.keyBindJump.isKeyDown()) Minecraft.getMinecraft().thePlayer.motionY += speed;
-//		if (Minecraft.getMinecraft().gameSettings.keyBindSneak.isKeyDown()) Minecraft.getMinecraft().thePlayer.motionY -= speed;
+		if (host.actionFly.isActive()) Minecraft.getMinecraft().thePlayer.noClip = true;
+		else Minecraft.getMinecraft().thePlayer.noClip = false;
 	}
 	
 	@Override

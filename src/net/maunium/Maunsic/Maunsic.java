@@ -231,7 +231,7 @@ public class Maunsic {
 		actionFastbow = ach.registerAction(new ActionFastbow(), ActionHandler.Phase.LIVING);
 		actionRegen = ach.registerAction(new ActionRegen(), ActionHandler.Phase.LIVING);
 		actionFullbright = ach.registerAction(new ActionFullbright(), ActionHandler.Phase.TICKEND);
-		actionFreecam = ach.registerAction(new ActionFreecam(), ActionHandler.Phase.LIVING);
+		actionFreecam = ach.registerAction(new ActionFreecam(this), ActionHandler.Phase.LIVING);
 		
 		getLogger().info("Init complete in " + (init = (int) (System.currentTimeMillis() - st)) + "ms.");
 	}
