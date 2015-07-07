@@ -8,6 +8,12 @@ import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.util.EnumChatFormatting;
 
+/**
+ * Regenerate health super quickly
+ * 
+ * @author Tulir293
+ * @since 0.1
+ */
 public class ActionRegen implements TickAction {
 	private boolean active = false;
 	

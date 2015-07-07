@@ -6,6 +6,12 @@ import net.maunium.Maunsic.Util.MaunsiConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.EnumChatFormatting;
 
+/**
+ * Much brighter environment.
+ * 
+ * @author Tulir293
+ * @since 0.1
+ */
 public class ActionFullbright implements TickAction {
 	private boolean active = false;
 	private float gamma = Minecraft.getMinecraft().gameSettings.gammaSetting;

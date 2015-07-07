@@ -30,6 +30,13 @@ import net.minecraft.util.Timer;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
+/**
+ * Trajectories for bows.
+ * 
+ * @author Tulir293
+ * @since 0.1
+ * @from Maucros
+ */
 public class ActionTrajectories implements TickAction {
 	private double x, y, z;
 	private double motionX, motionY, motionZ;

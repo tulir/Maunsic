@@ -8,6 +8,13 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
 import net.minecraft.util.EnumChatFormatting;
 
+/**
+ * Freecam. Part of the code from Wurst Client licenced under MPL v2.0 by Alexander01998.
+ * 
+ * @author Tulir293
+ * @author Alexander01998
+ * @since 0.1
+ */
 public class ActionFreecam implements TickAction {
 	private Maunsic host;
 	public static boolean active = false;
