@@ -39,9 +39,9 @@ public class ActionFullbright implements TickAction {
 	@Override
 	public void execute() {
 		if (isActuallyActive()) {
-			if (Minecraft.getMinecraft().gameSettings.gammaSetting < 16F) Minecraft.getMinecraft().gameSettings.gammaSetting += 0.1F;
+			if (Minecraft.getMinecraft().gameSettings.gammaSetting < 16F) Minecraft.getMinecraft().gameSettings.gammaSetting += 0.5F;
 		} else if (Minecraft.getMinecraft().gameSettings.gammaSetting > gamma) {
-			Minecraft.getMinecraft().gameSettings.gammaSetting -= 0.1F;
+			Minecraft.getMinecraft().gameSettings.gammaSetting -= 0.5F;
 		}
 	}
 	
