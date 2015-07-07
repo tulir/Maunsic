@@ -10,7 +10,7 @@ import net.minecraft.util.EnumChatFormatting;
 
 public class ActionFreecam implements TickAction {
 	private Maunsic host;
-	private boolean active = false;
+	public static boolean active = false;
 	private double oldX, oldY, oldZ;
 	private EntityOtherPlayerMP fake = null;
 	
@@ -20,7 +20,7 @@ public class ActionFreecam implements TickAction {
 	
 	@Override
 	public void setActive(boolean active) {
-		this.active = active;
+		ActionFreecam.active = active;
 		if (active) {
 			oldX = Minecraft.getMinecraft().thePlayer.posX;
 			oldY = Minecraft.getMinecraft().thePlayer.posY;
