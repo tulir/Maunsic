@@ -1,0 +1,143 @@
+on=ON
+off=OFF
+
+key.conf=Asetukset
+key.fly=Lentotila
+key.nofall=Ei pudotusta
+key.inc_speed=Lisää nopeutta
+key.dec_speed=Vähennä nopeutta
+key.antikb=Ei knockbackkia
+key.blink=Blink
+key.spammer=Roskaviestittäjä
+key.phase=Phase
+key.attackaura=Hyökkäysaura
+key.triggerbot=Triggerbot
+key.autosoup=Autokeitto
+key.aimbot=Tähtäysbotti
+key.alts=Muut tilit
+key.xray=Röntgenkatse
+key.tracer=Tracer
+key.esp=Player ESP
+key.autouse=Autouse
+key.fastbow=Nopea jousi
+key.regen=Regen Hack
+key.fullbright=Täysi valaistus
+key.freecam=Vapaa kamera
+key.trajectories=Ampumiskohde
+
+conf.title=Maunsic {0} - Sivu {1}
+conf.back=Takaisin
+conf.backtogame=Takaisin peliin
+conf.nextpage=Seuraava sivu
+conf.prevpage=Edellinen sivu
+
+conf.keys=Näppäinkomennot
+conf.keys.title=Maunsicin näppäinkomennot
+conf.keys.disableall=Poista kaikki
+conf.keys.notset=Ei asetettu
+conf.keys.reset=Alkuarvoon
+conf.keys.enable=Input Handler enabled. Use Konami to toggle.
+conf.keys.disable=Input Handler disabled. Use Konami to toggle.
+
+conf.username=Nimen vaihtaja
+conf.username.title=Nimen vaihtaja
+conf.username.unlabel=Käyttäjänimi
+conf.username.pwlabel=Salasana
+conf.username.finish=Valmis
+conf.username.cancel=Peruuta
+
+conf.lua.threads=Lua Säikeet
+conf.lua.threads.title=Lua Säie Manageri
+conf.lua.threads.killall=Tapa Kaikki Säikeet
+
+conf.km=Näppäin Maucrot
+conf.km.title=Näppäin Maucrot
+
+conf.km.editor.lua.title=Lua Näppäinmaucron muokkaaja
+conf.km.editor.lua.enter=Uusi Lua Maucro
+conf.km.editor.lua.file=Lua Tiedosto
+
+conf.km.editor.cc.title=CC Näppäinmaucron muokkaaja
+conf.km.editor.cc.enter=Uusi CC Maucro
+conf.km.editor.cc.commands=Komennot
+
+conf.km.editor.finish=Valmis
+conf.km.editor.cancel=Peruuta
+conf.km.editor.key=Maucron Näppäin
+conf.km.editor.name=Maucro Nimi
+conf.km.editor.shiftkeys=Lisänäppäimet
+conf.km.editor.phase=Ajoaika
+conf.km.editor.phase.precheck=Ennen tarkistuksia
+conf.km.editor.phase.prekeys=Ennen näppäimiä
+conf.km.editor.phase.postkeys=Näppäinten jälkeen
+conf.km.editor.ks=Näppäimen tila
+conf.km.editor.ks.up=Päästö
+conf.km.editor.ks.down=Painallus
+
+conf.alts=Muut tilit
+conf.alts.title=Vaihtoehtoiset tilit
+conf.alts.add=Lisää
+conf.alts.random=Arvo nimi
+conf.alts.delete=Poista
+conf.alts.select=Valitse
+conf.alts.add.title=Lisää tili
+conf.alts.add.username=Käyttäjänimi
+conf.alts.add.password=Salasana
+conf.alts.add.add=Lisää
+conf.alts.add.cancel=Peruuta
+
+conf.xray=Röntgenkatse
+conf.xray.title=Röntgenkatse Palikat
+conf.xray.deselectall=Poista valinnat
+conf.xray.selectall=Valitse kaikki
+
+conf.amv.speed=Nopeus
+conf.amv.jump=Hyppykorkeus: {0}
+conf.amv.jump.default=Hyppykorkeus: Nopeuden mukaan
+
+conf.blink.automated=Auto Blink
+conf.blink.safety=Blink Turvallisuus
+conf.blink.safety.level=sekuntia
+
+conf.phase.automated=Auto Phase
+conf.phase.autoforward=Phase Autojuoksu
+
+conf.fanda=Kaverit & Hyökkääminen
+conf.fanda.title=Kavereiden ja hyökkäämisen asetukseet.
+conf.fanda.tctitle=Kohteet
+conf.fanda.fctitle=Kaverit
+conf.fanda.range=Hyökkäysalue
+conf.fanda.addfriend=Lisää kaveri
+conf.fanda.removefriend=Poista valittu kaveri
+conf.fanda.addtarget=Lisää kohde
+conf.fanda.removetarget=Poista valittu kohde
+
+conf.antispam=Antispam
+conf.antispam.disabled=Antispam: Pois päältä
+conf.antispam.simple=Antispam: Piilota määrä
+conf.antispam.count=Antispam: Näytä määrä
+
+conf.triggerbot.min=Triggerbot Minimiaika
+conf.triggerbot.max=Triggerbot Maksimiaika
+
+action.amv.title=Vaihtoehtoinen liikkuminen
+action.amv.mode=Tila
+action.amv.fly=Lento
+action.amv.walk=Kävely
+action.amv.speed=Nopeus
+
+keymaucros.syntax.delay=The MaucroCommand Delay takes one integer.
+keymaucros.syntax.forward=The MaucroCommand Forward takes one integer.
+keymaucros.syntax.look=The MaucroCommand Look takes two integers.
+keymaucros.output.local={0}
+
+message.alt.username=Onnistuneesti vaihdettiin käyttäjänimeksi {0}.
+message.alt.login=Onnistuneesti kirjauduttiin sisään käyttäjänä {0}.
+message.alt.failusername=Nimen vaihto epäonnistui.
+message.alt.faillogin=Sisäänkirjautuminen epäonnistui {0}.
+message.alt.failsession=Session asettaminen epäonnistui.
+
+message.calculator.variable.spacename=Muuttujien nimet eivät saa sisältää välejä
+message.calculator.variable.setvalue=Asetettiin {0}:n arvoksi {1}.
+message.calculator.unknownerror={0}
+message.calculator.result={0} = {1}
