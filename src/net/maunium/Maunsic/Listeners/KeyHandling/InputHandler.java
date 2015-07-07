@@ -53,6 +53,7 @@ public class InputHandler {
 		KeyRegistry.registerKeybind(Keybinds.regen);
 		KeyRegistry.registerKeybind(Keybinds.fullbright);
 		KeyRegistry.registerKeybind(Keybinds.freecam);
+		KeyRegistry.registerKeybind(Keybinds.trajectories);
 	}
 	
 	public static void input(int keycode, boolean pressed) {
@@ -125,6 +126,7 @@ public class InputHandler {
 			else if (keycode == Keybinds.regen.getKeyCode()) host.actionRegen.setActive(!host.actionRegen.isActive());
 			else if (keycode == Keybinds.fullbright.getKeyCode()) host.actionFullbright.setActive(!host.actionFullbright.isActuallyActive());
 			else if (keycode == Keybinds.freecam.getKeyCode()) host.actionFreecam.setActive(!host.actionFreecam.isActive());
+			else if (keycode == Keybinds.trajectories.getKeyCode()) host.actionTrajectories.setActive(!host.actionTrajectories.isActive());
 			else if (keycode == Keybinds.phase.getKeyCode()) host.actionPhase.phase();
 //			else if (keycode == Keybinds.antikb.getKeyCode()) host.actionAntiKB.setActive(!host.actionAntiKB.isActive());
 		}
@@ -167,5 +169,6 @@ public class InputHandler {
 		public static final MauKeybind regen = new MauKeybind("regen", Keyboard.KEY_P);
 		public static final MauKeybind fullbright = new MauKeybind("fullbright", Keyboard.KEY_C);
 		public static final MauKeybind freecam = new MauKeybind("freecam", Keyboard.KEY_I);
+		public static final MauKeybind trajectories = new MauKeybind("trajectories", Keyboard.KEY_Y);
 	}
 }
