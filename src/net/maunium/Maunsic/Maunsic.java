@@ -70,7 +70,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
  * 
  * @author Tulir293
  * @since 0.1
- * @version 0.1 Alpha 4. Same as {@link #version}
+ * @version 0.1 Alpha 5. Same as {@link #version}
  */
 @Mod(modid = Maunsic.name, version = Maunsic.version, name = Maunsic.name, acceptedMinecraftVersions = "[1.8,1.9)", clientSideOnly = true, dependencies = "required-after:Forge")
 public class Maunsic {
@@ -82,7 +82,7 @@ public class Maunsic {
 	/** The version of Minecraft that this version of Maunsic is made for. */
 	public static final String forMC = "1.8";
 	/** The current version of Maunsic */
-	public static final String version = "0.1-A4", longVersion = "0.1 Alpha 4";
+	public static final String version = "0.1-A5", longVersion = "0.1 Alpha 5";
 	private static final File maunsicDir = new File(Minecraft.getMinecraft().mcDataDir, "config" + File.separator + "Maunsic" + File.separator);
 	/** A standard Minecraft logger with the name "Maunsic" ({@link #name}) */
 	private Logger log;

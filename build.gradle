@@ -16,7 +16,7 @@ buildscript {
 }
 apply plugin: 'forge'
 
-version = "0.1-A4"
+version = "0.1-A5"
 group = "net.maunium.Maunsic"
 archivesBaseName = "Maunsic-MC1.8"
 
