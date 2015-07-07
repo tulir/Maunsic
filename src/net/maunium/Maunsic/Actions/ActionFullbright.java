@@ -8,14 +8,17 @@ import net.minecraft.util.EnumChatFormatting;
 
 public class ActionFullbright implements TickAction {
 	private boolean active = false;
+	private float gamma = Minecraft.getMinecraft().gameSettings.gammaSetting;
 	
 	@Override
 	public boolean isActive() {
-		return active;
+		return true;
 	}
 	
 	@Override
 	public void setActive(boolean active) {
+		if (!active) Minecraft.getMinecraft().gameSettings.gammaSetting = gamma;
+		else gamma = Minecraft.getMinecraft().gameSettings.gammaSetting;
 		this.active = active;
 	}
 	
@@ -27,16 +30,15 @@ public class ActionFullbright implements TickAction {
 	
 	@Override
 	public String[] getStatusText() {
-		return new String[] { "Fullbright " + EnumChatFormatting.GREEN + "ON" };
+		return active ? new String[] { "Fullbright " + EnumChatFormatting.GREEN + "ON" } : null;
 	}
 	
 	@Override
 	public void execute() {
-		if (isActive()) {
-			if (Minecraft.getMinecraft().gameSettings.gammaSetting < 16F) Minecraft.getMinecraft().gameSettings.gammaSetting += 0.5F;
-		} else if (Minecraft.getMinecraft().gameSettings.gammaSetting > 0.5F) {
-			if (Minecraft.getMinecraft().gameSettings.gammaSetting < 1F) Minecraft.getMinecraft().gameSettings.gammaSetting = 0.5F;
-			else Minecraft.getMinecraft().gameSettings.gammaSetting -= 0.5F;
+		if (active) {
+			if (Minecraft.getMinecraft().gameSettings.gammaSetting < 16F) Minecraft.getMinecraft().gameSettings.gammaSetting += 0.25F;
+		} else if (Minecraft.getMinecraft().gameSettings.gammaSetting > gamma) {
+			Minecraft.getMinecraft().gameSettings.gammaSetting -= 0.5F;
 		}
 	}
 	
