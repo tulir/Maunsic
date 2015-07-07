@@ -44,18 +44,6 @@ public class ActionTrajectories implements TickAction {
 	private boolean hasHitEntity = false, active = false;
 	private Timer t;
 	
-	public ActionTrajectories() {
-		try {
-			Minecraft mc = Minecraft.getMinecraft();
-			Field f = Minecraft.class.getField("timer");
-			f.setAccessible(true);
-			t = (Timer) f.get(mc);
-		} catch (Exception e) {
-			Maunsic.getLogger().error("Failed to reflect Minecraft timer object to me.");
-			Maunsic.getLogger().catching(e);
-		}
-	}
-	
 	@Override
 	public boolean isActive() {
 		return active;
@@ -63,6 +51,17 @@ public class ActionTrajectories implements TickAction {
 	
 	@Override
 	public void setActive(boolean active) {
+		if (active) {
+			try {
+				Minecraft mc = Minecraft.getMinecraft();
+				Field f = Minecraft.class.getDeclaredField("timer");
+				f.setAccessible(true);
+				t = (Timer) f.get(mc);
+			} catch (Exception e) {
+				Maunsic.getLogger().error("Failed to reflect Minecraft timer object to me.");
+				Maunsic.getLogger().catching(e);
+			}
+		}
 		this.active = active;
 	}
 	
