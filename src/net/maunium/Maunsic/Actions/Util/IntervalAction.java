@@ -2,6 +2,12 @@ package net.maunium.Maunsic.Actions.Util;
 
 import net.minecraft.client.Minecraft;
 
+/**
+ * Base class for actions that need to be executed at specific intervals.
+ * 
+ * @author Tulir293
+ * @since 0.1
+ */
 public abstract class IntervalAction extends TickAction {
 	protected int interval;
 	protected long previousExec = 0;
