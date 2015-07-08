@@ -1,6 +1,7 @@
 package net.maunium.Maunsic.Actions;
 
-import net.maunium.Maunsic.Actions.Util.TickAction;
+import net.maunium.Maunsic.Actions.Util.IntervalAction;
+import net.maunium.Maunsic.Util.MaunsiConfig;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -18,14 +19,32 @@ import net.minecraft.util.EnumFacing;
  * @author Alexander01998
  * @since 0.1
  */
-public class ActionFastbow extends TickAction {
+public class ActionFastbow extends IntervalAction {
+	@Override
+	public void loadData(MaunsiConfig conf) {
+		interval = conf.getInt("fastbow.interval", 1);
+	}
+	
+	@Override
+	public void saveData(MaunsiConfig conf) {
+		conf.set("fastbow.interval", interval);
+	}
+	
+	public void setInterval(int interval) {
+		this.interval = interval;
+	}
+	
+	public int getInterval() {
+		return interval;
+	}
+	
 	@Override
 	public String[] getStatusText() {
 		return new String[] { "Fastbow " + EnumChatFormatting.GREEN + "ON" };
 	}
 	
 	@Override
-	public void execute() {
+	public void executeInterval() {
 		EntityPlayerSP p = Minecraft.getMinecraft().thePlayer;
 		// Make sure the player has a bow in the hand and is pressing the use button.
 		if (p.inventory.getCurrentItem() != null && p.inventory.getCurrentItem().getItem() instanceof ItemBow
