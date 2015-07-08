@@ -20,6 +20,9 @@ public abstract class IntervalAction extends TickAction {
 		this.interval = interval;
 	}
 	
+	/**
+	 * Execute the action after checking that the specific interval has passed.
+	 */
 	public abstract void executeInterval();
 	
 	@Override
