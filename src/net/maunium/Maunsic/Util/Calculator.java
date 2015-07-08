@@ -62,7 +62,7 @@ public class Calculator {
 		Maunsic.printChatError("message.calculator.syntax.start");
 		Maunsic.getLogger().catching(e);
 		for (String ss : e.explain().split("\n"))
-			Maunsic.printChat("message.calculator.syntaxs", ss);
+			Maunsic.printChatPlain("message.calculator.syntaxs", ss);
 	}
 	
 	private static double calculate(String s) throws SyntaxException {

@@ -396,45 +396,18 @@ public class Maunsic {
 	 * @param key The I18n tag
 	 * @param args The I18n args
 	 */
-	public static void printChatStyled(ChatStyle style, String message, Object... args) {
-		ChatLogger.printChat(new ChatComponentText(I18n.translate(message, args)).setChatStyle(style));
+	public static void printChatStyled(ChatStyle style, String key, Object... args) {
+		ChatLogger.printChat(new ChatComponentText(I18n.translate(key, args)).setChatStyle(style));
 	}
 	
 	/**
-	 * Prints a chat message (without sending to server)<br>
-	 * Uses the public static final String stag as prefix and gray as message color
+	 * Localizes a message with I18n and prints it.
 	 * 
-	 * @param message The message to print.
-	 * @deprecated Use {@link #printChat}
+	 * @param key The I18n tag
+	 * @param args The I18n args
 	 */
-	@Deprecated
-	public static void printChat_static(String message) {
-		ChatLogger.printChat(stdTag.createCopy().appendText(message).setChatStyle(stdStyle));
-	}
-	
-	/**
-	 * Prints a chat error message (without sending to server)<br>
-	 * Uses the public static final String errtag as prefix and red as message color
-	 * 
-	 * @param message The message to print.
-	 * @deprecated Use {@link #printChatError}
-	 */
-	@Deprecated
-	public static void printChatError_static(String message) {
-		ChatLogger.printChat(errTag.createCopy().appendText(message).setChatStyle(errStyle));
-	}
-	
-	/**
-	 * Prints a styled chat message (without sending to server)<br>
-	 * There is no prefix and all color is specified in the message and/or the ChatStyle object.
-	 * 
-	 * @param message The message to print.
-	 * @param style The ChatStyle object to apply to the message.
-	 * @deprecated Use {@link #printChatStyled}
-	 */
-	@Deprecated
-	public static void printChat_static(Object message, ChatStyle style) {
-		ChatLogger.printChat(new ChatComponentText(message.toString()).setChatStyle(style));
+	public static void printChatPlain(String key, Object... args) {
+		ChatLogger.printChat(new ChatComponentText(I18n.translate(key, args)));
 	}
 	
 	/**

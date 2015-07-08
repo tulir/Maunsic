@@ -19,9 +19,6 @@ import org.luaj.vm2.lib.ZeroArgFunction;
 
 import net.maunium.Maunsic.Maunsic;
 
-import net.minecraft.util.ChatStyle;
-import net.minecraft.util.EnumChatFormatting;
-
 public class MauIOLib extends TwoArgFunction {
 	
 	@Override
@@ -137,12 +134,11 @@ public class MauIOLib extends TwoArgFunction {
 	
 	public static class print extends VarArgFunction {
 		@Override
-		@SuppressWarnings("deprecation")
 		public LuaValue invoke(Varargs msg) {
 			StringBuffer sb = new StringBuffer();
 			for (int i = 1; i < msg.narg() + 1; i++)
 				sb.append(msg.tojstring(i));
-			Maunsic.printChat_static(sb.toString(), new ChatStyle().setColor(EnumChatFormatting.WHITE));
+			Maunsic.printChatPlain("message.mauluam.out", sb.toString());
 			return LuaValue.NIL;
 		}
 	}
@@ -153,19 +149,18 @@ public class MauIOLib extends TwoArgFunction {
 			StringBuffer sb = new StringBuffer();
 			for (int i = 1; i < msg.narg() + 1; i++)
 				sb.append(msg.tojstring(i));
-			Maunsic.printChat(sb.toString());
+			Maunsic.printChatPlain(sb.toString());
 			return LuaValue.NIL;
 		}
 	}
 	
 	public static class error extends VarArgFunction {
 		@Override
-		@SuppressWarnings("deprecation")
 		public LuaValue invoke(Varargs msg) {
 			StringBuffer sb = new StringBuffer();
 			for (int i = 1; i < msg.narg() + 1; i++)
 				sb.append(msg.tojstring(i));
-			Maunsic.printChat_static(sb.toString(), new ChatStyle().setColor(EnumChatFormatting.RED));
+			Maunsic.printChat("message.mauluam.err", sb.toString());
 			return LuaValue.NIL;
 		}
 	}

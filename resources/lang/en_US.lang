@@ -145,3 +145,6 @@ message.calculator.unknownerror={0}
 message.calculator.result={0} = {1}
 message.calculator.syntax=&c{0}
 message.calculator.syntax.start=A wild Syntax Exception appears!
+
+message.mauluam.error=&c{0}
+message.mauluam.error=&f{0}
