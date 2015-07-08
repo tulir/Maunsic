@@ -22,7 +22,7 @@ import net.minecraft.util.EnumFacing;
 public class ActionFastbow extends IntervalAction {
 	@Override
 	public void loadData(MaunsiConfig conf) {
-		interval = conf.getInt("fastbow.interval", 1);
+		interval = conf.getInt("fastbow.interval", interval);
 	}
 	
 	@Override
