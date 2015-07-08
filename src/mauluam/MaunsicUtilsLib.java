@@ -11,7 +11,8 @@ public class MaunsicUtilsLib extends TwoArgFunction {
 	public LuaValue call(LuaValue modname, LuaValue env) {
 		LuaValue lib = LuaValue.tableOf();
 		lib.set("version", new version());
-		env.set("maucrosutils", lib);
+		lib.set("longversion", new longversion());
+		env.set("maunsicutils", lib);
 		return lib;
 	}
 	
@@ -19,6 +20,13 @@ public class MaunsicUtilsLib extends TwoArgFunction {
 		@Override
 		public LuaValue call() {
 			return LuaValue.valueOf(Maunsic.version);
+		}
+	}
+	
+	public static class longversion extends ZeroArgFunction {
+		@Override
+		public LuaValue call() {
+			return LuaValue.valueOf(Maunsic.longVersion);
 		}
 	}
 }
