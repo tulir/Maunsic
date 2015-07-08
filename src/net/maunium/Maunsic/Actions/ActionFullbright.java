@@ -20,6 +20,12 @@ public class ActionFullbright extends TickAction {
 	}
 	
 	@Override
+	public void toggle() {
+		if (active) activate();
+		else deactivate();
+	}
+	
+	@Override
 	public void activate() {
 		super.activate();
 		if (gamma > 1.0F) gamma = 1.0F;
