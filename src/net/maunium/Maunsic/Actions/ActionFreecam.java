@@ -42,7 +42,7 @@ public class ActionFreecam extends TickAction {
 	
 	@Override
 	public void deactivate() {
-		super.activate();
+		super.deactivate();
 		Minecraft.getMinecraft().thePlayer.setPositionAndRotation(oldX, oldY, oldZ, Minecraft.getMinecraft().thePlayer.rotationYaw,
 				Minecraft.getMinecraft().thePlayer.rotationPitch);
 		
