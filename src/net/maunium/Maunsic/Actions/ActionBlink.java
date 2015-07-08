@@ -25,11 +25,6 @@ public class ActionBlink extends StatusAction {
 	private static List<Packet> packets = new ArrayList<Packet>();
 	private static long blinkStart = 0;
 	
-	@Override
-	public boolean isActive() {
-		return active;
-	}
-	
 	public static void startBlinking() {
 		blinkStart = Minecraft.getSystemTime();
 		active = true;
@@ -54,6 +49,27 @@ public class ActionBlink extends StatusAction {
 		for (Packet p : packets)
 			nhpc.addToSendQueue(p);
 		packets.clear();
+	}
+	
+	@Override
+	public void activate() {
+		startBlinking();
+	}
+	
+	@Override
+	public void deactivate() {
+		releaseBlink();
+	}
+	
+	@Override
+	public void toggle() {
+		if (active) activate();
+		else deactivate();
+	}
+	
+	@Override
+	public boolean isActive() {
+		return active;
 	}
 	
 	@Override

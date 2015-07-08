@@ -14,10 +14,6 @@ import net.minecraft.util.EnumChatFormatting;
 public class ActionFullbright extends TickAction {
 	private float gamma = Minecraft.getMinecraft().gameSettings.gammaSetting;
 	
-	public boolean isActuallyActive() {
-		return active;
-	}
-	
 	@Override
 	public boolean isActive() {
 		return true;
@@ -31,12 +27,12 @@ public class ActionFullbright extends TickAction {
 	
 	@Override
 	public String[] getStatusText() {
-		return isActuallyActive() ? new String[] { "Fullbright " + EnumChatFormatting.GREEN + "ON" } : null;
+		return active ? new String[] { "Fullbright " + EnumChatFormatting.GREEN + "ON" } : null;
 	}
 	
 	@Override
 	public void execute() {
-		if (isActuallyActive()) {
+		if (active) {
 			if (Minecraft.getMinecraft().gameSettings.gammaSetting < 16F) Minecraft.getMinecraft().gameSettings.gammaSetting += 0.5F;
 		} else if (Minecraft.getMinecraft().gameSettings.gammaSetting > gamma) {
 			Minecraft.getMinecraft().gameSettings.gammaSetting -= 0.5F;
