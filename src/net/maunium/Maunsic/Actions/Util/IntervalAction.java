@@ -12,10 +12,16 @@ public abstract class IntervalAction extends TickAction {
 	protected int interval;
 	protected long previousExec = 0;
 	
+	/**
+	 * Construct an interval action with the default interval (20ms)
+	 */
 	public IntervalAction() {
 		this(20);
 	}
 	
+	/**
+	 * Construct an interval action with the given interval.
+	 */
 	public IntervalAction(int interval) {
 		this.interval = interval;
 	}

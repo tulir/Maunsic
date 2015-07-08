@@ -26,6 +26,9 @@ public class ActionHandler {
 			worldActions = new HashSet<TickAction>();
 	private Set<StatusAction> allActions = new HashSet<StatusAction>();
 	
+	/**
+	 * Initialize the action handler. This should only be used by the Maunsic main class.
+	 */
 	public ActionHandler(Maunsic host) {
 		this.host = host;
 	}
