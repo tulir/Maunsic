@@ -143,3 +143,5 @@ message.calculator.variable.spacename=Variable names can't contain spaces.
 message.calculator.variable.setvalue=Set value of {0} to {1}.
 message.calculator.unknownerror={0}
 message.calculator.result={0} = {1}
+message.calculator.syntax=&c{0}
+message.calculator.syntax.start=A wild Syntax Exception appears!

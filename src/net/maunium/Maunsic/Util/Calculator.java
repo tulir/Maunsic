@@ -8,9 +8,6 @@ import com.github.darius.expr.Variable;
 
 import net.maunium.Maunsic.Maunsic;
 
-import net.minecraft.util.ChatStyle;
-import net.minecraft.util.EnumChatFormatting;
-
 /**
  * A simplified interface for Expr by Darius.
  * 
@@ -58,12 +55,14 @@ public class Calculator {
 		}
 	}
 	
-	@SuppressWarnings("deprecation")
+	/**
+	 * Catch a syntax exception from the calculator.
+	 */
 	public static void catchSyntax(SyntaxException e) {
-		Maunsic.printChatError_static("A wild Syntax Exception appears!");
+		Maunsic.printChatError("message.calculator.syntax.start");
 		Maunsic.getLogger().catching(e);
 		for (String ss : e.explain().split("\n"))
-			Maunsic.printChat_static(ss, new ChatStyle().setColor(EnumChatFormatting.RED));
+			Maunsic.printChat("message.calculator.syntaxs", ss);
 	}
 	
 	private static double calculate(String s) throws SyntaxException {
