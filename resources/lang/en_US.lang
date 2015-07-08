@@ -120,6 +120,8 @@ conf.antispam.count=Antispam: Show count
 conf.triggerbot.min=Triggerbot Min delay
 conf.triggerbot.max=Triggerbot Max delay
 
+conf.fastbow.speed=Fastbow Interval
+
 action.amv.title=Alt. Movement
 action.amv.mode=Mode
 action.amv.fly=Fly
