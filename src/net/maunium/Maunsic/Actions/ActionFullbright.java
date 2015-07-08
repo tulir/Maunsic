@@ -15,20 +15,17 @@ public class ActionFullbright extends TickAction {
 	private float gamma = Minecraft.getMinecraft().gameSettings.gammaSetting;
 	
 	@Override
-	public boolean isActive() {
-		return true;
-	}
-	
-	@Override
-	public void toggle() {
-		if (active) activate();
-		else deactivate();
-	}
-	
-	@Override
 	public void activate() {
 		super.activate();
 		if (gamma > 1.0F) gamma = 1.0F;
+		Minecraft.getMinecraft().gameSettings.gammaSetting = 20.0F;
+	}
+	
+	@Override
+	public void deactivate() {
+		super.deactivate();
+		if (gamma > 1.0F) gamma = 1.0F;
+		Minecraft.getMinecraft().gameSettings.gammaSetting = gamma;
 	}
 	
 	@Override
@@ -38,11 +35,6 @@ public class ActionFullbright extends TickAction {
 	
 	@Override
 	public void execute() {
-		if (active) {
-			if (Minecraft.getMinecraft().gameSettings.gammaSetting < 16F) Minecraft.getMinecraft().gameSettings.gammaSetting += 0.5F;
-		} else if (Minecraft.getMinecraft().gameSettings.gammaSetting > gamma) {
-			Minecraft.getMinecraft().gameSettings.gammaSetting -= 0.5F;
-		}
+		if (Minecraft.getMinecraft().gameSettings.gammaSetting < 20.0F) Minecraft.getMinecraft().gameSettings.gammaSetting = 20.0F;
 	}
-	
 }
