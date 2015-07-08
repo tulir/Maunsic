@@ -62,12 +62,6 @@ public class ActionBlink extends StatusAction {
 	}
 	
 	@Override
-	public void toggle() {
-		if (active) activate();
-		else deactivate();
-	}
-	
-	@Override
 	public boolean isActive() {
 		return active;
 	}
