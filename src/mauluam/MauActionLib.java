@@ -1,23 +1,33 @@
 package mauluam;
 
+import java.lang.reflect.Field;
+import java.util.Locale;
+
 import org.luaj.vm2.LuaValue;
 import org.luaj.vm2.lib.OneArgFunction;
 import org.luaj.vm2.lib.ThreeArgFunction;
 import org.luaj.vm2.lib.TwoArgFunction;
 
-public class MauReflectLib extends TwoArgFunction {
+import net.maunium.Maunsic.Maunsic;
+import net.maunium.Maunsic.Actions.Util.StatusAction;
+
+public class MauActionLib extends TwoArgFunction {
+	private Maunsic host;
 	
 	@Override
 	public LuaValue call(LuaValue modname, LuaValue env) {
 		LuaValue lib = LuaValue.tableOf();
 		lib.set("setsetting", new setsetting());
 		lib.set("getsetting", new getsetting());
-		lib.set("action", new action());
-		env.set("reflection", lib);
+		lib.set("activate", new activate());
+		lib.set("deactivate", new deactivate());
+		lib.set("toggle", new toggle());
+		lib.set("isactive", new isactive());
+		env.set("actions", lib);
 		return lib;
 	}
 	
-	public static class getsetting extends TwoArgFunction {
+	public class getsetting extends TwoArgFunction {
 		@Override
 		public LuaValue call(LuaValue clazz, LuaValue field) {
 //			Field f = null;
@@ -47,7 +57,7 @@ public class MauReflectLib extends TwoArgFunction {
 		}
 	}
 	
-	public static class setsetting extends ThreeArgFunction {
+	public class setsetting extends ThreeArgFunction {
 		@Override
 		public LuaValue call(LuaValue clazz, LuaValue field, LuaValue value) {
 //			Field f = null;
@@ -79,19 +89,76 @@ public class MauReflectLib extends TwoArgFunction {
 		}
 	}
 	
-	public static class action extends OneArgFunction {
+	public class activate extends OneArgFunction {
 		@Override
 		public LuaValue call(LuaValue method) {
-//			try {
-//				Action a = Actions.getAction(method.tojstring());
-//				if (a != null) a.execute();
-//				else return LuaValue.valueOf(1);
-//				return LuaValue.valueOf(0);
-//			} catch (Throwable e) {
-//				Maunsic.getLogger().catching(e);
-//				return LuaValue.valueOf(2);
-//			}
-			return LuaValue.valueOf("Not yet implemented");
+			StatusAction a = getAction(method.tojstring());
+			if (a != null) a.activate();
+			else return LuaValue.valueOf(1);
+			return LuaValue.valueOf(0);
+		}
+	}
+	
+	public class deactivate extends OneArgFunction {
+		@Override
+		public LuaValue call(LuaValue method) {
+			StatusAction a = getAction(method.tojstring());
+			if (a != null) a.deactivate();
+			else return LuaValue.valueOf(1);
+			return LuaValue.valueOf(0);
+		}
+	}
+	
+	public class toggle extends OneArgFunction {
+		@Override
+		public LuaValue call(LuaValue method) {
+			StatusAction a = getAction(method.tojstring());
+			if (a != null) a.toggle();
+			else return LuaValue.valueOf(1);
+			return LuaValue.valueOf(0);
+		}
+	}
+	
+	public class isactive extends OneArgFunction {
+		@Override
+		public LuaValue call(LuaValue method) {
+			StatusAction a = getAction(method.tojstring());
+			if (a != null) return LuaValue.valueOf(a.isActive());
+			else return LuaValue.FALSE;
+		}
+	}
+	
+	public StatusAction getAction(String name) {
+		switch (name.toLowerCase(Locale.ENGLISH)) {
+		// @mauformat=off
+			case "fly": return host.actionFly;
+			case "nofall": return host.actionNofall;
+			case "blink": return host.actionBlink;
+			case "spammer": return host.actionSpammer;
+			case "attackaura": return host.actionAttackaura;
+			case "autosoup": return host.actionAutosoup;
+			case "aimbot": return host.actionAimbot;
+			case "xray": return host.actionXray;
+			case "tracer": return host.actionTracer;
+			case "playeresp": return host.actionEsp;
+			case "autouse": return host.actionAutouse;
+			case "regen": return host.actionRegen;
+			case "freecam": return host.actionFreecam;
+			case "trajectories": return host.actionTrajectories;
+			case "phase": return host.actionPhase;
+			case "triggerbot": return host.actionTriggerbot;
+			case "fullbright": return host.actionFullbright;
+			case "fastbow": return host.actionFastbow;
+		// @mauformat=on
+			default:
+				try {
+					Field f = Maunsic.class.getDeclaredField("action" + name);
+					Object o = f.get(host);
+					if (o instanceof StatusAction) ((StatusAction) o).deactivate();
+				} catch (Exception e) {
+					Maunsic.getLogger().catching(e);
+				}
+				return null;
 		}
 	}
 }
