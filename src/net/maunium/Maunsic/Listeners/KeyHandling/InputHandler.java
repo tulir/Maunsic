@@ -123,12 +123,10 @@ public class InputHandler {
 			else if (keycode == Keybinds.regen.getKeyCode()) host.actionRegen.toggle();
 			else if (keycode == Keybinds.freecam.getKeyCode()) host.actionFreecam.toggle();
 			else if (keycode == Keybinds.trajectories.getKeyCode()) host.actionTrajectories.toggle();
+			else if (keycode == Keybinds.fullbright.getKeyCode()) host.actionFullbright.toggle();
 			else if (keycode == Keybinds.phase.getKeyCode()) {
 				if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) host.actionPhase.deactivate();
 				else host.actionPhase.activate();
-			} else if (keycode == Keybinds.fullbright.getKeyCode()) {
-				if (host.actionFullbright.isActuallyActive()) host.actionFullbright.activate();
-				else host.actionFullbright.deactivate();
 			}
 //			else if (keycode == Keybinds.antikb.getKeyCode()) host.actionAntiKB.setActive(!host.actionAntiKB.isActive());
 		}
