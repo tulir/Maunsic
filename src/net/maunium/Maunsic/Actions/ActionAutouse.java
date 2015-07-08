@@ -12,22 +12,11 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MovingObjectPosition;
 
 public class ActionAutouse extends IntervalAction {
-	private boolean active = false;
 	public double range = 5.0D;
 	
 	@Override
 	public String[] getStatusText() {
 		return new String[] { "Autouse " + EnumChatFormatting.GREEN + "ON" };
-	}
-	
-	@Override
-	public boolean isActive() {
-		return active;
-	}
-	
-	@Override
-	public void setActive(boolean active) {
-		this.active = active;
 	}
 	
 	@Override

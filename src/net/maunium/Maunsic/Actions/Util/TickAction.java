@@ -6,7 +6,7 @@ package net.maunium.Maunsic.Actions.Util;
  * @author Tulir293
  * @since 0.1
  */
-public interface TickAction extends StatusAction {
+public abstract class TickAction extends StatusAction {
 	/**
 	 * Execute the action.
 	 */

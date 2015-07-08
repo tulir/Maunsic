@@ -1,7 +1,6 @@
 package net.maunium.Maunsic.Actions;
 
 import net.maunium.Maunsic.Actions.Util.TickAction;
-import net.maunium.Maunsic.Util.MaunsiConfig;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.EnumChatFormatting;
@@ -12,30 +11,23 @@ import net.minecraft.util.EnumChatFormatting;
  * @author Tulir293
  * @since 0.1
  */
-public class ActionFullbright implements TickAction {
-	private boolean active = false;
+public class ActionFullbright extends TickAction {
 	private float gamma = Minecraft.getMinecraft().gameSettings.gammaSetting;
-	
-	@Override
-	public boolean isActive() {
-		return true;
-	}
 	
 	public boolean isActuallyActive() {
 		return active;
 	}
 	
 	@Override
-	public void setActive(boolean active) {
-		if (gamma > 1.0F) gamma = 1.0F;
-		this.active = active;
+	public boolean isActive() {
+		return true;
 	}
 	
 	@Override
-	public void saveData(MaunsiConfig conf) {}
-	
-	@Override
-	public void loadData(MaunsiConfig conf) {}
+	public void activate() {
+		super.activate();
+		if (gamma > 1.0F) gamma = 1.0F;
+	}
 	
 	@Override
 	public String[] getStatusText() {

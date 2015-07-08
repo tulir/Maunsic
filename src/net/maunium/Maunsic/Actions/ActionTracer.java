@@ -5,7 +5,6 @@ import java.util.List;
 import net.maunium.Maunsic.Actions.Util.TickAction;
 import net.maunium.Maunsic.Settings.Attacking;
 import net.maunium.Maunsic.Util.GLHelper;
-import net.maunium.Maunsic.Util.MaunsiConfig;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -19,25 +18,7 @@ import net.minecraft.util.EnumChatFormatting;
  * @since 0.1
  * @from Maucros
  */
-public class ActionTracer implements TickAction {
-	private boolean active = false;
-	
-	@Override
-	public boolean isActive() {
-		return active;
-	}
-	
-	@Override
-	public void setActive(boolean active) {
-		this.active = active;
-	}
-	
-	@Override
-	public void saveData(MaunsiConfig conf) {}
-	
-	@Override
-	public void loadData(MaunsiConfig conf) {}
-	
+public class ActionTracer extends TickAction {
 	@Override
 	public String[] getStatusText() {
 		return new String[] { "Tracer " + EnumChatFormatting.GREEN + "ON" };

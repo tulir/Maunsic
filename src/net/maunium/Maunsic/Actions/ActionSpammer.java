@@ -17,7 +17,6 @@ import net.minecraft.util.EnumChatFormatting;
  * @from Maucros
  */
 public class ActionSpammer extends IntervalAction {
-	private boolean active = false;
 	private String spam = "test";
 	
 	@Override
@@ -35,15 +34,10 @@ public class ActionSpammer extends IntervalAction {
 	}
 	
 	@Override
-	public boolean isActive() {
-		return active;
-	}
-	
-	@Override
-	public void setActive(boolean active) {
+	public void activate() {
+		super.activate();
 		List<?> msgs = Minecraft.getMinecraft().ingameGUI.getChatGUI().getSentMessages();
 		spam = (String) msgs.get(msgs.size() - 1);
-		this.active = active;
 	}
 	
 	public void setInterval(int interval) {

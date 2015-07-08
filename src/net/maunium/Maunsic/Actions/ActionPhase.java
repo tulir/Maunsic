@@ -1,7 +1,5 @@
 package net.maunium.Maunsic.Actions;
 
-import org.lwjgl.input.Keyboard;
-
 import net.maunium.Maunsic.Maunsic;
 import net.maunium.Maunsic.Actions.Util.StatusAction;
 import net.maunium.Maunsic.Server.ServerHandler;
@@ -21,11 +19,19 @@ import net.minecraft.util.MathHelper;
  * @since 0.1
  * @from Maucros
  */
-public class ActionPhase implements StatusAction {
+public class ActionPhase extends StatusAction {
 	public boolean automated = true, autoforward = true;
 	
-	public void phase() {
-		setActive(!Keyboard.isKeyDown(Keyboard.KEY_LSHIFT));
+	@Override
+	public void activate() {
+//		setActive(!Keyboard.isKeyDown(Keyboard.KEY_LSHIFT));
+		if (automated) autophase();
+		else manualphase();
+	}
+	
+	@Override
+	public void deactivate() {
+		stopPhase();
 	}
 	
 	public void manualphase() {
@@ -156,13 +162,6 @@ public class ActionPhase implements StatusAction {
 		if (autoforward) rtrn[1] = " Auto-forward: " + EnumChatFormatting.GREEN + "ON";
 		else rtrn[1] = " Auto-forward: " + EnumChatFormatting.RED + "OFF";
 		return rtrn;
-	}
-	
-	@Override
-	public void setActive(boolean active) {
-		if (!active) stopPhase();
-		else if (automated) autophase();
-		else manualphase();
 	}
 	
 	@Override

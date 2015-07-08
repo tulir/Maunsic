@@ -23,7 +23,7 @@ import net.minecraft.util.EnumChatFormatting;
  * @from Maucros
  */
 public class ActionAttackaura extends IntervalAction {
-	private boolean active = false, swing = true;
+	private boolean swing = true;
 	
 	@Override
 	public void executeInterval() {
@@ -63,16 +63,6 @@ public class ActionAttackaura extends IntervalAction {
 		if (interval >= 20) rtrn[2] = " Speed (ms/hit): " + EnumChatFormatting.GREEN + interval;
 		else rtrn[2] = " Speed (ms/hit): " + EnumChatFormatting.GREEN + EnumChatFormatting.ITALIC + interval;
 		return rtrn;
-	}
-	
-	@Override
-	public boolean isActive() {
-		return active;
-	}
-	
-	@Override
-	public void setActive(boolean active) {
-		this.active = active;
 	}
 	
 	public void setInterval(int interval) {

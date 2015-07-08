@@ -9,7 +9,6 @@ import org.lwjgl.opengl.GL13;
 import net.maunium.Maunsic.Maunsic;
 import net.maunium.Maunsic.Actions.Util.TickAction;
 import net.maunium.Maunsic.Util.GLHelper;
-import net.maunium.Maunsic.Util.MaunsiConfig;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -37,32 +36,25 @@ import net.minecraft.world.World;
  * @since 0.1
  * @from Maucros
  */
-public class ActionTrajectories implements TickAction {
+public class ActionTrajectories extends TickAction {
 	private double x, y, z;
 	private double motionX, motionY, motionZ;
 	private double r, g, b;
-	private boolean hasHitEntity = false, active = false;
+	private boolean hasHitEntity = false;
 	private Timer t;
 	
 	@Override
-	public boolean isActive() {
-		return active;
-	}
-	
-	@Override
-	public void setActive(boolean active) {
-		if (active) {
-			try {
-				Minecraft mc = Minecraft.getMinecraft();
-				Field f = Minecraft.class.getDeclaredField("timer");
-				f.setAccessible(true);
-				t = (Timer) f.get(mc);
-			} catch (Exception e) {
-				Maunsic.getLogger().error("Failed to reflect Minecraft timer object to me.");
-				Maunsic.getLogger().catching(e);
-			}
+	public void activate() {
+		super.activate();
+		try {
+			Minecraft mc = Minecraft.getMinecraft();
+			Field f = Minecraft.class.getDeclaredField("timer");
+			f.setAccessible(true);
+			t = (Timer) f.get(mc);
+		} catch (Exception e) {
+			Maunsic.getLogger().error("Failed to reflect Minecraft timer object to me.");
+			Maunsic.getLogger().catching(e);
 		}
-		this.active = active;
 	}
 	
 	@Override
@@ -301,10 +293,4 @@ public class ActionTrajectories implements TickAction {
 		GL11.glDisable(3042);
 		GL11.glPopMatrix();
 	}
-	
-	@Override
-	public void saveData(MaunsiConfig conf) {}
-	
-	@Override
-	public void loadData(MaunsiConfig conf) {}
 }

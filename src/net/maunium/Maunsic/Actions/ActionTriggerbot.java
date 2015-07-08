@@ -15,21 +15,10 @@ import net.minecraft.util.MovingObjectPosition;
  * @author Tulir293
  * @since 0.1
  */
-public class ActionTriggerbot implements TickAction {
-	private boolean active = false;
+public class ActionTriggerbot extends TickAction {
 	private long lastAttack = 0;
 	private Random r = new Random(System.nanoTime());
 	public int delay = 0, minDelay = 50, maxDelay = 125;
-	
-	@Override
-	public boolean isActive() {
-		return active;
-	}
-	
-	@Override
-	public void setActive(boolean active) {
-		this.active = active;
-	}
 	
 	@Override
 	public void execute() {

@@ -18,12 +18,17 @@ import net.minecraft.util.EnumChatFormatting;
  * @since 0.1
  * @from Maucros
  */
-public class ActionBlink implements StatusAction {
-	public static boolean active = false, automated = true;
+public class ActionBlink extends StatusAction {
+	public static boolean automated = true, active = false;
 	public static int safetyLevel = 3;
 	
 	private static List<Packet> packets = new ArrayList<Packet>();
 	private static long blinkStart = 0;
+	
+	@Override
+	public boolean isActive() {
+		return active;
+	}
 	
 	public static void startBlinking() {
 		blinkStart = Minecraft.getSystemTime();
@@ -65,17 +70,6 @@ public class ActionBlink implements StatusAction {
 			else rtrn[1] = " Safety: " + EnumChatFormatting.RED + "Disabled";
 		}
 		return rtrn;
-	}
-	
-	@Override
-	public boolean isActive() {
-		return active;
-	}
-	
-	@Override
-	public void setActive(boolean active) {
-		if (active) startBlinking();
-		else releaseBlink();
 	}
 	
 	@Override

@@ -18,7 +18,7 @@ import net.minecraft.util.EnumChatFormatting;
  * @since 0.1
  * @from Maucros
  */
-public class ActionFly implements TickAction {
+public class ActionFly extends TickAction {
 	private Maunsic host;
 	public static final int DEFAULT_SPEED = 20, MAX_SPEED = 980, MIN_SPEED = 0, TYPE_DISABLED = 0, TYPE_FLY = 1, TYPE_WALK = 2;
 	private int speed = DEFAULT_SPEED, type = TYPE_DISABLED, jump = 0;
@@ -35,9 +35,13 @@ public class ActionFly implements TickAction {
 	}
 	
 	@Override
-	public void setActive(boolean active) {
-		if (isActive()) setType(TYPE_DISABLED);
-		else setType(TYPE_FLY);
+	public void activate() {
+		setType(TYPE_FLY);
+	}
+	
+	@Override
+	public void deactivate() {
+		setType(TYPE_DISABLED);
 	}
 	
 	public void setType(int type) {

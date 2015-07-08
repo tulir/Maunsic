@@ -20,7 +20,7 @@ import net.minecraft.util.EnumChatFormatting;
  * @from Maucros
  */
 public class ActionAutosoup extends IntervalAction {
-	private boolean legit = false, active = false;
+	private boolean legit = false;
 	private int nextTask = 0, taskModifier = 0, nextSlot = 0, prevSlot = 0, emptySlots = 0;
 	private Random mslr = new Random(System.currentTimeMillis());
 	
@@ -128,16 +128,6 @@ public class ActionAutosoup extends IntervalAction {
 		else if (soup > 0) rtrn[3] = EnumChatFormatting.RED + " " + soup + " Soup left";
 		else rtrn[3] = EnumChatFormatting.DARK_RED + " " + EnumChatFormatting.BOLD + "No soup left!";
 		return rtrn;
-	}
-	
-	@Override
-	public boolean isActive() {
-		return active;
-	}
-	
-	@Override
-	public void setActive(boolean active) {
-		this.active = active;
 	}
 	
 	@Override

@@ -107,27 +107,29 @@ public class InputHandler {
 				else host.actionFly.changeSpeed(false);
 			} else if (keycode == Keybinds.xray.getKeyCode()) {
 				if (Keyboard.isKeyDown(Keyboard.KEY_LCONTROL)) Minecraft.getMinecraft().displayGuiScreen(new GuiXrayBlocks(host));
-				else {
-					if (host.actionXray.isActive()) host.actionXray.setActive(false);
-					else host.actionXray.setActive(true);
-				}
+				else host.actionXray.toggle();
 			} else if (keycode == Keybinds.alts.getKeyCode()) Minecraft.getMinecraft().displayGuiScreen(new GuiChangeUsername(host));
-			else if (keycode == Keybinds.nofall.getKeyCode()) host.actionNofall.setActive(!host.actionNofall.isActive());
-			else if (keycode == Keybinds.blink.getKeyCode()) host.actionBlink.setActive(!host.actionBlink.isActive());
-			else if (keycode == Keybinds.attackaura.getKeyCode()) host.actionAttackaura.setActive(!host.actionAttackaura.isActive());
-			else if (keycode == Keybinds.spammer.getKeyCode()) host.actionSpammer.setActive(!host.actionSpammer.isActive());
-			else if (keycode == Keybinds.triggerbot.getKeyCode()) host.actionTriggerbot.setActive(!host.actionTriggerbot.isActive());
-			else if (keycode == Keybinds.autosoup.getKeyCode()) host.actionAutosoup.setActive(!host.actionAutosoup.isActive());
-			else if (keycode == Keybinds.aimbot.getKeyCode()) host.actionAimbot.setActive(!host.actionAimbot.isActive());
-			else if (keycode == Keybinds.tracer.getKeyCode()) host.actionTracer.setActive(!host.actionTracer.isActive());
-			else if (keycode == Keybinds.esp.getKeyCode()) host.actionEsp.setActive(!host.actionEsp.isActive());
-			else if (keycode == Keybinds.autouse.getKeyCode()) host.actionAutouse.setActive(!host.actionAutouse.isActive());
-			else if (keycode == Keybinds.fastbow.getKeyCode()) host.actionFastbow.setActive(!host.actionFastbow.isActive());
-			else if (keycode == Keybinds.regen.getKeyCode()) host.actionRegen.setActive(!host.actionRegen.isActive());
-			else if (keycode == Keybinds.fullbright.getKeyCode()) host.actionFullbright.setActive(!host.actionFullbright.isActuallyActive());
-			else if (keycode == Keybinds.freecam.getKeyCode()) host.actionFreecam.setActive(!host.actionFreecam.isActive());
-			else if (keycode == Keybinds.trajectories.getKeyCode()) host.actionTrajectories.setActive(!host.actionTrajectories.isActive());
-			else if (keycode == Keybinds.phase.getKeyCode()) host.actionPhase.phase();
+			else if (keycode == Keybinds.nofall.getKeyCode()) host.actionNofall.toggle();
+			else if (keycode == Keybinds.blink.getKeyCode()) host.actionBlink.toggle();
+			else if (keycode == Keybinds.attackaura.getKeyCode()) host.actionAttackaura.toggle();
+			else if (keycode == Keybinds.spammer.getKeyCode()) host.actionSpammer.toggle();
+			else if (keycode == Keybinds.triggerbot.getKeyCode()) host.actionTriggerbot.toggle();
+			else if (keycode == Keybinds.autosoup.getKeyCode()) host.actionAutosoup.toggle();
+			else if (keycode == Keybinds.aimbot.getKeyCode()) host.actionAimbot.toggle();
+			else if (keycode == Keybinds.tracer.getKeyCode()) host.actionTracer.toggle();
+			else if (keycode == Keybinds.esp.getKeyCode()) host.actionEsp.toggle();
+			else if (keycode == Keybinds.autouse.getKeyCode()) host.actionAutouse.toggle();
+			else if (keycode == Keybinds.fastbow.getKeyCode()) host.actionFastbow.toggle();
+			else if (keycode == Keybinds.regen.getKeyCode()) host.actionRegen.toggle();
+			else if (keycode == Keybinds.freecam.getKeyCode()) host.actionFreecam.toggle();
+			else if (keycode == Keybinds.trajectories.getKeyCode()) host.actionTrajectories.toggle();
+			else if (keycode == Keybinds.phase.getKeyCode()) {
+				if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) host.actionPhase.deactivate();
+				else host.actionPhase.activate();
+			} else if (keycode == Keybinds.fullbright.getKeyCode()) {
+				if (host.actionFullbright.isActuallyActive()) host.actionFullbright.activate();
+				else host.actionFullbright.deactivate();
+			}
 //			else if (keycode == Keybinds.antikb.getKeyCode()) host.actionAntiKB.setActive(!host.actionAntiKB.isActive());
 		}
 		

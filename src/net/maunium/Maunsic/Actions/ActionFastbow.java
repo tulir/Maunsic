@@ -1,7 +1,6 @@
 package net.maunium.Maunsic.Actions;
 
 import net.maunium.Maunsic.Actions.Util.TickAction;
-import net.maunium.Maunsic.Util.MaunsiConfig;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -19,25 +18,7 @@ import net.minecraft.util.EnumFacing;
  * @author Alexander01998
  * @since 0.1
  */
-public class ActionFastbow implements TickAction {
-	private boolean active = false;
-	
-	@Override
-	public boolean isActive() {
-		return active;
-	}
-	
-	@Override
-	public void setActive(boolean active) {
-		this.active = active;
-	}
-	
-	@Override
-	public void saveData(MaunsiConfig conf) {}
-	
-	@Override
-	public void loadData(MaunsiConfig conf) {}
-	
+public class ActionFastbow extends TickAction {
 	@Override
 	public String[] getStatusText() {
 		return new String[] { "Fastbow " + EnumChatFormatting.GREEN + "ON" };

@@ -2,7 +2,7 @@ package net.maunium.Maunsic.Actions.Util;
 
 import net.minecraft.client.Minecraft;
 
-public abstract class IntervalAction implements TickAction {
+public abstract class IntervalAction extends TickAction {
 	protected int interval;
 	protected long previousExec = 0;
 	
@@ -17,7 +17,7 @@ public abstract class IntervalAction implements TickAction {
 	public abstract void executeInterval();
 	
 	@Override
-	public void execute() {
+	public final void execute() {
 		if (Minecraft.getSystemTime() - previousExec > interval) {
 			executeInterval();
 			previousExec = Minecraft.getSystemTime();

@@ -23,8 +23,6 @@ import net.minecraft.util.EnumChatFormatting;
  * @from Maucros
  */
 public class ActionAimbot extends IntervalAction {
-	private boolean active = false;
-	
 	@Override
 	public void executeInterval() {
 		List<Entity> e = new ArrayList<Entity>(getEntitiesAABB(EntityFireball.class, Attacking.range));
@@ -56,16 +54,6 @@ public class ActionAimbot extends IntervalAction {
 		if (interval >= 40) rtrn[2] = " Speed (ms/ref): " + EnumChatFormatting.GREEN + interval;
 		else rtrn[2] = " Speed (ms/ref): " + EnumChatFormatting.GREEN + EnumChatFormatting.ITALIC + interval;
 		return rtrn;
-	}
-	
-	@Override
-	public boolean isActive() {
-		return active;
-	}
-	
-	@Override
-	public void setActive(boolean active) {
-		this.active = active;
 	}
 	
 	@Override

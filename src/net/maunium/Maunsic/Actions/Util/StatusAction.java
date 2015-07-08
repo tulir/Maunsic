@@ -8,27 +8,51 @@ import net.maunium.Maunsic.Util.MaunsiConfig;
  * @author Tulir293
  * @since 0.1
  */
-public interface StatusAction {
+public abstract class StatusAction {
+	protected boolean active = false;
+	
+	/**
+	 * Deactivate this action.
+	 */
+	public void activate() {
+		active = true;
+	}
+	
+	/**
+	 * Activate this action.
+	 */
+	public void deactivate() {
+		active = false;
+	}
+	
+	/**
+	 * If this action is active, deactivate it. Otherwise activate it.
+	 */
+	public void toggle() {
+		if (isActive()) deactivate();
+		else activate();
+	}
 	
 	/**
 	 * @return True if this action is active and should be executed on the next tick. False otherwise.
 	 */
-	public boolean isActive();
+	public boolean isActive() {
+		return active;
+	}
 	
 	/**
-	 * Activate or deactivate this action.
-	 * 
-	 * @param active True if the action should be activated, false if it should be deactivated.
+	 * Save the settings of this action to the given MaunsiConfig.
 	 */
-	public void setActive(boolean active);
+	public void saveData(MaunsiConfig conf) {}
 	
-	public void saveData(MaunsiConfig conf);
-	
-	public void loadData(MaunsiConfig conf);
+	/**
+	 * Load the settings of this action from the given MaunsiConfig.
+	 */
+	public void loadData(MaunsiConfig conf) {}
 	
 	/**
 	 * @return The text to render on the left side of the screen when this action is active. An empty string will render an empty line and a null string will be
 	 *         ignored. To render no text, return null.
 	 */
-	public String[] getStatusText();
+	public abstract String[] getStatusText();
 }

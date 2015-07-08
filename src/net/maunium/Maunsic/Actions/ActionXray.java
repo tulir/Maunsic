@@ -17,7 +17,7 @@ import net.minecraft.util.EnumChatFormatting;
  * @author Tulir293
  * @since 0.1
  */
-public class ActionXray implements StatusAction {
+public class ActionXray extends StatusAction {
 	public static boolean enabled = false;
 	private static Set<String> disabledBlocks = new HashSet<String>();
 	
@@ -69,8 +69,14 @@ public class ActionXray implements StatusAction {
 	}
 	
 	@Override
-	public void setActive(boolean active) {
-		enabled = active;
+	public void activate() {
+		enabled = true;
+		Minecraft.getMinecraft().renderGlobal.loadRenderers();
+	}
+	
+	@Override
+	public void deactivate() {
+		enabled = false;
 		Minecraft.getMinecraft().renderGlobal.loadRenderers();
 	}
 	
