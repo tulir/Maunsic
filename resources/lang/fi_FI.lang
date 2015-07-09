@@ -120,6 +120,8 @@ conf.antispam.count=Antispam: Näytä määrä
 conf.triggerbot.min=Triggerbot Minimiaika
 conf.triggerbot.max=Triggerbot Maksimiaika
 
+conf.fastbow.speed=Jousen nopeus
+
 action.amv.title=Vaihtoehtoinen liikkuminen
 action.amv.mode=Tila
 action.amv.fly=Lento
@@ -141,3 +143,10 @@ message.calculator.variable.spacename=Muuttujien nimet eivät saa sisältää v�
 message.calculator.variable.setvalue=Asetettiin {0}:n arvoksi {1}.
 message.calculator.unknownerror={0}
 message.calculator.result={0} = {1}
+message.calculator.syntax=&c{0}
+message.calculator.syntax.start=Villi syntaksivirhe ilmestyy!
+
+message.mauluam.err=&c{0}
+message.mauluam.out=&f{0}
+message.lua.execfail=Lua tiedoston {0} ajaminen epäonnistui. Virhe: {1}
+message.lua.filemissing=Lua tiedostoa {0} näppäin Maucrossa {1} ei löydetty.
