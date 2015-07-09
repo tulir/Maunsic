@@ -29,69 +29,79 @@ public class MauActionLib extends TwoArgFunction {
 	
 	public class getsetting extends TwoArgFunction {
 		@Override
-		public LuaValue call(LuaValue clazz, LuaValue field) {
-//			Field f = null;
-//			boolean b1 = false;
-//			for (Class<?> c : Settings.class.getDeclaredClasses())
-//				if (c.getSimpleName().equalsIgnoreCase(clazz.tojstring())) {
-//					b1 = true;
-//					for (Field ff : c.getDeclaredFields())
-//						if (ff.getName().equalsIgnoreCase(field.tojstring())) {
-//							f = ff;
-//							break;
-//						}
-//				}
-//			if (!b1) return LuaValue.valueOf("Class not found: \"" + clazz.tojstring() + "\"");
-//			if (f == null) return LuaValue.valueOf("Field not found: \"" + field.tojstring() + "\"");
-//			try {
-//				if (!f.isAccessible()) f.setAccessible(true);
-//				if (f.getType().equals(int.class)) return LuaValue.valueOf(f.getInt(null));
-//				else if (f.getType().equals(double.class)) return LuaValue.valueOf(f.getDouble(null));
-//				else if (f.getType().equals(boolean.class)) return LuaValue.valueOf(f.getBoolean(null));
-//				else return LuaValue.valueOf(f.get(null).toString());
-//			} catch (Exception e) {
-//				Maunsic.getLogger().catching(e);
-//				return LuaValue.valueOf("Exception: " + e.getMessage());
-//			}
-			return LuaValue.valueOf("Not yet implemented");
+		public LuaValue call(LuaValue action, LuaValue field) {
+			StatusAction sa = getAction(action.tojstring());
+			if (sa == null) return LuaValue.valueOf(-1);
+			Field f = null;
+			Class<?> type = null;
+			try {
+				f = sa.getClass().getDeclaredField(field.tojstring());
+				if (f == null) return LuaValue.valueOf(-3);
+				type = f.getType();
+				if (type == null) return LuaValue.valueOf(-3);
+			} catch (Throwable e) {
+				Maunsic.getLogger().catching(e);
+				return LuaValue.valueOf(-2);
+			}
+			
+			try {
+				if (type.equals(String.class)) return LuaValue.valueOf((String) f.get(sa));
+				else if (type.equals(int.class)) return LuaValue.valueOf(f.getInt(sa));
+				else if (type.equals(double.class)) return LuaValue.valueOf(f.getDouble(sa));
+				else if (type.equals(float.class)) return LuaValue.valueOf(f.getFloat(sa));
+				else if (type.equals(boolean.class)) return LuaValue.valueOf(f.getBoolean(sa));
+				else if (type.equals(byte[].class)) return LuaValue.valueOf((byte[]) f.get(sa));
+			} catch (Throwable t) {
+				return LuaValue.valueOf(-4);
+			}
+			return LuaValue.valueOf(-5);
 		}
 	}
 	
 	public class setsetting extends ThreeArgFunction {
 		@Override
-		public LuaValue call(LuaValue clazz, LuaValue field, LuaValue value) {
-//			Field f = null;
-//			boolean b1 = false;
-//			for (Class<?> c : Settings.class.getDeclaredClasses())
-//				if (c.getSimpleName().equalsIgnoreCase(clazz.tojstring())) {
-//					b1 = true;
-//					for (Field ff : c.getDeclaredFields())
-//						if (ff.getName().equalsIgnoreCase(field.tojstring())) {
-//							f = ff;
-//							break;
-//						}
-//				}
-//			if (!b1) return LuaValue.valueOf("Class not found: \"" + clazz.tojstring() + "\"");
-//			if (f == null) return LuaValue.valueOf("Field not found: \"" + field.tojstring() + "\"");
-//			try {
-//				if (!f.isAccessible()) f.setAccessible(true);
-//				if (f.getType().equals(int.class)) f.set(null, value.toint());
-//				else if (f.getType().equals(double.class)) f.set(null, value.todouble());
-//				else if (f.getType().equals(String.class)) f.set(null, value.tojstring());
-//				else if (f.getType().equals(boolean.class)) f.set(null, value.toboolean());
-//				else return LuaValue.valueOf("Type \"" + f.getType().getSimpleName() + "\" could not be identified.");
-//				return LuaValue.valueOf("Success");
-//			} catch (Exception e) {
-//				Maunsic.getLogger().catching(e);
-//				return LuaValue.valueOf("Exception: " + e.getMessage());
-//			}
-			return LuaValue.valueOf("Not yet implemented");
+		public LuaValue call(LuaValue action, LuaValue field, LuaValue value) {
+			StatusAction sa = getAction(action.tojstring());
+			if (sa == null) return LuaValue.valueOf(-1);
+			Field f;
+			Class<?> type = null;
+			try {
+				f = sa.getClass().getDeclaredField(field.tojstring());
+				if (f == null) return LuaValue.valueOf(-3);
+				type = f.getType();
+				if (type == null) return LuaValue.valueOf(-3);
+			} catch (Throwable e) {
+				Maunsic.getLogger().catching(e);
+				return LuaValue.valueOf(-2);
+			}
+			try {
+				switch (value.type()) {
+					case LuaValue.TBOOLEAN:
+						f.setBoolean(sa, value.toboolean());
+						break;
+					case LuaValue.TINT:
+						f.setInt(sa, value.toint());
+						break;
+					case LuaValue.TNUMBER:
+						f.setDouble(sa, value.todouble());
+						break;
+					case LuaValue.TSTRING:
+						f.set(sa, value.tojstring());
+						break;
+					default:
+						return LuaValue.valueOf(-5);
+				}
+			} catch (Throwable t) {
+				return LuaValue.valueOf(-4);
+			}
+			return LuaValue.valueOf(0);
 		}
 	}
 	
 	public class activate extends OneArgFunction {
 		@Override
 		public LuaValue call(LuaValue method) {
+			if (!method.isstring()) return LuaValue.FALSE;
 			StatusAction a = getAction(method.tojstring());
 			if (a != null) a.activate();
 			else return LuaValue.valueOf(1);
@@ -102,6 +112,7 @@ public class MauActionLib extends TwoArgFunction {
 	public class deactivate extends OneArgFunction {
 		@Override
 		public LuaValue call(LuaValue method) {
+			if (!method.isstring()) return LuaValue.FALSE;
 			StatusAction a = getAction(method.tojstring());
 			if (a != null) a.deactivate();
 			else return LuaValue.valueOf(1);
@@ -112,6 +123,7 @@ public class MauActionLib extends TwoArgFunction {
 	public class toggle extends OneArgFunction {
 		@Override
 		public LuaValue call(LuaValue method) {
+			if (!method.isstring()) return LuaValue.FALSE;
 			StatusAction a = getAction(method.tojstring());
 			if (a != null) a.toggle();
 			else return LuaValue.valueOf(1);
@@ -122,6 +134,7 @@ public class MauActionLib extends TwoArgFunction {
 	public class isactive extends OneArgFunction {
 		@Override
 		public LuaValue call(LuaValue method) {
+			if (!method.isstring()) return LuaValue.FALSE;
 			StatusAction a = getAction(method.tojstring());
 			if (a != null) return LuaValue.valueOf(a.isActive());
 			else return LuaValue.FALSE;
