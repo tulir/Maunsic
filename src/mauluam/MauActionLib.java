@@ -12,8 +12,6 @@ import net.maunium.Maunsic.Maunsic;
 import net.maunium.Maunsic.Actions.Util.StatusAction;
 
 public class MauActionLib extends TwoArgFunction {
-	private Maunsic host;
-	
 	@Override
 	public LuaValue call(LuaValue modname, LuaValue env) {
 		LuaValue lib = LuaValue.tableOf();
@@ -142,6 +140,7 @@ public class MauActionLib extends TwoArgFunction {
 	}
 	
 	public StatusAction getAction(String name) {
+		Maunsic host = Maunsic.getInstance();
 		switch (name.toLowerCase(Locale.ENGLISH)) {
 		// @mauformat=off
 			case "fly": return host.actionFly;

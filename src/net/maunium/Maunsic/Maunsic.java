@@ -421,4 +421,8 @@ public class Maunsic {
 		if (Minecraft.getMinecraft().thePlayer == null) return;
 		Minecraft.getMinecraft().thePlayer.sendChatMessage(message);
 	}
+	
+	public static Maunsic getInstance() {
+		return instance;
+	}
 }
