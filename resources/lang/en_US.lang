@@ -146,5 +146,7 @@ message.calculator.result={0} = {1}
 message.calculator.syntax=&c{0}
 message.calculator.syntax.start=A wild Syntax Exception appears!
 
-message.mauluam.error=&c{0}
-message.mauluam.error=&f{0}
+message.mauluam.err=&c{0}
+message.mauluam.out=&f{0}
+message.lua.execfail=Failed to execute Lua file {0}. Error: {1}
+message.lua.filemissing=The lua file {0} in the Key Maucro {1} does not exist.
