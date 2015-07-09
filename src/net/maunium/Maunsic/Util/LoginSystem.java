@@ -20,6 +20,8 @@ import net.minecraft.util.Session;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 /**
+ * Allows easy usage of the Yggdrasil authentication system.
+ * 
  * @author Tulir293
  * @since 0.1
  * @from Maucros

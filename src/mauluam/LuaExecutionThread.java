@@ -100,6 +100,6 @@ public class LuaExecutionThread extends Thread {
 	
 	@Override
 	public String toString() {
-		return "Lua Execution Thread #" + uid + ": \"" + name + "\" executing file \"" + f.getPath() + "\"";
+		return "Lua Execution Thread #" + uid + ": \"" + name + "\" executing file \"" + f.getName() + "\"";
 	}
 }

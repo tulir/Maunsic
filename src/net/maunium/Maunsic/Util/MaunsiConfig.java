@@ -27,14 +27,7 @@ import com.google.gson.stream.JsonWriter;
  * @since 0.1
  */
 public class MaunsiConfig {
-	private JsonObject json;
-	
-	/**
-	 * Create a new MaunsiConfig
-	 */
-	public MaunsiConfig() {
-		json = new JsonObject();
-	}
+	private JsonObject json = new JsonObject();
 	
 	/**
 	 * Load the data from the given file to this MaunsiConfig.

@@ -40,6 +40,7 @@ public class ActionHandler {
 	 * @param phase The tick event phase to execute this action at.
 	 */
 	public <T extends StatusAction> T registerAction(T ta, Phase phase) {
+		Maunsic.getLogger().trace("Registering action " + ta.getClass().getSimpleName() + " in phase " + phase.toString(), this);
 		switch (phase) {
 			case TICKSTART:
 				startActions.add((TickAction) ta);
@@ -66,6 +67,7 @@ public class ActionHandler {
 	 * @param phase The value used when registering the action.
 	 */
 	public <T extends StatusAction> void unregisterAction(T ta, Phase phase) {
+		Maunsic.getLogger().trace("Unregistering action " + ta.getClass().getSimpleName() + " in phase " + phase.toString(), this);
 		switch (phase) {
 			case TICKSTART:
 				startActions.remove(ta);
@@ -88,6 +90,7 @@ public class ActionHandler {
 	 * Save the configurations of all actions to RAM by calling the saveData method of each action.
 	 */
 	public void saveAll() {
+		Maunsic.getLogger().trace("Saving configurations of all actions.", this);
 		for (StatusAction a : allActions)
 			a.saveData(host.getConfig());
 	}
@@ -96,6 +99,7 @@ public class ActionHandler {
 	 * Load the configurations of all actions to RAM by calling the saveData method of each action.
 	 */
 	public void loadAll() {
+		Maunsic.getLogger().trace("Loading configurations of all actions.", this);
 		for (StatusAction a : allActions)
 			a.loadData(host.getConfig());
 	}
