@@ -156,10 +156,13 @@ public class MaunsicLogger {
 	public void catching(Throwable e) {
 		String msg = "[" + sdf.format(new Date()) + "] [Maunsic/EXCEPTION] " + e.getClass().getName() + ": " + e.getMessage();
 		printerr(msg, new ChatStyle().setColor(EnumChatFormatting.DARK_RED));
-		if (debugType >= 1) for (StackTraceElement ste : e.getStackTrace())
-			printerr("	at " + ste.toString(), new ChatStyle().setColor(EnumChatFormatting.RED).setItalic(true));
-		else for (StackTraceElement ste : e.getStackTrace())
-			write("	at " + ste.toString());
+		if (debugType >= 1) {
+			for (StackTraceElement ste : e.getStackTrace())
+				printerr("	at " + ste.toString(), new ChatStyle().setColor(EnumChatFormatting.RED).setItalic(true));
+		} else {
+			for (StackTraceElement ste : e.getStackTrace())
+				write("	at " + ste.toString());
+		}
 	}
 	
 	private void printout(String msg, ChatStyle cs) {
