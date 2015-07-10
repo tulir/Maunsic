@@ -122,8 +122,9 @@ public class Maunsic {
 	public ActionTriggerbot actionTriggerbot;
 	public ActionFullbright actionFullbright;
 	public ActionFastbow actionFastbow;
-	public StatusAction actionNofall, actionBlink, actionSpammer, actionAttackaura, actionAutosoup, actionAimbot, actionXray, actionTracer, actionEsp,
-			actionAutouse, actionRegen, actionFreecam, actionTrajectories;
+	public ActionAutosoup actionAutosoup;
+	public StatusAction actionNofall, actionBlink, actionSpammer, actionAttackaura, actionAimbot, actionXray, actionTracer, actionEsp, actionAutouse,
+			actionRegen, actionFreecam, actionTrajectories;
 	
 	/**
 	 * Constructor
