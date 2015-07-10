@@ -27,7 +27,7 @@ public class ActionFastbow extends IntervalAction {
 	
 	@Override
 	public void saveData(MaunsiConfig conf) {
-		conf.set("fastbow.interval", interval);
+		conf.set("actions.fastbow.interval", interval);
 	}
 	
 	public void setInterval(int interval) {
