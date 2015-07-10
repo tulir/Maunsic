@@ -39,7 +39,7 @@ public class GuiMaunsic extends BasicScreen {
 	private List<Widget> widgets = new ArrayList<Widget>();
 	
 	private Label title;
-	private ButtonVanilla keys, alts, keymaucros, luathreads, xray, fanda, prevPage, nextPage, close;
+	private ButtonVanilla keys, alts, keymaucros, luathreads, xray, fanda, autosoup, prevPage, nextPage, close;
 	private StateButton autophase, autoblink, autophasesprint, antispam;
 	private ExtendedIntSlider speed, jump, blinksafety, triggerMin, triggerMax, fastbowSpeed;
 	
@@ -64,7 +64,8 @@ public class GuiMaunsic extends BasicScreen {
 		keys = new ButtonVanilla(I18n.translate("conf.keys"), this);
 		xray = new ButtonVanilla(I18n.translate("conf.xray"), this);
 		fanda = new ButtonVanilla(I18n.translate("conf.fanda"), this);
-		add(alts, keymaucros, luathreads, keys, xray, fanda);
+		autosoup = new ButtonVanilla(I18n.translate("conf.autosoup"), this);
+		add(alts, keymaucros, luathreads, keys, xray, fanda, autosoup);
 		
 		speed = new ExtendedIntSlider(I18n.translate("conf.amv.speed"), host.actionFly.getSpeed(), ActionFly.MIN_SPEED, ActionFly.MAX_SPEED);
 		jump = new ExtendedIntSlider(amount -> amount == 0 ? I18n.translate("conf.amv.jump.default") : I18n.translate("conf.amv.jump", amount),
@@ -170,6 +171,7 @@ public class GuiMaunsic extends BasicScreen {
 		else if (b == luathreads) Minecraft.getMinecraft().displayGuiScreen(new GuiLuaThreads(this));
 		else if (b == xray) Minecraft.getMinecraft().displayGuiScreen(new GuiXrayBlocks(host));
 		else if (b == fanda) Minecraft.getMinecraft().displayGuiScreen(new GuiFriendsAndAttacking(this, host));
+		else if (b == autosoup) Minecraft.getMinecraft().displayGuiScreen(new GuiAutosoup(this, host));
 	}
 	
 	@Override
