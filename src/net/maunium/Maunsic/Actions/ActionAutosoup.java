@@ -22,7 +22,7 @@ import net.minecraft.util.EnumFacing;
  * @from Maucros
  */
 public class ActionAutosoup extends IntervalAction {
-	private boolean fullRefill = false, randomizeSoup = false, randomizeRefill = false;
+	public boolean fullRefill = false, randomizeSoup = false, randomizeRefill = false;
 	private int prevSlot = 0;
 	private Task task = Task.CHECKSTATUS;
 	private Random r = new Random(System.currentTimeMillis());
@@ -32,6 +32,7 @@ public class ActionAutosoup extends IntervalAction {
 		Minecraft mc = Minecraft.getMinecraft();
 		EntityPlayerSP p = mc.thePlayer;
 		if (task == Task.CHECKSTATUS) {
+			if (countSoup() == 0) return;
 			int emptySlot = -1;
 			prevSlot = p.inventory.currentItem;
 			
@@ -42,7 +43,7 @@ public class ActionAutosoup extends IntervalAction {
 					continue;
 				} else if (!is.getItem().equals(Items.mushroom_stew)) continue;
 				
-				if (randomizeSoup && r.nextInt(3) == 2) {
+				if (randomizeSoup && i != 8 && r.nextInt(5) == 2) {
 					is = p.inventory.getStackInSlot(i + 1);
 					if (is != null && is.getItem() != null && is.stackSize != 0 && is.getItem().equals(Items.mushroom_stew)) i++;
 				}
@@ -83,9 +84,14 @@ public class ActionAutosoup extends IntervalAction {
 			}
 			if (soupIn == -1) task = Task.CHECKSTATUS;
 			
-			if (randomizeRefill && r.nextInt(2) == 1) {
-				ItemStack is = p.inventory.getStackInSlot(soupIn + 9);
-				if (is != null && is.getItem() != null && is.getItem().equals(Items.mushroom_stew) && is.stackSize != 0) soupIn += 9;
+			if (randomizeRefill && r.nextInt(3) == 1) {
+				int ns = -1;
+				if (soupIn < 27 && r.nextBoolean()) ns = soupIn + 9;
+				else if (soupIn % 9 != 8) ns = soupIn + 1;
+				if (ns != -1) {
+					ItemStack is = p.inventory.getStackInSlot(ns);
+					if (is != null && is.getItem() != null && is.getItem().equals(Items.mushroom_stew) && is.stackSize != 0) soupIn = ns;
+				}
 			}
 			
 			for (int i = 0; i < 9; i++) {
@@ -108,19 +114,23 @@ public class ActionAutosoup extends IntervalAction {
 		else rtrn[1] = null;
 		if (interval != 20) rtrn[2] = " Tick delay: " + EnumChatFormatting.AQUA + interval;
 		else rtrn[2] = null;
-		int soup = 0;
-		
-		for (ItemStack is : Minecraft.getMinecraft().thePlayer.inventory.mainInventory) {
-			if (is == null) continue;
-			if (is.getItem() == null) continue;
-			if (is.getItem().equals(Items.mushroom_stew)) soup++;
-		}
+		int soup = countSoup();
 		
 		if (soup > 18) rtrn[3] = EnumChatFormatting.GREEN + " " + soup + " Soup left";
 		else if (soup > 8) rtrn[3] = EnumChatFormatting.YELLOW + " " + soup + " Soup left";
 		else if (soup > 0) rtrn[3] = EnumChatFormatting.RED + " " + soup + " Soup left";
 		else rtrn[3] = EnumChatFormatting.DARK_RED + " " + EnumChatFormatting.BOLD + "No soup left!";
 		return rtrn;
+	}
+	
+	public int countSoup() {
+		int soup = 0;
+		for (ItemStack is : Minecraft.getMinecraft().thePlayer.inventory.mainInventory) {
+			if (is == null) continue;
+			if (is.getItem() == null) continue;
+			if (is.getItem().equals(Items.mushroom_stew)) soup++;
+		}
+		return soup;
 	}
 	
 	@Override
@@ -137,6 +147,14 @@ public class ActionAutosoup extends IntervalAction {
 		fullRefill = conf.getBoolean("actions.autosoup.fullrefill", fullRefill);
 		randomizeSoup = conf.getBoolean("actions.autosoup.randomize.soup", randomizeSoup);
 		randomizeRefill = conf.getBoolean("actions.autosoup.randomize.refill", randomizeRefill);
+	}
+	
+	public int getInterval() {
+		return interval;
+	}
+	
+	public void setInterval(int i) {
+		interval = i;
 	}
 	
 	public static enum Task {
