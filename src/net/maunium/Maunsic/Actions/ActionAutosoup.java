@@ -2,8 +2,6 @@ package net.maunium.Maunsic.Actions;
 
 import java.util.Random;
 
-import org.lwjgl.input.Keyboard;
-
 import net.maunium.Maunsic.Actions.Util.IntervalAction;
 import net.maunium.Maunsic.Util.MaunsiConfig;
 
@@ -24,17 +22,10 @@ import net.minecraft.util.EnumFacing;
  * @from Maucros
  */
 public class ActionAutosoup extends IntervalAction {
-	private boolean legit = false;
+	private boolean fullRefill = false, randomizeSoup = false, randomizeRefill = false;
 	private int prevSlot = 0;
 	private Task task = Task.CHECKSTATUS;
 	private Random r = new Random(System.currentTimeMillis());
-	
-	@Override
-	public void activate() {
-		super.activate();
-		if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) legit = true;
-		else legit = false;
-	}
 	
 	@Override
 	public void executeInterval() {
@@ -44,13 +35,17 @@ public class ActionAutosoup extends IntervalAction {
 			int emptySlot = -1;
 			prevSlot = p.inventory.currentItem;
 			
-			// TODO: Small randomization if legit mode
 			for (int i = 0; i < 9; i++) {
 				ItemStack is = p.inventory.getStackInSlot(i);
 				if (is == null || is.getItem() == null || is.stackSize == 0) {
 					if (emptySlot == -1) emptySlot = i;
 					continue;
 				} else if (!is.getItem().equals(Items.mushroom_stew)) continue;
+				
+				if (randomizeSoup && r.nextInt(3) == 2) {
+					is = p.inventory.getStackInSlot(i + 1);
+					if (is != null && is.getItem() != null && is.stackSize != 0 && is.getItem().equals(Items.mushroom_stew)) i++;
+				}
 				
 				if (p.getHealth() < p.getMaxHealth() - 7) {
 					p.inventory.currentItem = i;
@@ -59,7 +54,7 @@ public class ActionAutosoup extends IntervalAction {
 				return;
 			}
 			
-			if (legit) task = Task.LEGITREFILL;
+			if (fullRefill) task = Task.LEGITREFILL;
 			else {
 				for (int i = 9; i < 36; i++) {
 					ItemStack is = p.inventory.getStackInSlot(i);
@@ -88,10 +83,9 @@ public class ActionAutosoup extends IntervalAction {
 			}
 			if (soupIn == -1) task = Task.CHECKSTATUS;
 			
-			// TODO: Better randomization.
-			if (r.nextInt(3) == 2) {
-				ItemStack is = p.inventory.getStackInSlot(soupIn + 1);
-				if (is != null && is.getItem() != null && is.getItem().equals(Items.mushroom_stew) && is.stackSize != 0) soupIn++;
+			if (randomizeRefill && r.nextInt(2) == 1) {
+				ItemStack is = p.inventory.getStackInSlot(soupIn + 9);
+				if (is != null && is.getItem() != null && is.getItem().equals(Items.mushroom_stew) && is.stackSize != 0) soupIn += 9;
 			}
 			
 			for (int i = 0; i < 9; i++) {
@@ -110,7 +104,7 @@ public class ActionAutosoup extends IntervalAction {
 	public String[] getStatusText() {
 		String[] rtrn = new String[4];
 		rtrn[0] = "Autosoup " + EnumChatFormatting.GREEN + "ON";
-		if (legit) rtrn[1] = " Legit mode " + EnumChatFormatting.GREEN + "ON";
+		if (fullRefill) rtrn[1] = " Legit mode " + EnumChatFormatting.GREEN + "ON";
 		else rtrn[1] = null;
 		if (interval != 20) rtrn[2] = " Tick delay: " + EnumChatFormatting.AQUA + interval;
 		else rtrn[2] = null;
@@ -132,11 +126,17 @@ public class ActionAutosoup extends IntervalAction {
 	@Override
 	public void saveData(MaunsiConfig conf) {
 		conf.set("actions.autosoup.interval", interval);
+		conf.set("actions.autosoup.fullrefill", fullRefill);
+		conf.set("actions.autosoup.randomize.soup", randomizeSoup);
+		conf.set("actions.autosoup.randomize.refill", randomizeRefill);
 	}
 	
 	@Override
 	public void loadData(MaunsiConfig conf) {
 		interval = conf.getInt("actions.autosoup.interval", interval);
+		fullRefill = conf.getBoolean("actions.autosoup.fullrefill", fullRefill);
+		randomizeSoup = conf.getBoolean("actions.autosoup.randomize.soup", randomizeSoup);
+		randomizeRefill = conf.getBoolean("actions.autosoup.randomize.refill", randomizeRefill);
 	}
 	
 	public static enum Task {
