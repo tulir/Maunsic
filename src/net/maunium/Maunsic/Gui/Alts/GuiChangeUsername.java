@@ -112,7 +112,7 @@ public class GuiChangeUsername extends BasicScreen {
 		Maunsic.getLogger().trace("Creating buttons", this);
 		finish = new ButtonVanilla(150, 20, I18n.translate("conf.username.finish"), this);
 		cancel = new ButtonVanilla(150, 20, I18n.translate("conf.username.cancel"), this);
-		alts = new ButtonVanilla(150, 20, I18n.translate("conf.alts.enter"), this);
+		alts = new ButtonVanilla(150, 20, I18n.translate("conf.alts"), this);
 		randomName = new ButtonVanilla(150, 20, I18n.translate("conf.alts.random"), this);
 		
 		Maunsic.getLogger().trace("Creating container and adding widgets", this);

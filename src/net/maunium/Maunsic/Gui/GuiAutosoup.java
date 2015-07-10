@@ -35,7 +35,7 @@ public class GuiAutosoup extends BasicScreen {
 		
 		interval = new ExtendedIntSlider(200, 20, I18n.translate("conf.autosoup.interval"), host.actionAutosoup.getInterval(), 1, 200);
 		
-		back = new ButtonVanilla(200, 20, "conf.back", this);
+		back = new ButtonVanilla(200, 20, I18n.translate("conf.back"), this);
 		
 		c.addWidgets(title, fullRefill, randomRefill, randomSoup, interval, back);
 		containers.add(c);
