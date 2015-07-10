@@ -122,6 +122,13 @@ conf.triggerbot.max=Triggerbot Max delay
 
 conf.fastbow.speed=Fastbow Interval
 
+conf.autosoup=Autosoup
+conf.autosoup.title=Autosoup Settings
+conf.autosoup.fullrefill=Full hotbar refill
+conf.autosoup.randomrefill=Random refill slot
+conf.autosoup.randomsoup=Random soup eat slot
+conf.autosoup.interval=Execute interval
+
 action.amv.title=Alt. Movement
 action.amv.mode=Mode
 action.amv.fly=Fly
