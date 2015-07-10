@@ -2,6 +2,8 @@ package net.maunium.Maunsic.Actions;
 
 import java.util.Random;
 
+import org.lwjgl.input.Keyboard;
+
 import net.maunium.Maunsic.Actions.Util.IntervalAction;
 import net.maunium.Maunsic.Util.MaunsiConfig;
 
@@ -9,11 +11,13 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.play.client.C0EPacketClickWindow;
+import net.minecraft.network.play.client.C07PacketPlayerDigging;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.EnumFacing;
 
 /**
- * Updated version of AutoSoup.
+ * Autosoup v3 with functional legit mode.
  * 
  * @author Tulir293
  * @since 0.1
@@ -21,90 +25,85 @@ import net.minecraft.util.EnumChatFormatting;
  */
 public class ActionAutosoup extends IntervalAction {
 	private boolean legit = false;
-	private int nextTask = 0, taskModifier = 0, nextSlot = 0, prevSlot = 0, emptySlots = 0;
-	private Random mslr = new Random(System.currentTimeMillis());
+	private int prevSlot = 0;
+	private Task task = Task.CHECKSTATUS;
+	private Random r = new Random(System.currentTimeMillis());
+	
+	@Override
+	public void activate() {
+		super.activate();
+		if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) legit = true;
+		else legit = false;
+	}
 	
 	@Override
 	public void executeInterval() {
-		EntityPlayerSP p = Minecraft.getMinecraft().thePlayer;
-		if (nextTask == 0) {
+		Minecraft mc = Minecraft.getMinecraft();
+		EntityPlayerSP p = mc.thePlayer;
+		if (task == Task.CHECKSTATUS) {
+			int emptySlot = -1;
 			prevSlot = p.inventory.currentItem;
+			
+			// TODO: Small randomization if legit mode
 			for (int i = 0; i < 9; i++) {
-				if (legit && i != 8 && mslr.nextInt(5) == 3) i++;
-				if (p.inventory.getStackInSlot(i) == null || p.inventory.getStackInSlot(i).getItem() == null || p.inventory.getStackInSlot(i).stackSize == 0
-						|| !p.inventory.getStackInSlot(i).getItem().equals(Items.mushroom_stew)) continue;
+				ItemStack is = p.inventory.getStackInSlot(i);
+				if (is == null || is.getItem() == null || is.stackSize == 0) {
+					if (emptySlot == -1) emptySlot = i;
+					continue;
+				} else if (!is.getItem().equals(Items.mushroom_stew)) continue;
 				
 				if (p.getHealth() < p.getMaxHealth() - 7) {
 					p.inventory.currentItem = i;
-					nextTask = 1;
+					task = Task.EATSOUP;
 				}
 				return;
 			}
-			if (taskModifier == 1) {
-				for (int i = 9; i < 36; i++) {
-					ItemStack is = p.inventory.getStackInSlot(i);
-					if (is != null && is.getItem() != null && is.getItem().equals(Items.mushroom_stew) && is.stackSize != 0) {
-						p.inventoryContainer.transferStackInSlot(p, i);
-						p.sendQueue.addToSendQueue(new C0EPacketClickWindow(0, i, 0, 1, p.inventory.mainInventory[i], (short) i));
-						emptySlots--;
-						if (emptySlots == 0) taskModifier = 0;
-						else taskModifier = 2;
-						return;
-					}
-				}
-				taskModifier = 0;
-			} else if (taskModifier == 2) taskModifier++;
-			else if (taskModifier == 3) taskModifier++;
-			else if (taskModifier == 4) taskModifier++;
-			else if (taskModifier == 5) taskModifier = 1;
 			
-			if (legit) {
-				emptySlots = 0;
-				for (int i = 0; i < 9; i++) {
-					ItemStack is = p.inventory.getStackInSlot(nextSlot);
-					if (is == null || is.getItem() == null || is.stackSize == 0) emptySlots++;
-				}
-				taskModifier++;
-			} else {
+			if (legit) task = Task.LEGITREFILL;
+			else {
 				for (int i = 9; i < 36; i++) {
 					ItemStack is = p.inventory.getStackInSlot(i);
 					if (is != null && is.getItem() != null && is.getItem().equals(Items.mushroom_stew) && is.stackSize != 0) {
-						p.inventoryContainer.transferStackInSlot(p, i);
-						p.sendQueue.addToSendQueue(new C0EPacketClickWindow(0, i, 0, 1, p.inventory.mainInventory[i], (short) i));
+						mc.playerController.windowClick(0, i, 0, 0, p);
+						mc.playerController.windowClick(0, emptySlot + 36, 0, 0, p);
 						return;
 					}
 				}
 			}
-		} else if (nextTask == 1) {
-			if (p.inventory.getCurrentItem() != null) Minecraft.getMinecraft().playerController.sendUseItem(p, p.worldObj, p.inventory.getCurrentItem());
-			nextTask = 2;
-		} else if (nextTask == 2) {
-			p.dropOneItem(true);
+		} else if (task == Task.EATSOUP) {
+			if (p.inventory.getCurrentItem() != null) mc.playerController.sendUseItem(p, p.worldObj, p.inventory.getCurrentItem());
+			task = Task.DROPSOUP;
+		} else if (task == Task.DROPSOUP) {
+			p.sendQueue.addToSendQueue(new C07PacketPlayerDigging(C07PacketPlayerDigging.Action.DROP_ALL_ITEMS, BlockPos.ORIGIN, EnumFacing.DOWN));
 			p.inventory.currentItem = prevSlot;
-			nextTask = 0;
-		} else if (nextTask == 10) {
-			emptySlots = 0;
-			for (int i = 0; i < 9; i++) {
-				ItemStack is = p.inventory.getStackInSlot(nextSlot);
-				if (is == null || is.getItem() == null || is.stackSize == 0) emptySlots++;
-			}
-			nextTask = 12;
-		} else if (nextTask == 12) {
+			task = Task.CHECKSTATUS;
+		} else if (task == Task.LEGITREFILL) {
+			int soupIn = -1;
 			for (int i = 9; i < 36; i++) {
 				ItemStack is = p.inventory.getStackInSlot(i);
 				if (is != null && is.getItem() != null && is.getItem().equals(Items.mushroom_stew) && is.stackSize != 0) {
-					p.inventoryContainer.transferStackInSlot(p, i);
-					p.sendQueue.addToSendQueue(new C0EPacketClickWindow(0, i, 0, 1, p.inventory.mainInventory[i], (short) i));
-					emptySlots--;
-					if (emptySlots == 0) nextTask = 0;
-					else nextTask = 13;
+					soupIn = i;
 					break;
 				}
 			}
-		} else if (nextTask == 13) nextTask = 14;
-		else if (nextTask == 14) nextTask = 15;
-		else if (nextTask == 15) nextTask = 16;
-		else if (nextTask == 16) nextTask = 12;
+			if (soupIn == -1) task = Task.CHECKSTATUS;
+			
+			// TODO: Better randomization.
+			if (r.nextInt(3) == 2) {
+				ItemStack is = p.inventory.getStackInSlot(soupIn + 1);
+				if (is != null && is.getItem() != null && is.getItem().equals(Items.mushroom_stew) && is.stackSize != 0) soupIn++;
+			}
+			
+			for (int i = 0; i < 9; i++) {
+				ItemStack is = p.inventory.getStackInSlot(i);
+				if (is == null || is.getItem() == null || is.stackSize == 0) {
+					mc.playerController.windowClick(0, soupIn, 0, 0, p);
+					mc.playerController.windowClick(0, i + 36, 0, 0, p);
+					return;
+				}
+			}
+			task = Task.CHECKSTATUS;
+		}
 	}
 	
 	@Override
@@ -132,13 +131,15 @@ public class ActionAutosoup extends IntervalAction {
 	
 	@Override
 	public void saveData(MaunsiConfig conf) {
-		conf.set("actions.autosoup.legit", legit);
 		conf.set("actions.autosoup.interval", interval);
 	}
 	
 	@Override
 	public void loadData(MaunsiConfig conf) {
-		legit = conf.getBoolean("actions.autosoup.legit", legit);
 		interval = conf.getInt("actions.autosoup.interval", interval);
+	}
+	
+	public static enum Task {
+		CHECKSTATUS, EATSOUP, DROPSOUP, LEGITREFILL;
 	}
 }
