@@ -16,6 +16,13 @@ import org.luaj.vm2.lib.ZeroArgFunction;
 
 import net.maunium.Maunsic.Maunsic;
 
+/**
+ * MauluaM library for globally storing and reading data from lua scripts.
+ * 
+ * @author Tulir293
+ * @since 0.1
+ * @from Maucros
+ */
 public class MauGDataLib extends TwoArgFunction {
 	
 	@Override

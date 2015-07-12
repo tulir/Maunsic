@@ -6,6 +6,13 @@ import org.luaj.vm2.lib.ZeroArgFunction;
 
 import net.maunium.Maunsic.Maunsic;
 
+/**
+ * MauluaM library to interact with the Maunsic class.
+ * 
+ * @author Tulir293
+ * @since 0.1
+ * @from Maucros
+ */
 public class MaunsicUtilsLib extends TwoArgFunction {
 	@Override
 	public LuaValue call(LuaValue modname, LuaValue env) {

@@ -6,6 +6,13 @@ import org.luaj.vm2.lib.ZeroArgFunction;
 
 import net.minecraft.client.Minecraft;
 
+/**
+ * MauluaM library to interact with the Minecraft class.
+ * 
+ * @author Tulir293
+ * @since 0.1
+ * @from Maucros
+ */
 public class MauMcLib extends TwoArgFunction {
 	
 	@Override

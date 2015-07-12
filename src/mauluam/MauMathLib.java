@@ -16,6 +16,13 @@ import net.maunium.Maunsic.Maunsic;
 
 import net.minecraft.client.Minecraft;
 
+/**
+ * MauluaM library with various mathematical functions.
+ * 
+ * @author Tulir293
+ * @since 0.1
+ * @from Maucros
+ */
 public class MauMathLib extends TwoArgFunction {
 	@Override
 	public LuaValue call(LuaValue modname, LuaValue env) {
@@ -51,7 +58,7 @@ public class MauMathLib extends TwoArgFunction {
 			StringBuffer sb = new StringBuffer();
 			for (int i = 1; i < args.narg(); i++)
 				sb.append(args.tojstring(i));
-			
+				
 			try {
 				return LuaValue.valueOf(Parser.parse(sb.toString()).value());
 			} catch (SyntaxException ex) {

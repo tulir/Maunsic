@@ -15,6 +15,13 @@ import org.luaj.vm2.lib.ZeroArgFunction;
 
 import net.maunium.Maunsic.Maunsic;
 
+/**
+ * MauluaM library to manage Lua threads.
+ * 
+ * @author Tulir293
+ * @since 0.1
+ * @from Maucros
+ */
 public class MauThreadLib extends TwoArgFunction {
 	
 	@Override

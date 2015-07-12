@@ -13,6 +13,13 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.client.settings.KeyBinding;
 
+/**
+ * MauluaM library to emulate keyboard presses and checking key status.
+ * 
+ * @author Tulir293
+ * @since 0.1
+ * @from Maucros
+ */
 public class MauKeyboardLib extends TwoArgFunction {
 	
 	@Override

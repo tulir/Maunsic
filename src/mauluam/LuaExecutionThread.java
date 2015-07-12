@@ -20,6 +20,13 @@ import net.maunium.Maunsic.Server.ServerHandler;
 
 import net.minecraft.client.Minecraft;
 
+/**
+ * A class for executing lua files.
+ * 
+ * @author Tulir293
+ * @since 0.1
+ * @from Maucros
+ */
 public class LuaExecutionThread extends Thread {
 	private static int lastUID = 0;
 	

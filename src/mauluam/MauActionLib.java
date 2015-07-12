@@ -11,6 +11,12 @@ import org.luaj.vm2.lib.TwoArgFunction;
 import net.maunium.Maunsic.Maunsic;
 import net.maunium.Maunsic.Actions.Util.StatusAction;
 
+/**
+ * MauluaM library to interact with Maunsic Actions
+ * 
+ * @author Tulir293
+ * @since 0.1
+ */
 public class MauActionLib extends TwoArgFunction {
 	@Override
 	public LuaValue call(LuaValue modname, LuaValue env) {

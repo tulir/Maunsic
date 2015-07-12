@@ -19,6 +19,13 @@ import org.luaj.vm2.lib.ZeroArgFunction;
 
 import net.maunium.Maunsic.Maunsic;
 
+/**
+ * MauluaM library to print chat messages, read/write to files and use the Maunsic logger.
+ * 
+ * @author Tulir293
+ * @since 0.1
+ * @from Maucros.
+ */
 public class MauIOLib extends TwoArgFunction {
 	
 	@Override
@@ -149,7 +156,7 @@ public class MauIOLib extends TwoArgFunction {
 			StringBuffer sb = new StringBuffer();
 			for (int i = 1; i < msg.narg() + 1; i++)
 				sb.append(msg.tojstring(i));
-			Maunsic.printChatPlain(sb.toString());
+			Maunsic.printChat("message.mauluam.out", sb.toString());
 			return LuaValue.NIL;
 		}
 	}
@@ -160,7 +167,7 @@ public class MauIOLib extends TwoArgFunction {
 			StringBuffer sb = new StringBuffer();
 			for (int i = 1; i < msg.narg() + 1; i++)
 				sb.append(msg.tojstring(i));
-			Maunsic.printChat("message.mauluam.err", sb.toString());
+			Maunsic.printChatPlain("message.mauluam.err", sb.toString());
 			return LuaValue.NIL;
 		}
 	}
@@ -171,7 +178,7 @@ public class MauIOLib extends TwoArgFunction {
 			StringBuffer sb = new StringBuffer();
 			for (int i = 1; i < msg.narg() + 1; i++)
 				sb.append(msg.tojstring(i));
-			Maunsic.printChatError(sb.toString());
+			Maunsic.printChatError("message.mauluam.err", sb.toString());
 			return LuaValue.NIL;
 		}
 	}

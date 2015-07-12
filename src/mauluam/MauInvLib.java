@@ -7,6 +7,13 @@ import org.luaj.vm2.lib.TwoArgFunction;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.InventoryPlayer;
 
+/**
+ * A WIP MauluaM library for managing the playerinventory.
+ * 
+ * @author Tulir293
+ * @since 0.1
+ * @from Maucros
+ */
 public class MauInvLib extends TwoArgFunction {
 	@Override
 	public LuaValue call(LuaValue modname, LuaValue env) {

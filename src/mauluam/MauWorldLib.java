@@ -11,6 +11,13 @@ import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.util.BlockPos;
 
+/**
+ * MauluaM library to interact with the world.
+ * 
+ * @author Tulir293
+ * @since 0.1
+ * @from Maucros
+ */
 public class MauWorldLib extends TwoArgFunction {
 	@Override
 	public LuaValue call(LuaValue modname, LuaValue env) {
@@ -24,7 +31,8 @@ public class MauWorldLib extends TwoArgFunction {
 	public static class getBlockType extends ThreeArgFunction {
 		@Override
 		public LuaValue call(LuaValue x, LuaValue y, LuaValue z) {
-			return LuaValue.valueOf(Minecraft.getMinecraft().thePlayer.worldObj.getBlockState(new BlockPos(x.toint(), y.toint(), z.toint())).getBlock().getUnlocalizedName().substring(5));
+			return LuaValue.valueOf(Minecraft.getMinecraft().thePlayer.worldObj.getBlockState(new BlockPos(x.toint(), y.toint(), z.toint())).getBlock()
+					.getUnlocalizedName().substring(5));
 		}
 	}
 	
