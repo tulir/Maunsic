@@ -31,6 +31,8 @@ import org.luaj.vm2.LuaTable;
 import org.luaj.vm2.LuaValue;
 import org.luaj.vm2.Varargs;
 
+import net.minecraftforge.fml.common.FMLCommonHandler;
+
 /**
  * Subclass of {@link LibFunction} which implements the standard lua {@code os} library.
  * <p>
@@ -406,7 +408,7 @@ public class OsLib extends TwoArgFunction {
 	 * @param code
 	 */
 	protected void exit(int code) {
-		System.exit(code);
+		FMLCommonHandler.instance().exitJava(code, false);
 	}
 
 	/**
