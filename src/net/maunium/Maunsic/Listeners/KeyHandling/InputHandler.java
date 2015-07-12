@@ -4,6 +4,7 @@ import org.lwjgl.input.Keyboard;
 
 import net.maunium.Maunsic.Maunsic;
 import net.maunium.Maunsic.Actions.ActionFly;
+import net.maunium.Maunsic.Events.RawInputEvent;
 import net.maunium.Maunsic.Gui.GuiMaunsic;
 import net.maunium.Maunsic.Gui.Alts.GuiChangeUsername;
 import net.maunium.Maunsic.Gui.XRay.GuiXrayBlocks;
@@ -14,6 +15,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;
 
 import net.minecraftforge.fml.client.FMLClientHandler;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 /**
  * Handles all key and mouse input for Maunsic and also stores keybinds.
@@ -22,15 +24,15 @@ import net.minecraftforge.fml.client.FMLClientHandler;
  * @since 0.1
  */
 public class InputHandler {
-	private static boolean disabled = false;
-	private static final int[] konami = { Keyboard.KEY_UP, Keyboard.KEY_UP, Keyboard.KEY_DOWN, Keyboard.KEY_DOWN, Keyboard.KEY_LEFT, Keyboard.KEY_RIGHT,
+	private boolean disabled = false;
+	public static final int[] konami = { Keyboard.KEY_UP, Keyboard.KEY_UP, Keyboard.KEY_DOWN, Keyboard.KEY_DOWN, Keyboard.KEY_LEFT, Keyboard.KEY_RIGHT,
 			Keyboard.KEY_LEFT, Keyboard.KEY_RIGHT, Keyboard.KEY_B, Keyboard.KEY_A };
-	private static int konamiStatus = 0;
-	private static boolean konamiDown = true;
-	private static Maunsic host;
+	private int konamiStatus = 0;
+	private boolean konamiDown = true;
+	private Maunsic host;
 	
-	public static void setHost(Maunsic newHost) {
-		host = newHost;
+	public InputHandler(Maunsic host) {
+		this.host = host;
 		KeyRegistry.registerKeybind(Keybinds.config);
 		KeyRegistry.registerKeybind(Keybinds.fly);
 		KeyRegistry.registerKeybind(Keybinds.nofall);
@@ -56,13 +58,14 @@ public class InputHandler {
 		KeyRegistry.registerKeybind(Keybinds.trajectories);
 	}
 	
-	public static void input(int keycode, boolean pressed) {
-		if (keycode == -101 || keycode == Keyboard.KEY_NONE) return;
+	@SubscribeEvent
+	public void onKeyInput(RawInputEvent evt) {
+		if (evt.getCode() == -101 || evt.getCode() == Keyboard.KEY_NONE) return;
 		// Check if usage is allowed
 		if (!ServerHandler.canUse()) return;
 		// Execute the precheck key maucros, but only if the input handler is enabled.
 		if (!disabled) for (KeyMaucro km : KeyMaucro.getKeyMaucros()) {
-			KeyMaucro.ExecPhase ep = pressed ? KeyMaucro.ExecPhase.PRECHECKS_DOWN : KeyMaucro.ExecPhase.PRECHECKS_UP;
+			KeyMaucro.ExecPhase ep = evt.isPressed() ? KeyMaucro.ExecPhase.PRECHECKS_DOWN : KeyMaucro.ExecPhase.PRECHECKS_UP;
 			if (km.getExecutionPhase().equals(ep)) km.checkAndExecute();
 		}
 		
@@ -73,11 +76,11 @@ public class InputHandler {
 		
 		// Execute the prekeys key maucros, but only if the input handler is enabled.
 		if (!disabled) for (KeyMaucro km : KeyMaucro.getKeyMaucros()) {
-			KeyMaucro.ExecPhase ep = pressed ? KeyMaucro.ExecPhase.PREKEYS_DOWN : KeyMaucro.ExecPhase.PREKEYS_UP;
+			KeyMaucro.ExecPhase ep = evt.isPressed() ? KeyMaucro.ExecPhase.PREKEYS_DOWN : KeyMaucro.ExecPhase.PREKEYS_UP;
 			if (km.getExecutionPhase().equals(ep)) km.checkAndExecute();
 		}
 		
-		if (keycode == konami[konamiStatus] && pressed == konamiDown) {
+		if (evt.getCode() == konami[konamiStatus] && evt.isPressed() == konamiDown) {
 			if (!konamiDown) konamiStatus++;
 			konamiDown = !konamiDown;
 		} else {
@@ -92,57 +95,57 @@ public class InputHandler {
 			return;
 		}
 		
-		if (pressed && !disabled) {
-			if (keycode == Keybinds.config.getKeyCode()) Minecraft.getMinecraft().displayGuiScreen(new GuiMaunsic(host));
-			else if (keycode == Keybinds.fly.getKeyCode()) {
+		if (evt.isPressed() && !disabled) {
+			if (evt.getCode() == Keybinds.config.getKeyCode()) Minecraft.getMinecraft().displayGuiScreen(new GuiMaunsic(host));
+			else if (evt.getCode() == Keybinds.fly.getKeyCode()) {
 				if (!host.actionFly.isActive()) {
 					if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) host.actionFly.setType(ActionFly.TYPE_WALK);
 					else host.actionFly.setType(ActionFly.TYPE_FLY);
 				} else host.actionFly.setType(ActionFly.TYPE_DISABLED);
-			} else if (keycode == Keybinds.inc_speed.getKeyCode()) {
+			} else if (evt.getCode() == Keybinds.inc_speed.getKeyCode()) {
 				if (Keybinds.dec_speed.isDown()) host.actionFly.setSpeed(ActionFly.DEFAULT_SPEED);
 				else host.actionFly.changeSpeed(true);
-			} else if (keycode == Keybinds.dec_speed.getKeyCode()) {
+			} else if (evt.getCode() == Keybinds.dec_speed.getKeyCode()) {
 				if (Keybinds.inc_speed.isDown()) host.actionFly.setSpeed(ActionFly.DEFAULT_SPEED);
 				else host.actionFly.changeSpeed(false);
-			} else if (keycode == Keybinds.xray.getKeyCode()) {
+			} else if (evt.getCode() == Keybinds.xray.getKeyCode()) {
 				if (Keyboard.isKeyDown(Keyboard.KEY_LCONTROL)) Minecraft.getMinecraft().displayGuiScreen(new GuiXrayBlocks(host));
 				else host.actionXray.toggle();
-			} else if (keycode == Keybinds.alts.getKeyCode()) Minecraft.getMinecraft().displayGuiScreen(new GuiChangeUsername(host));
-			else if (keycode == Keybinds.nofall.getKeyCode()) host.actionNofall.toggle();
-			else if (keycode == Keybinds.blink.getKeyCode()) host.actionBlink.toggle();
-			else if (keycode == Keybinds.attackaura.getKeyCode()) host.actionAttackaura.toggle();
-			else if (keycode == Keybinds.spammer.getKeyCode()) host.actionSpammer.toggle();
-			else if (keycode == Keybinds.triggerbot.getKeyCode()) host.actionTriggerbot.toggle();
-			else if (keycode == Keybinds.autosoup.getKeyCode()) host.actionAutosoup.toggle();
-			else if (keycode == Keybinds.aimbot.getKeyCode()) host.actionAimbot.toggle();
-			else if (keycode == Keybinds.tracer.getKeyCode()) host.actionTracer.toggle();
-			else if (keycode == Keybinds.esp.getKeyCode()) host.actionEsp.toggle();
-			else if (keycode == Keybinds.autouse.getKeyCode()) host.actionAutouse.toggle();
-			else if (keycode == Keybinds.fastbow.getKeyCode()) host.actionFastbow.toggle();
-			else if (keycode == Keybinds.regen.getKeyCode()) host.actionRegen.toggle();
-			else if (keycode == Keybinds.freecam.getKeyCode()) host.actionFreecam.toggle();
-			else if (keycode == Keybinds.trajectories.getKeyCode()) host.actionTrajectories.toggle();
-			else if (keycode == Keybinds.fullbright.getKeyCode()) host.actionFullbright.toggle();
-			else if (keycode == Keybinds.phase.getKeyCode()) {
+			} else if (evt.getCode() == Keybinds.alts.getKeyCode()) Minecraft.getMinecraft().displayGuiScreen(new GuiChangeUsername(host));
+			else if (evt.getCode() == Keybinds.nofall.getKeyCode()) host.actionNofall.toggle();
+			else if (evt.getCode() == Keybinds.blink.getKeyCode()) host.actionBlink.toggle();
+			else if (evt.getCode() == Keybinds.attackaura.getKeyCode()) host.actionAttackaura.toggle();
+			else if (evt.getCode() == Keybinds.spammer.getKeyCode()) host.actionSpammer.toggle();
+			else if (evt.getCode() == Keybinds.triggerbot.getKeyCode()) host.actionTriggerbot.toggle();
+			else if (evt.getCode() == Keybinds.autosoup.getKeyCode()) host.actionAutosoup.toggle();
+			else if (evt.getCode() == Keybinds.aimbot.getKeyCode()) host.actionAimbot.toggle();
+			else if (evt.getCode() == Keybinds.tracer.getKeyCode()) host.actionTracer.toggle();
+			else if (evt.getCode() == Keybinds.esp.getKeyCode()) host.actionEsp.toggle();
+			else if (evt.getCode() == Keybinds.autouse.getKeyCode()) host.actionAutouse.toggle();
+			else if (evt.getCode() == Keybinds.fastbow.getKeyCode()) host.actionFastbow.toggle();
+			else if (evt.getCode() == Keybinds.regen.getKeyCode()) host.actionRegen.toggle();
+			else if (evt.getCode() == Keybinds.freecam.getKeyCode()) host.actionFreecam.toggle();
+			else if (evt.getCode() == Keybinds.trajectories.getKeyCode()) host.actionTrajectories.toggle();
+			else if (evt.getCode() == Keybinds.fullbright.getKeyCode()) host.actionFullbright.toggle();
+			else if (evt.getCode() == Keybinds.phase.getKeyCode()) {
 				if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) host.actionPhase.deactivate();
 				else host.actionPhase.activate();
 			}
-//			else if (keycode == Keybinds.antikb.getKeyCode()) host.actionAntiKB.setActive(!host.actionAntiKB.isActive());
+//			else if (evt.getCode() == Keybinds.antikb.getKeyCode()) host.actionAntiKB.setActive(!host.actionAntiKB.isActive());
 		}
 		
 		if (!disabled) for (KeyMaucro km : KeyMaucro.getKeyMaucros()) {
-			KeyMaucro.ExecPhase ep = pressed ? KeyMaucro.ExecPhase.POSTKEYS_DOWN : KeyMaucro.ExecPhase.POSTKEYS_UP;
+			KeyMaucro.ExecPhase ep = evt.isPressed() ? KeyMaucro.ExecPhase.POSTKEYS_DOWN : KeyMaucro.ExecPhase.POSTKEYS_UP;
 			if (km.getExecutionPhase().equals(ep)) km.checkAndExecute();
 		}
 	}
 	
-	public static boolean toggleDisable() {
+	public boolean toggleDisable() {
 		disabled = !disabled;
 		return disabled;
 	}
 	
-	public static boolean isDisabled() {
+	public boolean isDisabled() {
 		return disabled;
 	}
 	

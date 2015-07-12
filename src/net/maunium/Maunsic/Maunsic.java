@@ -116,6 +116,8 @@ public class Maunsic {
 	private AltAccounts alts;
 	/** The ActionHandler for Maunsic */
 	private ActionHandler ach;
+	/** Input handler for Maunsic */
+	private InputHandler ih;
 	/* Tick actions */
 	public ActionFly actionFly;
 	public ActionPhase actionPhase;
@@ -125,7 +127,7 @@ public class Maunsic {
 	public ActionAutosoup actionAutosoup;
 	public StatusAction actionNofall, actionBlink, actionSpammer, actionAttackaura, actionAimbot, actionXray, actionTracer, actionEsp, actionAutouse,
 			actionRegen, actionFreecam, actionTrajectories;
-	
+			
 	/**
 	 * Constructor
 	 */
@@ -215,7 +217,7 @@ public class Maunsic {
 		getLogger().trace("Loading friends and targets");
 		Attacking.load(getConfig());
 		getLogger().trace("Initializing input handler");
-		InputHandler.setHost(this);
+		MinecraftForge.EVENT_BUS.register(ih = new InputHandler(this));
 		
 		getLogger().trace("Registering actions");
 		actionFly = ach.registerAction(new ActionFly(this), ActionHandler.Phase.LIVING);
@@ -315,6 +317,13 @@ public class Maunsic {
 	 */
 	public ActionHandler getActionHandler() {
 		return ach;
+	}
+	
+	/**
+	 * Get the input handler of this Maunsic instance.
+	 */
+	public InputHandler getInputHandler() {
+		return ih;
 	}
 	
 	/**

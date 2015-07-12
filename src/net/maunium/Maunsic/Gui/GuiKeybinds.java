@@ -20,7 +20,6 @@ import com.mcf.davidee.guilib.vanilla.extended.ShiftableLabel;
 import com.mcf.davidee.guilib.vanilla.extended.StateButton;
 
 import net.maunium.Maunsic.Maunsic;
-import net.maunium.Maunsic.Listeners.KeyHandling.InputHandler;
 import net.maunium.Maunsic.Listeners.KeyHandling.KeyRegistry;
 import net.maunium.Maunsic.Listeners.KeyHandling.MauKeybind;
 import net.maunium.Maunsic.Util.I18n;
@@ -58,7 +57,7 @@ public class GuiKeybinds extends BasicScreen {
 		
 		title = new Label(I18n.translate("conf.keys.title"));
 		back = new ButtonVanilla(I18n.translate("conf.back"), this);
-		disableAll = new StateButton(I18n.translate("conf.keys.disableall"), this, InputHandler.isDisabled() ? 1 : 0);
+		disableAll = new StateButton(I18n.translate("conf.keys.disableall"), this, host.getInputHandler().isDisabled() ? 1 : 0);
 		
 		c.addWidgets(title, back, disableAll);
 		
@@ -102,7 +101,7 @@ public class GuiKeybinds extends BasicScreen {
 	@Override
 	public void onButtonClicked(Button b, int code) {
 		if (code != 0) return;
-		if (b == disableAll) disableAll.setState(InputHandler.toggleDisable() ? 1 : 0);
+		if (b == disableAll) disableAll.setState(host.getInputHandler().toggleDisable() ? 1 : 0);
 		else if (b == back) close();
 		else if (b instanceof ShiftableButtonWithMeta) {
 			ShiftableButtonWithMeta sbwm = (ShiftableButtonWithMeta) b;
