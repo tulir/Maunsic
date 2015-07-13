@@ -63,7 +63,7 @@ public class ActionTrajectories extends TickAction {
 	}
 	
 	@Override
-	@SuppressWarnings({ "null", "unchecked" })
+	@SuppressWarnings("unchecked")
 	public void execute() {
 		Minecraft mc = Minecraft.getMinecraft();
 		RenderManager rm = mc.getRenderManager();
