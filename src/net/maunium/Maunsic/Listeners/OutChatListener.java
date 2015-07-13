@@ -2,6 +2,7 @@ package net.maunium.Maunsic.Listeners;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Locale;
+import java.util.regex.Pattern;
 
 import org.apache.commons.codec.binary.Base64;
 
@@ -26,6 +27,19 @@ public class OutChatListener {
 			String s = evt.getMessage().split(" ", 2)[1];
 			String encoded = new String(Base64.encodeBase64(s.getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8);
 			String msg = "Ⅿᴮ" + encoded;
+			if (msg.length() > 100) {
+				Maunsic.printChatError("message.encoding.toolong", msg.length());
+				evt.setCanceled(true);
+				return;
+			}
+			evt.setMessage(msg);
+			return;
+		} else if (m.contains("|b64>> ")) {
+			String[] ss = evt.getMessage().split(Pattern.quote("|b64>> "), 2);
+			System.out.println(ss[0] + ", " + ss[1]);
+			String encoded = new String(Base64.encodeBase64(ss[1].getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8);
+			String msg = ss[0] + "Ⅿᴮ" + encoded;
+			System.out.println(msg);
 			if (msg.length() > 100) {
 				Maunsic.printChatError("message.encoding.toolong", msg.length());
 				evt.setCanceled(true);
