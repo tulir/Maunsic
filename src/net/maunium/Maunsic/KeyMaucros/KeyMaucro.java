@@ -383,17 +383,17 @@ public abstract class KeyMaucro implements Serializable, Comparable<KeyMaucro> {
 		public static ExecPhase fromInt(int i) {
 			switch (i) {
 				case 0:
-					return PRECHECKS_DOWN;
-				case 1:
-					return PREKEYS_DOWN;
-				case 2:
-					return POSTKEYS_DOWN;
-				case 3:
 					return PRECHECKS_UP;
-				case 4:
+				case 1:
 					return PREKEYS_UP;
-				case 5:
+				case 2:
 					return POSTKEYS_UP;
+				case 3:
+					return PRECHECKS_DOWN;
+				case 4:
+					return PREKEYS_DOWN;
+				case 5:
+					return POSTKEYS_DOWN;
 				default:
 					return null;
 			}
