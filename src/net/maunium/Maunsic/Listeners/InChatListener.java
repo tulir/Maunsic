@@ -36,12 +36,17 @@ public class InChatListener {
 	public void onChat(ClientChatReceivedEvent evt) {
 		if (evt.message.getUnformattedText().contains("Ⅿᴮ")) {
 			String[] tmp = evt.message.getFormattedText().split(Pattern.quote("Ⅿᴮ"), 2);
+			if (evt.message.getUnformattedText().contains("ᴮⅯ")) {
+				String[] a = tmp[1].split(Pattern.quote("ᴮⅯ"));
+				tmp = new String[] { tmp[0], a[0], a[1] };
+			}
 			tmp[1] = tmp[1].substring(0, tmp[1].length() - 2);
 			String decoded = new String(Base64.decodeBase64(tmp[1].getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8);
 			
 			evt.message = new ChatComponentText(tmp[0]);
 			evt.message.appendText(decoded.replace("&", "§"));
 			evt.message.appendSibling(new ChatComponentText(" [B64]").setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GRAY).setItalic(true)));
+			if (tmp.length > 2) evt.message.appendText(tmp[2]);
 		}
 		
 		String message = evt.message.getUnformattedText();
@@ -49,8 +54,8 @@ public class InChatListener {
 			evt.setCanceled(true);
 			if (message.equalsIgnoreCase(lastMessage)) {
 				countOfSpam++;
-				IChatComponent spamCount = new ChatComponentText(" [" + countOfSpam + "]").setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GRAY)
-						.setItalic(true));
+				IChatComponent spamCount = new ChatComponentText(" [" + countOfSpam + "]")
+						.setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GRAY).setItalic(true));
 				evt.message = evt.message.appendSibling(spamCount);
 			} else {
 				prevId++;

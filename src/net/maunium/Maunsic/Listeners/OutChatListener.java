@@ -25,8 +25,11 @@ public class OutChatListener {
 		String m = evt.getMessage().toLowerCase(Locale.ENGLISH);
 		if (m.startsWith("b64 ") || m.startsWith("base64 ")) {
 			String s = evt.getMessage().split(" ", 2)[1];
-			String encoded = new String(Base64.encodeBase64(s.getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8);
-			String msg = "Ⅿᴮ" + encoded;
+			String msg;
+			if (s.contains("<<b64|")) {
+				s = s.split(Pattern.quote(" <<b64|"), 2)[0];
+				msg = "Ⅿᴮ" + new String(Base64.encodeBase64(s.getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8) + "ᴮⅯ";
+			} else msg = "Ⅿᴮ" + new String(Base64.encodeBase64(s.getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8);
 			if (msg.length() > 100) {
 				Maunsic.printChatError("message.encoding.toolong", msg.length());
 				evt.setCanceled(true);
@@ -36,10 +39,11 @@ public class OutChatListener {
 			return;
 		} else if (m.contains("|b64>> ")) {
 			String[] ss = evt.getMessage().split(Pattern.quote("|b64>> "), 2);
-			System.out.println(ss[0] + ", " + ss[1]);
-			String encoded = new String(Base64.encodeBase64(ss[1].getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8);
-			String msg = ss[0] + "Ⅿᴮ" + encoded;
-			System.out.println(msg);
+			String msg;
+			if (ss[1].contains(" <<b64|")) {
+				String[] ss2 = ss[1].split(Pattern.quote(" <<b64|"), 2);
+				msg = ss[0] + "Ⅿᴮ" + new String(Base64.encodeBase64(ss2[0].getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8) + "ᴮⅯ" + ss2[1];
+			} else msg = ss[0] + "Ⅿᴮ" + new String(Base64.encodeBase64(ss[1].getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8);
 			if (msg.length() > 100) {
 				Maunsic.printChatError("message.encoding.toolong", msg.length());
 				evt.setCanceled(true);
