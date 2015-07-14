@@ -39,9 +39,9 @@ public class GuiMaunsic extends BasicScreen {
 	private List<Widget> widgets = new ArrayList<Widget>();
 	
 	private Label title;
-	private ButtonVanilla keys, alts, keymaucros, luathreads, xray, fanda, autosoup, prevPage, nextPage, close;
-	private StateButton autophase, autoblink, antispam;
-	private ExtendedIntSlider speed, jump, blinksafety, triggerMin, triggerMax, fastbowSpeed;
+	private ButtonVanilla keys, alts, keymaucros, luathreads, xray, fanda, autosoup, phase, prevPage, nextPage, close;
+	private StateButton autoblink, antispam;
+	private ExtendedIntSlider speed, jump, triggerMin, triggerMax, fastbowSpeed, blinksafety;
 	
 	public GuiMaunsic(Maunsic host) {
 		super(null);
@@ -65,7 +65,8 @@ public class GuiMaunsic extends BasicScreen {
 		xray = new ButtonVanilla(I18n.translate("conf.xray"), this);
 		fanda = new ButtonVanilla(I18n.translate("conf.fanda"), this);
 		autosoup = new ButtonVanilla(I18n.translate("conf.autosoup"), this);
-		add(alts, keymaucros, luathreads, keys, xray, fanda, autosoup);
+		phase = new ButtonVanilla(I18n.translate("conf.phase"), this);
+		add(alts, keymaucros, luathreads, keys, xray, fanda, autosoup, phase);
 		
 		speed = new ExtendedIntSlider(I18n.translate("conf.amv.speed"), host.actionFly.getSpeed(), ActionFly.MIN_SPEED, ActionFly.MAX_SPEED);
 		jump = new ExtendedIntSlider(amount -> amount == 0 ? I18n.translate("conf.amv.jump.default") : I18n.translate("conf.amv.jump", amount),
@@ -107,8 +108,7 @@ public class GuiMaunsic extends BasicScreen {
 				amount -> amount == 0 ? I18n.translate("conf.blink.safety") + ": " + I18n.translate("off")
 						: I18n.translate("conf.blink.safety") + ": " + amount + " " + I18n.translate("conf.blink.safety.level"),
 				ActionBlink.safetyLevel, 0, 10);
-		autophase = new StateButton(I18n.translate("conf.phase.automated"), host.actionPhase.automated ? 1 : 0);
-		add(autoblink, blinksafety, autophase);
+		add(autoblink, blinksafety);
 	}
 	
 	public void add(Widget... w) {
@@ -173,6 +173,7 @@ public class GuiMaunsic extends BasicScreen {
 		else if (b == xray) Minecraft.getMinecraft().displayGuiScreen(new GuiXrayBlocks(host));
 		else if (b == fanda) Minecraft.getMinecraft().displayGuiScreen(new GuiFriendsAndAttacking(this, host));
 		else if (b == autosoup) Minecraft.getMinecraft().displayGuiScreen(new GuiAutosoup(this, host));
+		else if (b == phase) Minecraft.getMinecraft().displayGuiScreen(new GuiPhase(this, host));
 	}
 	
 	@Override
@@ -187,7 +188,6 @@ public class GuiMaunsic extends BasicScreen {
 		
 		ActionBlink.automated = autoblink.getState() == 1;
 		ActionBlink.safetyLevel = blinksafety.getIntValue();
-		host.actionPhase.automated = autophase.getState() == 1;
 		
 		InChatListener.antispam = antispam.getState();
 		host.getConfig().set("antispam", InChatListener.antispam);

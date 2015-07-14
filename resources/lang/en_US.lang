@@ -99,9 +99,6 @@ conf.blink.automated=Auto Blink
 conf.blink.safety=Blink Safety
 conf.blink.safety.level=seconds
 
-conf.phase.automated=Auto Phase
-conf.phase.autoforward=Phase Autosprint
-
 conf.fanda=Friends & Attacking
 conf.fanda.title=Friends & Attacking Settings
 conf.fanda.tctitle=Targets
@@ -128,6 +125,17 @@ conf.autosoup.fullrefill=Full hotbar refill
 conf.autosoup.randomrefill=Random refill slot
 conf.autosoup.randomsoup=Random soup eat slot
 conf.autosoup.interval=Execute interval
+
+conf.phase=Phase
+conf.phase.title=Phase Settings
+conf.phase.automated=Phase longer
+conf.phase.noclip=[F] Noclip
+conf.phase.ground=[F] On Ground = true
+conf.phase.fall=[F] Fall Distance = 0
+conf.phase.packets.vertical=Vertical Move Packets
+conf.phase.packets.horizontal=Horizontal Move Packets
+conf.phase.move.vertical=Vertical Move Distance
+conf.phase.move.horizontal=Horizontal Move Distance
 
 action.amv.title=Alt. Movement
 action.amv.mode=Mode
