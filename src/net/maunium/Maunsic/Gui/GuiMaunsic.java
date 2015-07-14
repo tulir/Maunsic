@@ -40,7 +40,7 @@ public class GuiMaunsic extends BasicScreen {
 	
 	private Label title;
 	private ButtonVanilla keys, alts, keymaucros, luathreads, xray, fanda, autosoup, prevPage, nextPage, close;
-	private StateButton autophase, autoblink, autophasesprint, antispam;
+	private StateButton autophase, autoblink, antispam;
 	private ExtendedIntSlider speed, jump, blinksafety, triggerMin, triggerMax, fastbowSpeed;
 	
 	public GuiMaunsic(Maunsic host) {
@@ -103,11 +103,12 @@ public class GuiMaunsic extends BasicScreen {
 		add(antispam);
 		
 		autoblink = new StateButton(I18n.translate("conf.blink.automated"), ActionBlink.automated ? 1 : 0);
-		blinksafety = new ExtendedIntSlider(amount -> amount == 0 ? I18n.translate("conf.blink.safety") + ": " + I18n.translate("off")
-				: I18n.translate("conf.blink.safety") + ": " + amount + " " + I18n.translate("conf.blink.safety.level"), ActionBlink.safetyLevel, 0, 10);
+		blinksafety = new ExtendedIntSlider(
+				amount -> amount == 0 ? I18n.translate("conf.blink.safety") + ": " + I18n.translate("off")
+						: I18n.translate("conf.blink.safety") + ": " + amount + " " + I18n.translate("conf.blink.safety.level"),
+				ActionBlink.safetyLevel, 0, 10);
 		autophase = new StateButton(I18n.translate("conf.phase.automated"), host.actionPhase.automated ? 1 : 0);
-		autophasesprint = new StateButton(I18n.translate("conf.phase.autoforward"), host.actionPhase.autoforward ? 1 : 0);
-		add(autoblink, blinksafety, autophase, autophasesprint);
+		add(autoblink, blinksafety, autophase);
 	}
 	
 	public void add(Widget... w) {
@@ -187,7 +188,6 @@ public class GuiMaunsic extends BasicScreen {
 		ActionBlink.automated = autoblink.getState() == 1;
 		ActionBlink.safetyLevel = blinksafety.getIntValue();
 		host.actionPhase.automated = autophase.getState() == 1;
-		host.actionPhase.autoforward = autophasesprint.getState() == 1;
 		
 		InChatListener.antispam = antispam.getState();
 		host.getConfig().set("antispam", InChatListener.antispam);

@@ -223,7 +223,7 @@ public class Maunsic {
 		actionFly = ach.registerAction(new ActionFly(this), ActionHandler.Phase.LIVING);
 		actionNofall = ach.registerAction(new ActionNofall(), ActionHandler.Phase.LIVING);
 		actionBlink = ach.registerAction(new ActionBlink(), ActionHandler.Phase.STATUS);
-		actionPhase = ach.registerAction(new ActionPhase(), ActionHandler.Phase.STATUS);
+		actionPhase = ach.registerAction(new ActionPhase(), ActionHandler.Phase.LIVING);
 		actionAttackaura = ach.registerAction(new ActionAttackaura(), ActionHandler.Phase.LIVING);
 		actionSpammer = ach.registerAction(new ActionSpammer(), ActionHandler.Phase.TICKSTART);
 		actionTriggerbot = ach.registerAction(new ActionTriggerbot(), ActionHandler.Phase.LIVING);
