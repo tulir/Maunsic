@@ -11,6 +11,12 @@ import com.mcf.davidee.guilib.vanilla.extended.StateButton;
 import net.maunium.Maunsic.Maunsic;
 import net.maunium.Maunsic.Util.I18n;
 
+/**
+ * Gui for autosoup configuration.
+ * 
+ * @author Tulir293
+ * @since 0.1
+ */
 public class GuiAutosoup extends BasicScreen {
 	private Maunsic host;
 	private Container c;
