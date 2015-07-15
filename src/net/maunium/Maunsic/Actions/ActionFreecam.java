@@ -26,7 +26,7 @@ public class ActionFreecam extends TickAction {
 	
 	@Override
 	public void activate() {
-		super.activate();
+		active = true;
 		oldX = Minecraft.getMinecraft().thePlayer.posX;
 		oldY = Minecraft.getMinecraft().thePlayer.posY;
 		oldZ = Minecraft.getMinecraft().thePlayer.posZ;
@@ -42,14 +42,19 @@ public class ActionFreecam extends TickAction {
 	
 	@Override
 	public void deactivate() {
-		super.deactivate();
+		active = false;
 		Minecraft.getMinecraft().thePlayer.setPositionAndRotation(oldX, oldY, oldZ, Minecraft.getMinecraft().thePlayer.rotationYaw,
 				Minecraft.getMinecraft().thePlayer.rotationPitch);
-		
+				
 		Minecraft.getMinecraft().theWorld.removeEntityFromWorld(-293);
 		fake = null;
 		
 		Minecraft.getMinecraft().renderGlobal.loadRenderers();
+	}
+	
+	@Override
+	public boolean isActive() {
+		return active;
 	}
 	
 	@Override
