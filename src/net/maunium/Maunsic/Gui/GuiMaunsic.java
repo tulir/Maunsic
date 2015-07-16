@@ -39,7 +39,7 @@ public class GuiMaunsic extends BasicScreen {
 	private List<Widget> widgets = new ArrayList<Widget>();
 	
 	private Label title;
-	private ButtonVanilla keys, alts, keymaucros, luathreads, xray, fanda, autosoup, phase, prevPage, nextPage, close;
+	private ButtonVanilla keys, alts, keymaucros, luathreads, xray, fanda, autosoup, phase, language, prevPage, nextPage, close;
 	private StateButton autoblink, antispam;
 	private ExtendedIntSlider speed, jump, triggerMin, triggerMax, fastbowSpeed, blinksafety;
 	
@@ -66,7 +66,8 @@ public class GuiMaunsic extends BasicScreen {
 		fanda = new ButtonVanilla(I18n.translate("conf.fanda"), this);
 		autosoup = new ButtonVanilla(I18n.translate("conf.autosoup"), this);
 		phase = new ButtonVanilla(I18n.translate("conf.phase"), this);
-		add(alts, keymaucros, luathreads, keys, xray, fanda, autosoup, phase);
+		language = new ButtonVanilla(I18n.translate("conf.language"), this);
+		add(alts, keymaucros, luathreads, keys, xray, fanda, autosoup, phase, language);
 		
 		speed = new ExtendedIntSlider(I18n.translate("conf.amv.speed"), host.actionFly.getSpeed(), ActionFly.MIN_SPEED, ActionFly.MAX_SPEED);
 		jump = new ExtendedIntSlider(amount -> amount == 0 ? I18n.translate("conf.amv.jump.default") : I18n.translate("conf.amv.jump", amount),
@@ -76,31 +77,7 @@ public class GuiMaunsic extends BasicScreen {
 		fastbowSpeed = new ExtendedIntSlider(I18n.translate("conf.fastbow.speed"), host.actionFastbow.getInterval(), 1, 500);
 		add(speed, jump, triggerMin, triggerMax, fastbowSpeed);
 		
-		antispam = new StateButton(InChatListener.antispam, new StateButton.Format() {
-			@Override
-			public int stateCount() {
-				return 3;
-			}
-			
-			@Override
-			public String getText() {
-				return I18n.translate("conf.antispam");
-			}
-			
-			@Override
-			public String format(int state) {
-				switch (state) {
-					case 0:
-						return I18n.translate("conf.antispam.disabled");
-					case 1:
-						return I18n.translate("conf.antispam.simple");
-					case 2:
-						return I18n.translate("conf.antispam.count");
-					default:
-						return I18n.translate("conf.antispam");
-				}
-			}
-		});
+		antispam = new StateButton(InChatListener.antispam, asformat);
 		add(antispam);
 		
 		autoblink = new StateButton(I18n.translate("conf.blink.automated"), ActionBlink.automated ? 1 : 0);
@@ -174,6 +151,7 @@ public class GuiMaunsic extends BasicScreen {
 		else if (b == fanda) Minecraft.getMinecraft().displayGuiScreen(new GuiFriendsAndAttacking(this, host));
 		else if (b == autosoup) Minecraft.getMinecraft().displayGuiScreen(new GuiAutosoup(this, host));
 		else if (b == phase) Minecraft.getMinecraft().displayGuiScreen(new GuiPhase(this, host));
+		else if (b == language) Minecraft.getMinecraft().displayGuiScreen(new GuiLanguage(this, host));
 	}
 	
 	@Override
@@ -197,4 +175,30 @@ public class GuiMaunsic extends BasicScreen {
 		// Save config to disk.
 		host.saveConfig();
 	}
+	
+	private StateButton.Format asformat = new StateButton.Format() {
+		@Override
+		public int stateCount() {
+			return 3;
+		}
+		
+		@Override
+		public String getText() {
+			return I18n.translate("conf.antispam");
+		}
+		
+		@Override
+		public String format(int state) {
+			switch (state) {
+				case 0:
+					return I18n.translate("conf.antispam.disabled");
+				case 1:
+					return I18n.translate("conf.antispam.simple");
+				case 2:
+					return I18n.translate("conf.antispam.count");
+				default:
+					return I18n.translate("conf.antispam");
+			}
+		}
+	};
 }
