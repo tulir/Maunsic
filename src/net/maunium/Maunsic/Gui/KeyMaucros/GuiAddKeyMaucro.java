@@ -24,7 +24,7 @@ import net.maunium.Maunsic.Util.I18n;
  */
 public class GuiAddKeyMaucro extends BasicScreen {
 	private Container c;
-	private Label title, varLabel, keyLabel, shiftKeysLabel, nameLabel;
+	private Label title, varLabel, keyLabel, shiftKeysLabel, nameLabel, phaseLabel, keystatusLabel;
 	private TextFieldVanilla name, var;
 	private ButtonVanilla cancel, finish;
 	private StateButton phase, keystatus;
@@ -59,23 +59,25 @@ public class GuiAddKeyMaucro extends BasicScreen {
 		varLabel = new Label(I18n.translate("conf.km.editor." + (lua ? "lua.file" : "cc.commands")), false);
 		keyLabel = new Label(I18n.translate("conf.km.editor.key"), false);
 		shiftKeysLabel = new Label(I18n.translate("conf.km.editor.shiftkeys"), false);
+		phaseLabel = new Label(I18n.translate("conf.km.editor.phase"), false);
+		keystatusLabel = new Label(I18n.translate("conf.km.editor.ks"), false);
 		
 		name = new TextFieldVanilla(200, 20, new TextFieldVanilla.VanillaFilter());
 		var = new TextFieldVanilla(200, 20, new TextFieldVanilla.VanillaFilter());
 		key = new KeySelectButton(200, 20, this);
 		shiftKeys = new MultiKeySelectButton(200, 20, this);
-		phase = new StateButton(100, 20, this, 1,
-				new StateButton.GenericFormat(I18n.translate("conf.km.editor.phase"), I18n.translate("conf.km.editor.phase.precheck"),
-						I18n.translate("conf.km.editor.phase.prekeys"), I18n.translate("conf.km.editor.phase.postkeys")));
-		keystatus = new StateButton(100, 20, this, 1, new StateButton.GenericFormat(I18n.translate("conf.km.editor.ks"), I18n.translate("conf.km.editor.ks.up"),
-				I18n.translate("conf.km.editor.ks.down")));
+		phase = new StateButton(200, 20, this, 1, new StateButton.BlankFormat(I18n.translate("conf.km.editor.phase.precheck"),
+				I18n.translate("conf.km.editor.phase.prekeys"), I18n.translate("conf.km.editor.phase.postkeys")));
+		keystatus = new StateButton(200, 20, this, 1,
+				new StateButton.BlankFormat(I18n.translate("conf.km.editor.ks.up"), I18n.translate("conf.km.editor.ks.down")));
 				
 		finish = new ButtonVanilla(150, 20, I18n.translate("conf.km.editor.finish"), this);
 		finish.setEnabled(false);
 		cancel = new ButtonVanilla(150, 20, I18n.translate("conf.km.editor.cancel"), this);
 		
 		c = new Container();
-		c.addWidgets(title, nameLabel, varLabel, keyLabel, shiftKeysLabel, name, var, key, shiftKeys, phase, keystatus, finish, cancel);
+		c.addWidgets(title, nameLabel, varLabel, keyLabel, shiftKeysLabel, phaseLabel, keystatusLabel, name, var, key, shiftKeys, phase, keystatus, finish,
+				cancel);
 		containers.add(c);
 	}
 	
@@ -83,20 +85,22 @@ public class GuiAddKeyMaucro extends BasicScreen {
 	public void onRevalidate() {
 		title.setPosition(width / 2, 15);
 		
-		nameLabel.setPosition(width / 6, 52);
-		varLabel.setPosition(width / 6, 82);
-		keyLabel.setPosition(width / 6, 112);
-		shiftKeysLabel.setPosition(width / 6, 142);
-		phase.setPosition(width / 3, 170);
-		keystatus.setPosition(width / 3 + phase.getWidth() + 10, 170);
+		nameLabel.setPosition(width / 6, 53);
+		varLabel.setPosition(width / 6, 78);
+		keyLabel.setPosition(width / 6, 103);
+		shiftKeysLabel.setPosition(width / 6, 128);
+		phaseLabel.setPosition(width / 6, 153);
+		keystatusLabel.setPosition(width / 6, 178);
 		
 		name.setPosition(width / 3, 50);
-		var.setPosition(width / 3, 80);
-		key.setPosition(width / 3, 110);
-		shiftKeys.setPosition(width / 3, 140);
+		var.setPosition(width / 3, 75);
+		key.setPosition(width / 3, 100);
+		shiftKeys.setPosition(width / 3, 125);
+		phase.setPosition(width / 3, 150);
+		keystatus.setPosition(width / 3, 175);
 		
-		finish.setPosition(width / 2 - 150 - 2, 200);
-		cancel.setPosition(width / 2 + 2, 200);
+		finish.setPosition(width / 2 - 150 - 2, height - 40);
+		cancel.setPosition(width / 2 + 2, height - 40);
 		
 		c.revalidate(0, 0, width, height);
 	}
