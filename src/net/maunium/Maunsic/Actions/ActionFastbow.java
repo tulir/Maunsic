@@ -48,7 +48,7 @@ public class ActionFastbow extends IntervalAction {
 		EntityPlayerSP p = Minecraft.getMinecraft().thePlayer;
 		// Make sure the player has a bow in the hand and is pressing the use button.
 		if (p.inventory.getCurrentItem() != null && p.inventory.getCurrentItem().getItem() instanceof ItemBow
-				&& Minecraft.getMinecraft().gameSettings.keyBindUseItem.isKeyDown()) {
+				&& Minecraft.getMinecraft().gameSettings.keyBindUseItem.isKeyDown() && p.onGround) {
 			// Send use item packet.
 			Minecraft.getMinecraft().playerController.sendUseItem(p, Minecraft.getMinecraft().theWorld, p.inventory.getCurrentItem());
 			// Send an item right click event.
