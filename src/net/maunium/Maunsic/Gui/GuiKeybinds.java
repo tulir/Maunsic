@@ -94,6 +94,9 @@ public class GuiKeybinds extends BasicScreen {
 			kc.addWidgets(keybindTitles[i], keybindKeys[i], keybindReset[i]);
 		}
 		
+		kc.setFocused(null);
+		keybindKeys[0].focusLost();
+		
 		c.revalidate(0, 0, width, height);
 		kc.revalidate(0, 35, width, height - 83);
 	}
