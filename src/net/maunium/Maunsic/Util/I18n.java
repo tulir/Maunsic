@@ -88,7 +88,7 @@ public class I18n {
 	 */
 	public static void reinitMaunsicI18n(Maunsic host, boolean refresh) {
 		try {
-			I18n.init(Maunsic.getConfDir("language"), host.getConfig().getString("general.language", "en_US"));
+			I18n.init(Maunsic.getConfDir("language"), host.getConfig().getString("language", "en_US"));
 			if (refresh) refreshCachedI18n(host);
 		} catch (IOException e) {
 			Maunsic.getLogger().error("Failed to load I18n:");
