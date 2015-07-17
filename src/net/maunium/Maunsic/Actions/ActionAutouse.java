@@ -21,14 +21,14 @@ public class ActionAutouse extends IntervalAction {
 	
 	@Override
 	public void saveData(MaunsiConfig conf) {
-		interval = conf.getInt("autouse.interval", interval);
-		range = conf.getDouble("autouse.range", range);
+		interval = conf.getInt("actions.autouse.interval", interval);
+		range = conf.getDouble("actions.autouse.range", range);
 	}
 	
 	@Override
 	public void loadData(MaunsiConfig conf) {
-		conf.set("autouse.interval", interval);
-		conf.set("autouse.range", range);
+		conf.set("actions.autouse.interval", interval);
+		conf.set("actions.autouse.range", range);
 	}
 	
 	@Override
@@ -36,8 +36,8 @@ public class ActionAutouse extends IntervalAction {
 		EntityPlayerSP p = Minecraft.getMinecraft().thePlayer;
 		PlayerControllerMP pc = Minecraft.getMinecraft().playerController;
 		MovingObjectPosition moprt = p.rayTrace(range, 1);
-		if (moprt != null && !p.worldObj.getBlockState(new BlockPos(moprt.hitVec)).getBlock().getMaterial().equals(Material.air)) pc.func_178890_a(p,
-				Minecraft.getMinecraft().theWorld, p.inventory.getCurrentItem(), new BlockPos(moprt.hitVec), moprt.sideHit, moprt.hitVec);
+		if (moprt != null && !p.worldObj.getBlockState(new BlockPos(moprt.hitVec)).getBlock().getMaterial().equals(Material.air))
+			pc.func_178890_a(p, Minecraft.getMinecraft().theWorld, p.inventory.getCurrentItem(), new BlockPos(moprt.hitVec), moprt.sideHit, moprt.hitVec);
 		else if (p.inventory.getCurrentItem() != null) pc.sendUseItem(p, p.worldObj, p.inventory.getCurrentItem());
 	}
 	
