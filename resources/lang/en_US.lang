@@ -137,6 +137,10 @@ conf.phase.packets.horizontal=Horizontal Move Packets
 conf.phase.move.vertical=Vertical Move Distance
 conf.phase.move.horizontal=Horizontal Move Distance
 
+conf.language=Language
+conf.language.title=Language Selector
+conf.language.refresh=Refresh List
+
 action.amv.title=Alt. Movement
 action.amv.mode=Mode
 action.amv.fly=Fly
