@@ -57,7 +57,7 @@ public class GuiLanguage extends BasicScreen {
 		String ss = host.getConfig().getString("language", "en_US");
 		for (File f : Maunsic.getConfDir("language").listFiles()) {
 			ButtonVanilla sb = new ButtonVanilla(200, 20, f.getName().split(Pattern.quote("."), 2)[0], this);
-			if (sb.getText().equals(ss)) sb.setText("[Active] " + sb.getText());
+			if (sb.getText().equals(ss)) sb.setText("[" + I18n.translate("conf.language.active") + "] " + sb.getText());
 			sb.setPosition(width / 2 - sb.getWidth() / 2, 40 + i * 25);
 			lc.addWidgets(sb);
 			

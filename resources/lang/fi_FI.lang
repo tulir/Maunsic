@@ -140,6 +140,7 @@ conf.phase.move.horizontal=Matka XZ-akseleilla
 conf.language=Kieli
 conf.language.title=Kielivalitsin
 conf.language.refresh=Päivitä Lista
+conf.language.active=Aktiivinen
 
 action.amv.title=Vaihtoehtoinen liikkuminen
 action.amv.mode=Tila
