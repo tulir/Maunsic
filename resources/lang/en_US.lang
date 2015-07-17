@@ -91,7 +91,7 @@ conf.xray.title=X-Ray Blocks
 conf.xray.deselectall=Deselect All
 conf.xray.selectall=Select All
 
-conf.amv.speed=Speed
+conf.amv.speed=Fly Speed
 conf.amv.jump=Jump Height: {0}
 conf.amv.jump.default=Jump Height: By speed
 
