@@ -46,7 +46,7 @@ public class GuiAddKeyMaucro extends BasicScreen {
 		this.shiftKeys.setKeycodes(shiftKeys);
 		this.shiftKeys.updateText();
 		this.phase.setState(phase.toInt() > 2 ? phase.toInt() - 3 : phase.toInt());
-		keystatus.setState(phase.toInt() > 2 ? 0 : 1);
+		keystatus.setState(phase.toInt() > 2 ? 1 : 0);
 		this.index = index;
 		finish.setEnabled(true);
 	}
@@ -64,12 +64,12 @@ public class GuiAddKeyMaucro extends BasicScreen {
 		var = new TextFieldVanilla(200, 20, new TextFieldVanilla.VanillaFilter());
 		key = new KeySelectButton(200, 20, this);
 		shiftKeys = new MultiKeySelectButton(200, 20, this);
-		phase = new StateButton(100, 20, this, 1, new StateButton.GenericFormat(I18n.translate("conf.km.editor.phase"),
-				I18n.translate("conf.km.editor.phase.precheck"), I18n.translate("conf.km.editor.phase.prekeys"),
-				I18n.translate("conf.km.editor.phase.postkeys")));
-		keystatus = new StateButton(100, 20, this, 1, new StateButton.GenericFormat(I18n.translate("conf.km.editor.ks"),
-				I18n.translate("conf.km.editor.ks.down"), I18n.translate("conf.km.editor.ks.up")));
-		
+		phase = new StateButton(100, 20, this, 1,
+				new StateButton.GenericFormat(I18n.translate("conf.km.editor.phase"), I18n.translate("conf.km.editor.phase.precheck"),
+						I18n.translate("conf.km.editor.phase.prekeys"), I18n.translate("conf.km.editor.phase.postkeys")));
+		keystatus = new StateButton(100, 20, this, 1, new StateButton.GenericFormat(I18n.translate("conf.km.editor.ks"), I18n.translate("conf.km.editor.ks.up"),
+				I18n.translate("conf.km.editor.ks.down")));
+				
 		finish = new ButtonVanilla(150, 20, I18n.translate("conf.km.editor.finish"), this);
 		finish.setEnabled(false);
 		cancel = new ButtonVanilla(150, 20, I18n.translate("conf.km.editor.cancel"), this);
@@ -104,13 +104,13 @@ public class GuiAddKeyMaucro extends BasicScreen {
 	@Override
 	public void save() {
 		if (lua) {
-			KeyMaucro km = new LuaKeyMaucro(name.getText(), var.getText(), key.getKeycode(), KeyMaucro.ExecPhase.fromInt(phase.getState()
-					+ keystatus.getState() * 3), shiftKeys.getKeycodes());
+			KeyMaucro km = new LuaKeyMaucro(name.getText(), var.getText(), key.getKeycode(),
+					KeyMaucro.ExecPhase.fromInt(phase.getState() + keystatus.getState() * 3), shiftKeys.getKeycodes());
 			if (index == -1) KeyMaucro.addKeyMaucro(km);
 			else KeyMaucro.modifyKeyMaucro(index, km);
 		} else {
-			KeyMaucro km = new CCKeyMaucro(name.getText(), var.getText(), key.getKeycode(), KeyMaucro.ExecPhase.fromInt(phase.getState() + keystatus.getState()
-					* 3), shiftKeys.getKeycodes());
+			KeyMaucro km = new CCKeyMaucro(name.getText(), var.getText(), key.getKeycode(),
+					KeyMaucro.ExecPhase.fromInt(phase.getState() + keystatus.getState() * 3), shiftKeys.getKeycodes());
 			if (index == -1) KeyMaucro.addKeyMaucro(km);
 			else KeyMaucro.modifyKeyMaucro(index, km);
 		}
