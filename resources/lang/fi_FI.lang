@@ -17,13 +17,13 @@ key.aimbot=Tähtäysbotti
 key.alts=Muut tilit
 key.xray=Röntgenkatse
 key.tracer=Tracer
-key.esp=Player ESP
+key.esp=Pelaaja ESP
 key.autouse=Autouse
 key.fastbow=Nopea jousi
 key.regen=Regen Hack
 key.fullbright=Täysi valaistus
 key.freecam=Vapaa kamera
-key.trajectories=Ampumiskohde
+key.trajectories=Ampumisauttaja
 
 conf.title=Maunsic {0} - Sivu {1}
 conf.back=Takaisin
@@ -35,7 +35,7 @@ conf.keys=Näppäinkomennot
 conf.keys.title=Maunsicin näppäinkomennot
 conf.keys.disableall=Poista kaikki
 conf.keys.notset=Ei asetettu
-conf.keys.reset=Alkuarvoon
+conf.keys.reset=Alkuarvo
 conf.keys.enable=Input Handler enabled. Use Konami to toggle.
 conf.keys.disable=Input Handler disabled. Use Konami to toggle.
 
@@ -91,16 +91,16 @@ conf.xray.title=Röntgenkatse Palikat
 conf.xray.deselectall=Poista valinnat
 conf.xray.selectall=Valitse kaikki
 
-conf.amv.speed=Nopeus
+conf.amv.speed=Lentonopeus
 conf.amv.jump=Hyppykorkeus: {0}
-conf.amv.jump.default=Hyppykorkeus: Nopeuden mukaan
+conf.amv.jump.default=Hyppykorkeus: Dynaaminen
 
-conf.blink.automated=Auto Blink
+conf.blink.automated=Automaattinen Blink
 conf.blink.safety=Blink Turvallisuus
 conf.blink.safety.level=sekuntia
 
 conf.fanda=Kaverit & Hyökkääminen
-conf.fanda.title=Kavereiden ja hyökkäämisen asetukseet.
+conf.fanda.title=Kavereiden ja hyökkäämisen asetukset.
 conf.fanda.tctitle=Kohteet
 conf.fanda.fctitle=Kaverit
 conf.fanda.range=Hyökkäysalue
@@ -136,6 +136,10 @@ conf.phase.packets.vertical=Y-akselin liikkumispaketit
 conf.phase.packets.horizontal=XZ-akselien liikkumispaketit
 conf.phase.move.vertical=Matka Y-akselilla
 conf.phase.move.horizontal=Matka XZ-akseleilla
+
+conf.language=Kieli
+conf.language.title=Kielivalitsin
+conf.language.refresh=Päivitä Lista
 
 action.amv.title=Vaihtoehtoinen liikkuminen
 action.amv.mode=Tila

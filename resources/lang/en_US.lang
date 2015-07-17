@@ -93,7 +93,7 @@ conf.xray.selectall=Select All
 
 conf.amv.speed=Fly Speed
 conf.amv.jump=Jump Height: {0}
-conf.amv.jump.default=Jump Height: By speed
+conf.amv.jump.default=Jump Height: Dynamic
 
 conf.blink.automated=Auto Blink
 conf.blink.safety=Blink Safety
