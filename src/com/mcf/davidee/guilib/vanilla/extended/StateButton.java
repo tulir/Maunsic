@@ -132,6 +132,39 @@ public class StateButton extends ButtonVanilla implements Shiftable {
 		}
 	}
 	
+	public static class BlankFormat implements Format {
+		private String[] states;
+		
+		public BlankFormat(String... states) {
+			this.states = states;
+		}
+		
+		@Override
+		public int stateCount() {
+			return states.length;
+		}
+		
+		@Override
+		public String format(int state) {
+			if (states.length > state) return states[state];
+			return null;
+		}
+		
+		@Override
+		public String getText() {
+			return "Not supported";
+		}
+		
+		public String[] getStates() {
+			return states;
+		}
+		
+		public void setStates(String... states) {
+			if (states != null && states.length > 1) this.states = states;
+			else states = DefaultFormat.states;
+		}
+	}
+	
 	public static class GenericFormat implements Format {
 		private String[] states;
 		private String text;
