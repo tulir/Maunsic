@@ -27,7 +27,7 @@ public class ActionBlink extends StatusAction {
 	private static long blinkStart = 0;
 	
 	public static void startBlinking() {
-		if (Minecraft.getMinecraft().theWorld.isRemote) {
+		if (Minecraft.getMinecraft().isSingleplayer()) {
 			Maunsic.printChatError("message.blink.sp");
 			return;
 		}
