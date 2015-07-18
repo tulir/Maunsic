@@ -56,6 +56,7 @@ public class InputHandler {
 		KeyRegistry.registerKeybind(Keybinds.fullbright);
 		KeyRegistry.registerKeybind(Keybinds.freecam);
 		KeyRegistry.registerKeybind(Keybinds.trajectories);
+		KeyRegistry.registerKeybind(Keybinds.follow);
 	}
 	
 	@SubscribeEvent
@@ -127,6 +128,7 @@ public class InputHandler {
 			else if (evt.getCode() == Keybinds.freecam.getKeyCode()) host.actionFreecam.toggle();
 			else if (evt.getCode() == Keybinds.trajectories.getKeyCode()) host.actionTrajectories.toggle();
 			else if (evt.getCode() == Keybinds.fullbright.getKeyCode()) host.actionFullbright.toggle();
+			else if (evt.getCode() == Keybinds.follow.getKeyCode()) host.actionFollow.toggle();
 			else if (evt.getCode() == Keybinds.phase.getKeyCode()) {
 				if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) host.actionPhase.deactivate();
 				else host.actionPhase.activate();
@@ -173,5 +175,6 @@ public class InputHandler {
 		public static final MauKeybind fullbright = new MauKeybind("fullbright", Keyboard.KEY_C);
 		public static final MauKeybind freecam = new MauKeybind("freecam", Keyboard.KEY_I);
 		public static final MauKeybind trajectories = new MauKeybind("trajectories", Keyboard.KEY_Y);
+		public static final MauKeybind follow = new MauKeybind("follow", Keyboard.KEY_NONE);
 	}
 }
