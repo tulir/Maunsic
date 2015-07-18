@@ -69,16 +69,20 @@ public class GuiMaunsic extends BasicScreen {
 		language = new ButtonVanilla(I18n.translate("conf.language"), this);
 		add(alts, keymaucros, luathreads, keys, xray, fanda, autosoup, phase, language);
 		
+		add(new BlankWidget());
+		
 		speed = new ExtendedIntSlider(I18n.translate("conf.amv.speed"), host.actionFly.getSpeed(), ActionFly.MIN_SPEED, ActionFly.MAX_SPEED);
 		jump = new ExtendedIntSlider(amount -> amount == 0 ? I18n.translate("conf.amv.jump.default") : I18n.translate("conf.amv.jump", amount),
 				host.actionFly.getJump(), 0, 100);
+		add(speed, jump);
 		triggerMin = new ExtendedIntSlider(I18n.translate("conf.triggerbot.min"), host.actionTriggerbot.minDelay, 10, 500);
 		triggerMax = new ExtendedIntSlider(I18n.translate("conf.triggerbot.max"), host.actionTriggerbot.maxDelay, 10, 500);
-		fastbowSpeed = new ExtendedIntSlider(I18n.translate("conf.fastbow.speed"), host.actionFastbow.getInterval(), 1, 500);
-		add(speed, jump, triggerMin, triggerMax, fastbowSpeed);
+		add(triggerMin, triggerMax);
 		
 		antispam = new StateButton(InChatListener.antispam, asformat);
 		add(antispam);
+		fastbowSpeed = new ExtendedIntSlider(I18n.translate("conf.fastbow.speed"), host.actionFastbow.getInterval(), 1, 500);
+		add(fastbowSpeed);
 		
 		autoblink = new StateButton(I18n.translate("conf.blink.automated"), ActionBlink.automated ? 1 : 0);
 		blinksafety = new ExtendedIntSlider(
@@ -201,4 +205,22 @@ public class GuiMaunsic extends BasicScreen {
 			}
 		}
 	};
+	
+	private class BlankWidget extends Widget {
+		public BlankWidget(int width, int height) {
+			super(width, height);
+		}
+		
+		public BlankWidget() {
+			super(150, 20);
+		}
+		
+		@Override
+		public void draw(int mx, int my) {}
+		
+		@Override
+		public boolean click(int mx, int my, int code) {
+			return false;
+		}
+	}
 }
