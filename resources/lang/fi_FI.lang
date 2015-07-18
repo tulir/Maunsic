@@ -24,6 +24,7 @@ key.regen=Regen Hack
 key.fullbright=Täysi valaistus
 key.freecam=Vapaa kamera
 key.trajectories=Ampumisauttaja
+key.follow=Seuraajabotti
 
 conf.title=Maunsic {0} - Sivu {1}
 conf.back=Takaisin

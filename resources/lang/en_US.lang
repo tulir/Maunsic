@@ -24,6 +24,7 @@ key.regen=Regen Hack
 key.fullbright=Fullbright
 key.freecam=Freecam
 key.trajectories=Trajectories
+key.follow=Followbot
 
 conf.title=Maunsic {0} - Page {1}
 conf.back=Back
