@@ -24,6 +24,9 @@ import net.minecraft.util.MathHelper;
  * @from Wurst-Client
  */
 public class EntityUtils {
+	/**
+	 * Makes the player face the given entity on the client. Minecraft will soon after send the changes to the server.
+	 */
 	public synchronized static void faceEntityClient(Entity entity) {
 		RotationsNeeded rn = getRotationsNeeded(entity);
 		if (rn != null) {
@@ -32,6 +35,9 @@ public class EntityUtils {
 		}
 	}
 	
+	/**
+	 * Sends a packet that makes the player face the given entity. This may not be visible on the client.
+	 */
 	public synchronized static void faceEntityPacket(Entity entity) {
 		RotationsNeeded rn = getRotationsNeeded(entity);
 		if (rn != null) {
@@ -40,7 +46,7 @@ public class EntityUtils {
 		}
 	}
 	
-	public static RotationsNeeded getRotationsNeeded(Entity entity) {
+	private static RotationsNeeded getRotationsNeeded(Entity entity) {
 		if (entity == null) return null;
 		double diffX = entity.posX - Minecraft.getMinecraft().thePlayer.posX;
 		double diffY;
@@ -67,8 +73,11 @@ public class EntityUtils {
 		return current + change;
 	}
 	
-	public static int getDistanceFromMouse(EntityLivingBase entity) {
-		RotationsNeeded rn = getRotationsNeeded(entity);
+	/**
+	 * Get the distance from the mouse to the given entity.
+	 */
+	public static int getDistanceFromMouse(Entity e) {
+		RotationsNeeded rn = getRotationsNeeded(e);
 		if (rn != null) {
 			float neededYaw = Minecraft.getMinecraft().thePlayer.rotationYaw - rn.yaw,
 					neededPitch = Minecraft.getMinecraft().thePlayer.rotationPitch - rn.pitch;
@@ -87,6 +96,14 @@ public class EntityUtils {
 		public float yaw, pitch;
 	}
 	
+	/**
+	 * Get the closest entity from the given collection of entities. If an entity in the list is dead or can't be seen, it will be ignored. If the ignoreFriend
+	 * argument is true, all friends will be ignored. If thePlayer is in the list, it will also be ignored.
+	 * 
+	 * @param ignoreFriends True if friends should be ignored.
+	 * @param entities The collection of entities to search.
+	 * @return The closest entity, or null if none of the entities in the collection matched the required specifications.
+	 */
 	public static Entity getClosestEntity(boolean ignoreFriends, Collection<Entity> entities) {
 		Entity closestEntity = null;
 		EntityPlayerSP p = Minecraft.getMinecraft().thePlayer;
@@ -99,6 +116,9 @@ public class EntityUtils {
 		return closestEntity;
 	}
 	
+	/**
+	 * Get all entities of the given type within the given range from the player.
+	 */
 	public static List<Entity> getEntitiesAABB(Class<?> c, double range) {
 		EntityPlayerSP p = Minecraft.getMinecraft().thePlayer;
 		List<?> l = p.worldObj.getEntitiesWithinAABB(c,
