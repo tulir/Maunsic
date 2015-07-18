@@ -26,7 +26,7 @@ public class OutChatListener {
 		if (m.startsWith("b64 ") || m.startsWith("base64 ")) {
 			String s = evt.getMessage().split(" ", 2)[1];
 			String msg;
-			if (s.contains("<<b64|")) {
+			if (s.contains(" <<b64|")) {
 				s = s.split(Pattern.quote(" <<b64|"), 2)[0];
 				msg = "Ⅿᴮ" + new String(Base64.encodeBase64(s.getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8) + "ᴮⅯ";
 			} else msg = "Ⅿᴮ" + new String(Base64.encodeBase64(s.getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8);
