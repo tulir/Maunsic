@@ -83,8 +83,8 @@ public class GuiMaunsic extends BasicScreen {
 		autoblink = new StateButton(I18n.translate("conf.blink.automated"), ActionBlink.automated ? 1 : 0);
 		blinksafety = new ExtendedIntSlider(
 				amount -> amount == 0 ? I18n.translate("conf.blink.safety") + ": " + I18n.translate("off")
-						: I18n.translate("conf.blink.safety") + ": " + amount + " " + I18n.translate("conf.blink.safety.level"),
-				ActionBlink.safetyLevel, 0, 10);
+						: I18n.translate("conf.blink.safety") + ": " + amount / 10.0 + " " + I18n.translate("conf.blink.safety.level"),
+				ActionBlink.safetyLevel, 0, 50);
 		add(autoblink, blinksafety);
 	}
 	

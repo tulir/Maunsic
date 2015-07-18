@@ -20,7 +20,7 @@ import net.minecraft.util.EnumChatFormatting;
  */
 public class ActionBlink extends StatusAction {
 	public static boolean automated = true, active = false;
-	public static int safetyLevel = 3;
+	public static int safetyLevel = 15;
 	
 	private static List<Packet> packets = new ArrayList<Packet>();
 	private static long blinkStart = 0;
@@ -31,23 +31,28 @@ public class ActionBlink extends StatusAction {
 	}
 	
 	public static void blink(Packet p) {
-		if (automated && safetyLevel > 0) {
-			if (blinkStart + safetyLevel * 1000 < Minecraft.getSystemTime()) {
-				releaseBlink();
-				startBlinking();
-			}
-			packets.add(p);
-		} else if (safetyLevel > 0) {
-			if (blinkStart + safetyLevel * 1000 < Minecraft.getSystemTime()) releaseBlink();
-			else packets.add(p);
-		} else packets.add(p);
+		// Check if safety level is above zero and the safety point has passed
+		if (safetyLevel > 0 && blinkStart + safetyLevel * 100 < Minecraft.getSystemTime()) {
+			// Stop blinking
+			releaseBlink();
+			
+			// If blink is automated, start blinking again.
+			if (automated) startBlinking();
+			// Otherwise return.
+			else return;
+		}
+		// Add the packet to the blink queue
+		packets.add(p);
 	}
 	
 	public static void releaseBlink() {
+		// Set active status to false
 		active = false;
 		NetHandlerPlayClient nhpc = Minecraft.getMinecraft().thePlayer.sendQueue;
+		// Send all packets in the blink queue.
 		for (Packet p : packets)
 			nhpc.addToSendQueue(p);
+		// Clear the blink queue
 		packets.clear();
 	}
 	
@@ -69,14 +74,14 @@ public class ActionBlink extends StatusAction {
 	@Override
 	public String[] getStatusText() {
 		String[] rtrn = new String[2];
-		if (automated && safetyLevel != 0) {
+		if (automated && safetyLevel > 0) {
 			rtrn[0] = "Blink " + EnumChatFormatting.GREEN + "Automated";
-			if (safetyLevel < 5) rtrn[1] = " Release delay: " + EnumChatFormatting.GREEN + safetyLevel + " seconds";
-			else rtrn[1] = " Release delay: " + EnumChatFormatting.RED + safetyLevel + " seconds";
+			if (safetyLevel <= 20) rtrn[1] = " Release delay: " + EnumChatFormatting.GREEN + safetyLevel / 10.0 + " seconds";
+			else rtrn[1] = " Release delay: " + EnumChatFormatting.RED + safetyLevel / 10.0 + " seconds";
 		} else {
 			rtrn[0] = "Blink " + EnumChatFormatting.RED + "Manual";
-			if (safetyLevel > 4) rtrn[1] = " Release delay: " + EnumChatFormatting.RED + safetyLevel + " seconds";
-			else if (safetyLevel > 0) rtrn[1] = " Release delay: " + EnumChatFormatting.GREEN + safetyLevel + " seconds";
+			if (safetyLevel > 20) rtrn[1] = " Release delay: " + EnumChatFormatting.RED + safetyLevel / 10.0 + " seconds";
+			else if (safetyLevel > 0) rtrn[1] = " Release delay: " + EnumChatFormatting.GREEN + safetyLevel / 10.0 + " seconds";
 			else rtrn[1] = " Safety: " + EnumChatFormatting.RED + "Disabled";
 		}
 		return rtrn;
