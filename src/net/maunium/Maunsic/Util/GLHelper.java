@@ -11,7 +11,7 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.AxisAlignedBB;
 
 /**
- * Most of the code from CheatingEssentials by godshawk.
+ * Drawing code from CheatingEssentials by godshawk.
  * 
  * @author Tulir293
  * @author godshawk
@@ -206,10 +206,32 @@ public class GLHelper {
 		Tessellator.getInstance().draw();
 	}
 	
+	/**
+	 * Convert the given RGBA color to a Hex color.
+	 */
 	public static int toInt(int red, int green, int blue, int alpha) {
 		return (alpha & 0xFF) << 24 | (red & 0xFF) << 16 | (green & 0xFF) << 8 | (blue & 0xFF) << 0;
 	}
 	
+	/**
+	 * Convert the given RGB color to a Hex color.
+	 */
+	public static int toInt(int red, int green, int blue) {
+		return (255 & 0xFF) << 24 | (red & 0xFF) << 16 | (green & 0xFF) << 8 | (blue & 0xFF) << 0;
+	}
+	
+	/**
+	 * Convert the given RGBA color to a Hex color. This function allows the alpha variable to be omitted.
+	 */
+	public static int toInt(int... rgba) {
+		if (rgba.length == 3) return toInt(rgba[0], rgba[1], rgba[2]);
+		else if (rgba.length == 4) return toInt(rgba[0], rgba[1], rgba[2], rgba[3]);
+		else return toInt(0, 0, 0, 0);
+	}
+	
+	/**
+	 * Convert the given Hex color to a RGBA color
+	 */
 	public static int[] toRGBA(int color) {
 		Color c = new Color(color);
 		return new int[] { c.getAlpha(), c.getRed(), c.getGreen(), c.getBlue() };
