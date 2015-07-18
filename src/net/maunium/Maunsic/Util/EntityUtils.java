@@ -1,7 +1,3 @@
-/*
- * Copyright � 2014 - 2015 | Alexander01998 | All rights reserved. This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a
- * copy of the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
 package net.maunium.Maunsic.Util;
 
 import java.util.ArrayList;
@@ -29,24 +25,22 @@ import net.minecraft.util.MathHelper;
  */
 public class EntityUtils {
 	public synchronized static void faceEntityClient(Entity entity) {
-		float[] rotations = getRotationsNeeded(entity);
-		if (rotations != null) {
-			Minecraft.getMinecraft().thePlayer.rotationYaw = limitAngleChange(Minecraft.getMinecraft().thePlayer.prevRotationYaw, rotations[0], 55);
-			Minecraft.getMinecraft().thePlayer.rotationPitch = rotations[1];
+		RotationsNeeded rn = getRotationsNeeded(entity);
+		if (rn != null) {
+			Minecraft.getMinecraft().thePlayer.rotationYaw = limitAngleChange(Minecraft.getMinecraft().thePlayer.prevRotationYaw, rn.yaw, 55);
+			Minecraft.getMinecraft().thePlayer.rotationPitch = rn.pitch;
 		}
 	}
 	
 	public synchronized static void faceEntityPacket(Entity entity) {
-		float[] rotations = getRotationsNeeded(entity);
-		if (rotations != null) {
-			float yaw = rotations[0];
-			float pitch = rotations[1];
+		RotationsNeeded rn = getRotationsNeeded(entity);
+		if (rn != null) {
 			Minecraft.getMinecraft().thePlayer.sendQueue
-					.addToSendQueue(new C03PacketPlayer.C05PacketPlayerLook(yaw, pitch, Minecraft.getMinecraft().thePlayer.onGround));
+					.addToSendQueue(new C03PacketPlayer.C05PacketPlayerLook(rn.yaw, rn.pitch, Minecraft.getMinecraft().thePlayer.onGround));
 		}
 	}
 	
-	public static float[] getRotationsNeeded(Entity entity) {
+	public static RotationsNeeded getRotationsNeeded(Entity entity) {
 		if (entity == null) return null;
 		double diffX = entity.posX - Minecraft.getMinecraft().thePlayer.posX;
 		double diffY;
@@ -60,9 +54,9 @@ public class EntityUtils {
 		double dist = MathHelper.sqrt_double(diffX * diffX + diffZ * diffZ);
 		float yaw = (float) (Math.atan2(diffZ, diffX) * 180.0D / Math.PI) - 90.0F;
 		float pitch = (float) -(Math.atan2(diffY, dist) * 180.0D / Math.PI);
-		return new float[] {
+		return new RotationsNeeded(
 				Minecraft.getMinecraft().thePlayer.rotationYaw + MathHelper.wrapAngleTo180_float(yaw - Minecraft.getMinecraft().thePlayer.rotationYaw),
-				Minecraft.getMinecraft().thePlayer.rotationPitch + MathHelper.wrapAngleTo180_float(pitch - Minecraft.getMinecraft().thePlayer.rotationPitch) };
+				Minecraft.getMinecraft().thePlayer.rotationPitch + MathHelper.wrapAngleTo180_float(pitch - Minecraft.getMinecraft().thePlayer.rotationPitch));
 				
 	}
 	
@@ -74,14 +68,23 @@ public class EntityUtils {
 	}
 	
 	public static int getDistanceFromMouse(EntityLivingBase entity) {
-		float[] neededRotations = getRotationsNeeded(entity);
-		if (neededRotations != null) {
-			float neededYaw = Minecraft.getMinecraft().thePlayer.rotationYaw - neededRotations[0],
-					neededPitch = Minecraft.getMinecraft().thePlayer.rotationPitch - neededRotations[1];
+		RotationsNeeded rn = getRotationsNeeded(entity);
+		if (rn != null) {
+			float neededYaw = Minecraft.getMinecraft().thePlayer.rotationYaw - rn.yaw,
+					neededPitch = Minecraft.getMinecraft().thePlayer.rotationPitch - rn.pitch;
 			float distanceFromMouse = MathHelper.sqrt_float(neededYaw * neededYaw + neededPitch * neededPitch);
 			return (int) distanceFromMouse;
 		}
 		return -1;
+	}
+	
+	private static class RotationsNeeded {
+		public RotationsNeeded(float yaw, float pitch) {
+			this.yaw = yaw;
+			this.pitch = pitch;
+		}
+		
+		public float yaw, pitch;
 	}
 	
 	public static Entity getClosestEntity(boolean ignoreFriends, Collection<Entity> entities) {
