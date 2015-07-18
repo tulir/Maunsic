@@ -1,9 +1,5 @@
 package net.maunium.Maunsic.Gui;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import com.mcf.davidee.guilib.basic.BasicScreen;
 import com.mcf.davidee.guilib.basic.FocusedContainer;
 import com.mcf.davidee.guilib.basic.Label;
@@ -76,15 +72,12 @@ public class GuiKeybinds extends BasicScreen {
 		kc.addWidgets(s);
 		s.setPosition(width / 2 + 170, 0);
 		
-		List<MauKeybind> kbs = new ArrayList<MauKeybind>(KeyRegistry.getKeybinds());
-		Collections.sort(kbs);
+		keybindTitles = new ShiftableLabel[KeyRegistry.getKeybinds().size()];
+		keybindKeys = new KeySelectButtonForMaunsic[KeyRegistry.getKeybinds().size()];
+		keybindReset = new ShiftableButtonWithMeta[KeyRegistry.getKeybinds().size()];
 		
-		keybindTitles = new ShiftableLabel[kbs.size()];
-		keybindKeys = new KeySelectButtonForMaunsic[kbs.size()];
-		keybindReset = new ShiftableButtonWithMeta[kbs.size()];
-		
-		for (int i = 0; i < kbs.size(); i++) {
-			MauKeybind kb = kbs.get(i);
+		int i = 0;
+		for (MauKeybind kb : KeyRegistry.getKeybinds()) {
 			keybindTitles[i] = new ShiftableLabel(I18n.translate("key." + kb.getName()), false);
 			keybindKeys[i] = new KeySelectButtonForMaunsic(100, 20, this, kb.getKeyCode(), new KSBF(), kb);
 			keybindReset[i] = new ShiftableButtonWithMeta(50, 20, I18n.translate("conf.keys.reset"), this, i);
@@ -92,6 +85,7 @@ public class GuiKeybinds extends BasicScreen {
 			keybindKeys[i].setPosition(width / 2 - keybindKeys[i].getWidth() / 2 + 50, 40 + i * 25);
 			keybindReset[i].setPosition(width / 2 + keybindKeys[i].getWidth() / 2 + 60, 40 + i * 25);
 			kc.addWidgets(keybindTitles[i], keybindKeys[i], keybindReset[i]);
+			i++;
 		}
 		
 		kc.setFocused(null);

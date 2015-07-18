@@ -1,6 +1,6 @@
 package net.maunium.Maunsic.Listeners.KeyHandling;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import net.maunium.Maunsic.Util.MaunsiConfig;
@@ -12,20 +12,20 @@ import net.maunium.Maunsic.Util.MaunsiConfig;
  * @since 0.1
  */
 public class KeyRegistry {
-	private static Set<MauKeybind> keybinds = new HashSet<MauKeybind>();
+	private static Set<MauKeybind> keybinds = new LinkedHashSet<MauKeybind>(24);
 	
 	/**
 	 * Register the given key binding.
 	 */
 	public static void registerKeybind(MauKeybind kb) {
-		keybinds.add(kb);
+		if (kb != null) keybinds.add(kb);
 	}
 	
 	/**
 	 * Unregister the given key binding.
 	 */
 	public static void unregisterKeybind(MauKeybind kb) {
-		keybinds.remove(kb);
+		if (kb != null) keybinds.remove(kb);
 	}
 	
 	/**
