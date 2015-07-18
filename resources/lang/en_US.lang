@@ -153,6 +153,8 @@ keymaucros.syntax.forward=The MaucroCommand Forward takes one integer.
 keymaucros.syntax.look=The MaucroCommand Look takes two integers.
 keymaucros.output.local={0}
 
+message.blink.sp=Blink is not enabled in single player due to a severe freezing bug.
+
 message.alt.username=Successfully changed username to {0}.
 message.alt.login=Successfully logged in as {0}.
 message.alt.failusername=Failed to change username.

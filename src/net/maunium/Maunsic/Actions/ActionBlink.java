@@ -3,6 +3,7 @@ package net.maunium.Maunsic.Actions;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.maunium.Maunsic.Maunsic;
 import net.maunium.Maunsic.Actions.Util.StatusAction;
 import net.maunium.Maunsic.Util.MaunsiConfig;
 
@@ -26,7 +27,13 @@ public class ActionBlink extends StatusAction {
 	private static long blinkStart = 0;
 	
 	public static void startBlinking() {
+		if (Minecraft.getMinecraft().theWorld.isRemote) {
+			Maunsic.printChatError("message.blink.sp");
+			return;
+		}
+		// Set the start timestamp
 		blinkStart = Minecraft.getSystemTime();
+		// Set the active status to true
 		active = true;
 	}
 	
