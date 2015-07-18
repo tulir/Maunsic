@@ -66,7 +66,7 @@ public class InputHandler {
 		// Execute the precheck key maucros, but only if the input handler is enabled.
 		if (!disabled) for (KeyMaucro km : KeyMaucro.getKeyMaucros()) {
 			KeyMaucro.ExecPhase ep = evt.isPressed() ? KeyMaucro.ExecPhase.PRECHECKS_DOWN : KeyMaucro.ExecPhase.PRECHECKS_UP;
-			if (km.getExecutionPhase().equals(ep)) km.checkAndExecute();
+			if (evt.getCode() == km.getKeyCode() && km.shiftKeysDown() && km.getExecutionPhase().equals(ep)) km.executeMacro();
 		}
 		
 		// Check if the chat gui is open. If it is, return.
@@ -77,7 +77,7 @@ public class InputHandler {
 		// Execute the prekeys key maucros, but only if the input handler is enabled.
 		if (!disabled) for (KeyMaucro km : KeyMaucro.getKeyMaucros()) {
 			KeyMaucro.ExecPhase ep = evt.isPressed() ? KeyMaucro.ExecPhase.PREKEYS_DOWN : KeyMaucro.ExecPhase.PREKEYS_UP;
-			if (km.getExecutionPhase().equals(ep)) km.checkAndExecute();
+			if (evt.getCode() == km.getKeyCode() && km.shiftKeysDown() && km.getExecutionPhase().equals(ep)) km.executeMacro();
 		}
 		
 		if (evt.getCode() == konami[konamiStatus] && evt.isPressed() == konamiDown) {
@@ -136,7 +136,7 @@ public class InputHandler {
 		
 		if (!disabled) for (KeyMaucro km : KeyMaucro.getKeyMaucros()) {
 			KeyMaucro.ExecPhase ep = evt.isPressed() ? KeyMaucro.ExecPhase.POSTKEYS_DOWN : KeyMaucro.ExecPhase.POSTKEYS_UP;
-			if (km.getExecutionPhase().equals(ep)) km.checkAndExecute();
+			if (evt.getCode() == km.getKeyCode() && km.shiftKeysDown() && km.getExecutionPhase().equals(ep)) km.executeMacro();
 		}
 	}
 	

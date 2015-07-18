@@ -275,24 +275,12 @@ public abstract class KeyMaucro implements Serializable, Comparable<KeyMaucro> {
 	}
 	
 	/**
-	 * Returns true if the main key and all the shift keys are pressed.
+	 * Returns true if all the shift keys are pressed.
 	 */
-	public boolean isMacroDown() {
+	public boolean shiftKeysDown() {
 		for (int i : shiftKeys)
 			if (!MauKeybind.isDown(i)) return false;
-		return MauKeybind.isDown(keyCode);
-	}
-	
-	/**
-	 * Checks if the keys are down and executes the Maucro if they are.
-	 * 
-	 * @return If the Maucro was executed or not.
-	 */
-	public final boolean checkAndExecute() {
-		if (isMacroDown()) {
-			executeMacro();
-			return true;
-		} else return false;
+		return true;
 	}
 	
 	/**
