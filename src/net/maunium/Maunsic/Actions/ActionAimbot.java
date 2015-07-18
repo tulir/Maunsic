@@ -8,11 +8,8 @@ import net.maunium.Maunsic.Settings.Attacking;
 import net.maunium.Maunsic.Util.EntityUtils;
 import net.maunium.Maunsic.Util.MaunsiConfig;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.projectile.EntityFireball;
-import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.EnumChatFormatting;
 
 /**
@@ -25,23 +22,13 @@ import net.minecraft.util.EnumChatFormatting;
 public class ActionAimbot extends IntervalAction {
 	@Override
 	public void executeInterval() {
-		List<Entity> e = new ArrayList<Entity>(getEntitiesAABB(EntityFireball.class, Attacking.range));
+		List<Entity> e = new ArrayList<Entity>(EntityUtils.getEntitiesAABB(EntityFireball.class, Attacking.range));
 		for (Class<?> c : Attacking.getTargets())
-			e.addAll(getEntitiesAABB(c, Attacking.range));
-		
+			e.addAll(EntityUtils.getEntitiesAABB(c, Attacking.range));
+			
 		Entity c = EntityUtils.getClosestEntity(true, e);
 		if (c == null) return;
 		EntityUtils.faceEntityClient(c);
-	}
-	
-	private List<Entity> getEntitiesAABB(Class<?> c, double range) {
-		EntityPlayerSP p = Minecraft.getMinecraft().thePlayer;
-		List<?> l = p.worldObj.getEntitiesWithinAABB(c,
-				AxisAlignedBB.fromBounds(p.posX - range, p.posY - range, p.posZ - range, p.posX + range, p.posY + range, p.posZ + range));
-		List<Entity> rtrn = new ArrayList<Entity>();
-		for (Object o : l)
-			if (o instanceof Entity) rtrn.add((Entity) o);
-		return rtrn;
 	}
 	
 	@Override

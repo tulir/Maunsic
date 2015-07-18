@@ -4,7 +4,9 @@
  */
 package net.maunium.Maunsic.Util;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import net.maunium.Maunsic.Settings.Attacking;
 
@@ -14,6 +16,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.play.client.C03PacketPlayer;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MathHelper;
 
 /**
@@ -38,8 +41,8 @@ public class EntityUtils {
 		if (rotations != null) {
 			float yaw = rotations[0];
 			float pitch = rotations[1];
-			Minecraft.getMinecraft().thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C05PacketPlayerLook(yaw, pitch,
-					Minecraft.getMinecraft().thePlayer.onGround));
+			Minecraft.getMinecraft().thePlayer.sendQueue
+					.addToSendQueue(new C03PacketPlayer.C05PacketPlayerLook(yaw, pitch, Minecraft.getMinecraft().thePlayer.onGround));
 		}
 	}
 	
@@ -60,7 +63,7 @@ public class EntityUtils {
 		return new float[] {
 				Minecraft.getMinecraft().thePlayer.rotationYaw + MathHelper.wrapAngleTo180_float(yaw - Minecraft.getMinecraft().thePlayer.rotationYaw),
 				Minecraft.getMinecraft().thePlayer.rotationPitch + MathHelper.wrapAngleTo180_float(pitch - Minecraft.getMinecraft().thePlayer.rotationPitch) };
-		
+				
 	}
 	
 	private final static float limitAngleChange(final float current, final float intended, final float maxChange) {
@@ -73,8 +76,8 @@ public class EntityUtils {
 	public static int getDistanceFromMouse(EntityLivingBase entity) {
 		float[] neededRotations = getRotationsNeeded(entity);
 		if (neededRotations != null) {
-			float neededYaw = Minecraft.getMinecraft().thePlayer.rotationYaw - neededRotations[0], neededPitch = Minecraft.getMinecraft().thePlayer.rotationPitch
-					- neededRotations[1];
+			float neededYaw = Minecraft.getMinecraft().thePlayer.rotationYaw - neededRotations[0],
+					neededPitch = Minecraft.getMinecraft().thePlayer.rotationPitch - neededRotations[1];
 			float distanceFromMouse = MathHelper.sqrt_float(neededYaw * neededYaw + neededPitch * neededPitch);
 			return (int) distanceFromMouse;
 		}
@@ -92,73 +95,14 @@ public class EntityUtils {
 		}
 		return closestEntity;
 	}
-//	public static ArrayList<EntityLivingBase> getCloseEntities(boolean ignoreFriends, float range) {
-//		ArrayList<EntityLivingBase> closeEntities = new ArrayList<EntityLivingBase>();
-//		for (Object o : Minecraft.getMinecraft().theWorld.loadedEntityList)
-//			if (isCorrectEntity(o, ignoreFriends)) {
-//				EntityLivingBase en = (EntityLivingBase) o;
-//				if (!(o instanceof EntityPlayerSP) && !en.isDead && en.getHealth() > 0 && Minecraft.getMinecraft().thePlayer.canEntityBeSeen(en)
-//						&& !en.getName().equals(Minecraft.getMinecraft().thePlayer.getName())
-//						&& Minecraft.getMinecraft().thePlayer.getDistanceToEntity(en) <= range) closeEntities.add(en);
-//			}
-//		return closeEntities;
-//	}
-//	
-//	public static EntityLivingBase getClosestEntityRaw(boolean ignoreFriends) {
-//		EntityLivingBase closestEntity = null;
-//		for (Object o : Minecraft.getMinecraft().theWorld.loadedEntityList)
-//			if (isCorrectEntity(o, ignoreFriends)) {
-//				EntityLivingBase en = (EntityLivingBase) o;
-//				if (!(o instanceof EntityPlayerSP) && !en.isDead && en.getHealth() > 0)
-//					if (closestEntity == null
-//							|| Minecraft.getMinecraft().thePlayer.getDistanceToEntity(en) < Minecraft.getMinecraft().thePlayer
-//									.getDistanceToEntity(closestEntity)) closestEntity = en;
-//			}
-//		return closestEntity;
-//	}
-//	
-//	public static EntityLivingBase getClosestEnemy(EntityLivingBase friend) {
-//		EntityLivingBase closestEnemy = null;
-//		for (Object o : Minecraft.getMinecraft().theWorld.loadedEntityList)
-//			if (isCorrectEntity(o, true)) {
-//				EntityLivingBase en = (EntityLivingBase) o;
-//				if (!(o instanceof EntityPlayerSP) && o != friend && !en.isDead && en.getHealth() <= 0 == false
-//						&& Minecraft.getMinecraft().thePlayer.canEntityBeSeen(en))
-//					if (closestEnemy == null
-//							|| Minecraft.getMinecraft().thePlayer.getDistanceToEntity(en) < Minecraft.getMinecraft().thePlayer
-//									.getDistanceToEntity(closestEnemy)) closestEnemy = en;
-//			}
-//		return closestEnemy;
-//	}
-//	
-//	public static EntityLivingBase searchEntityByIdRaw(UUID ID) {
-//		EntityLivingBase newEntity = null;
-//		for (Object o : Minecraft.getMinecraft().theWorld.loadedEntityList)
-//			if (isCorrectEntity(o, false)) {
-//				EntityLivingBase en = (EntityLivingBase) o;
-//				if (!(o instanceof EntityPlayerSP) && !en.isDead) if (newEntity == null && en.getUniqueID().equals(ID)) newEntity = en;
-//			}
-//		return newEntity;
-//	}
-//	
-//	public static EntityLivingBase searchEntityByName(String name) {
-//		EntityLivingBase newEntity = null;
-//		for (Object o : Minecraft.getMinecraft().theWorld.loadedEntityList)
-//			if (isCorrectEntity(o, false)) {
-//				EntityLivingBase en = (EntityLivingBase) o;
-//				if (!(o instanceof EntityPlayerSP) && !en.isDead && Minecraft.getMinecraft().thePlayer.canEntityBeSeen(en))
-//					if (newEntity == null && en.getName().equals(name)) newEntity = en;
-//			}
-//		return newEntity;
-//	}
-//	
-//	public static EntityLivingBase searchEntityByNameRaw(String name) {
-//		EntityLivingBase newEntity = null;
-//		for (Object o : Minecraft.getMinecraft().theWorld.loadedEntityList)
-//			if (isCorrectEntity(o, false)) {
-//				EntityLivingBase en = (EntityLivingBase) o;
-//				if (!(o instanceof EntityPlayerSP) && !en.isDead) if (newEntity == null && en.getName().equals(name)) newEntity = en;
-//			}
-//		return newEntity;
-//	}
+	
+	public static List<Entity> getEntitiesAABB(Class<?> c, double range) {
+		EntityPlayerSP p = Minecraft.getMinecraft().thePlayer;
+		List<?> l = p.worldObj.getEntitiesWithinAABB(c,
+				AxisAlignedBB.fromBounds(p.posX - range, p.posY - range, p.posZ - range, p.posX + range, p.posY + range, p.posZ + range));
+		List<Entity> rtrn = new ArrayList<Entity>();
+		for (Object o : l)
+			if (o instanceof Entity) rtrn.add((Entity) o);
+		return rtrn;
+	}
 }
