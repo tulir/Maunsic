@@ -111,7 +111,7 @@ public class EntityUtils {
 			if (e.isDead) continue;
 			else if (e instanceof EntityPlayer && (e.equals(p) || Attacking.isFriend(((EntityPlayer) e).getName()))) continue;
 			else if (!p.canEntityBeSeen(e)) continue;
-			else if (closestEntity == null || p.getDistanceSqToEntity(closestEntity) < p.getDistanceSqToEntity(e)) closestEntity = e;
+			else if (closestEntity == null || p.getDistanceSqToEntity(closestEntity) > p.getDistanceSqToEntity(e)) closestEntity = e;
 		}
 		return closestEntity;
 	}
