@@ -6,16 +6,15 @@ import net.maunium.Maunsic.Util.EntityUtils;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.util.EnumChatFormatting;
 
 /**
- * Action for following a player. Parts of the code from Wurst Client by Alexander01998, which is licenced under MPL 2.0
+ * Action for following a player. Base of this action was taken from Wurst Client by Alexander01998, which is licenced under MPL v2.0
  * 
  * @author Tulir293
- * @author Alexander01998
  * @since 0.1
- * @from Wurst Client
  */
 public class ActionFollow extends TickAction {
 	public EntityOtherPlayerMP entity = null;
@@ -34,23 +33,25 @@ public class ActionFollow extends TickAction {
 	
 	@Override
 	public void execute() {
-		if (entity == null) {
-			deactivate();
-			return;
-		}
-		if (entity.isDead || Minecraft.getMinecraft().thePlayer.isDead) {
+		EntityPlayerSP p = Minecraft.getMinecraft().thePlayer;
+		if (entity == null || entity.isDead || p.isDead) {
 			entity = null;
 			deactivate();
 			return;
 		}
-		double xDist = Math.abs(Minecraft.getMinecraft().thePlayer.posX - entity.posX);
-		double zDist = Math.abs(Minecraft.getMinecraft().thePlayer.posZ - entity.posZ);
+		
+		double dx = Math.abs(p.posX - entity.posX);
+		double dz = Math.abs(p.posZ - entity.posZ);
 		EntityUtils.faceEntityClient(entity);
-		if (xDist > 1D || zDist > 1D) KeyBinding.setKeyBindState(Minecraft.getMinecraft().gameSettings.keyBindForward.getKeyCode(), true);
+		
+		if (dx > 1D || dz > 1D) KeyBinding.setKeyBindState(Minecraft.getMinecraft().gameSettings.keyBindForward.getKeyCode(), true);
 		else KeyBinding.setKeyBindState(Minecraft.getMinecraft().gameSettings.keyBindForward.getKeyCode(), false);
-		if (Minecraft.getMinecraft().thePlayer.isCollidedHorizontally && Minecraft.getMinecraft().thePlayer.onGround) Minecraft.getMinecraft().thePlayer.jump();
-		if (Minecraft.getMinecraft().thePlayer.isInWater() && Minecraft.getMinecraft().thePlayer.posY < entity.posY)
-			Minecraft.getMinecraft().thePlayer.motionY += 0.04;
+		
+		if (entity.isSprinting()) p.setSprinting(true);
+		else p.setSprinting(false);
+		
+		if (p.isCollidedHorizontally && p.onGround) p.jump();
+		if (p.isInWater() && p.posY < entity.posY) p.motionY += 0.04;
 	}
 	
 	@Override
