@@ -30,7 +30,7 @@ public class ActionFullbright extends TickAction {
 	
 	@Override
 	public String[] getStatusText() {
-		return active ? new String[] { "Fullbright " + EnumChatFormatting.GREEN + "ON" } : null;
+		return new String[] { "Fullbright " + EnumChatFormatting.GREEN + "ON" };
 	}
 	
 	@Override
