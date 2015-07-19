@@ -98,6 +98,10 @@ public class GuiMaunsic extends BasicScreen {
 			widgets.add(ww);
 	}
 	
+	public void addSpace() {
+		widgets.add(new BlankWidget());
+	}
+	
 	@Override
 	protected void onRevalidate() {
 		c.getWidgets().clear();
