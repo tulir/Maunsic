@@ -2,6 +2,7 @@ package net.maunium.Maunsic.Listeners;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Locale;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.codec.binary.Base64;
@@ -23,35 +24,60 @@ public class OutChatListener {
 	@SubscribeEvent(priority = EventPriority.HIGH)
 	public void onSendChat(ClientChatSendEvent evt) {
 		String m = evt.getMessage().toLowerCase(Locale.ENGLISH);
-		if (m.startsWith("b64 ") || m.startsWith("base64 ")) {
-			String s = evt.getMessage().split(" ", 2)[1];
-			String msg;
-			if (s.contains(" <<b64|")) {
-				s = s.split(Pattern.quote(" <<b64|"), 2)[0];
-				msg = "Ⅿᴮ" + new String(Base64.encodeBase64(s.getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8) + "ᴮⅯ";
-			} else msg = "Ⅿᴮ" + new String(Base64.encodeBase64(s.getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8);
+		
+		Base64: if (m.contains("b64")) {
+			Matcher matcher = Pattern.compile("(b64)[ ]*\\{[^\\}]+\\}").matcher(evt.getMessage());
+			boolean matched = false;
+			String msg = evt.getMessage();
+			while (matcher.find()) {
+				String s = matcher.group(0);
+				s = s.substring(4, s.length() - 1);
+				byte[] encoded = Base64.encodeBase64(s.getBytes(StandardCharsets.UTF_8));
+				s = new String(encoded, StandardCharsets.UTF_8);
+				msg = msg.replaceFirst("(b64)[ ]*\\{[^\\}]+\\}", "Ⅿᴮ" + s + "ᴮⅯ");
+				matched = true;
+			}
+			
+			if (!matched) {
+				if (m.startsWith("b64 ")) msg = "Ⅿᴮ"
+						+ new String(Base64.encodeBase64(evt.getMessage().split(" ", 2)[1].getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8) + "ᴮⅯ";
+				else break Base64;
+			}
+			
 			if (msg.length() > 100) {
 				Maunsic.printChatError("message.encoding.toolong", msg.length());
 				evt.setCanceled(true);
 				return;
 			}
+			
 			evt.setMessage(msg);
-			return;
-		} else if (m.contains("|b64>> ")) {
-			String[] ss = evt.getMessage().split(Pattern.quote("|b64>> "), 2);
-			String msg;
-			if (ss[1].contains(" <<b64|")) {
-				String[] ss2 = ss[1].split(Pattern.quote(" <<b64|"), 2);
-				msg = ss[0] + "Ⅿᴮ" + new String(Base64.encodeBase64(ss2[0].getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8) + "ᴮⅯ" + ss2[1];
-			} else msg = ss[0] + "Ⅿᴮ" + new String(Base64.encodeBase64(ss[1].getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8);
-			if (msg.length() > 100) {
-				Maunsic.printChatError("message.encoding.toolong", msg.length());
-				evt.setCanceled(true);
-				return;
-			}
-			evt.setMessage(msg);
-			return;
-		} else if (m.startsWith("calculate ") || m.startsWith("calc ")) {
+		}
+		
+//		if (m.startsWith("b64 ") || m.startsWith("base64 ")) {
+//			String s = evt.getMessage().split(" ", 2)[1];
+//			String msg = "Ⅿᴮ" + new String(Base64.encodeBase64(s.getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8);
+//			if (msg.length() > 100) {
+//				Maunsic.printChatError("message.encoding.toolong", msg.length());
+//				evt.setCanceled(true);
+//				return;
+//			}
+//			evt.setMessage(msg);
+//			return;
+//		} else if (m.contains("b64")) {
+//			String[] ss = evt.getMessage().split("(b64)[ ]?", 2);
+//			String msg;
+//			if (ss[1].contains("}")) {
+//				String[] ss2 = ss[1].split(Pattern.quote("}"), 2);
+//				msg = ss[0] + "Ⅿᴮ" + new String(Base64.encodeBase64(ss2[0].getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8) + "ᴮⅯ" + ss2[1];
+//			} else msg = ss[0] + "Ⅿᴮ" + new String(Base64.encodeBase64(ss[1].getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8);
+//			if (msg.length() > 100) {
+//				Maunsic.printChatError("message.encoding.toolong", msg.length());
+//				evt.setCanceled(true);
+//				return;
+//			}
+//			evt.setMessage(msg);
+//			return;
+		/* } */ else if (m.startsWith("calculate ") || m.startsWith("calc ")) {
 			evt.setCanceled(true);
 			String s = Calculator.processCalculation(evt.getMessage().split(" ", 2)[1]);
 			if (s.equals("varname")) Maunsic.printChatError("message.calculator.variable.spacename");
