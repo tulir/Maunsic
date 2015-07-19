@@ -40,7 +40,7 @@ public class GuiMaunsic extends BasicScreen {
 	
 	private Label title;
 	private ButtonVanilla keys, alts, keymaucros, luathreads, xray, fanda, autosoup, phase, language, prevPage, nextPage, close;
-	private StateButton autoblink, antispam;
+	private StateButton autoblink, antispam, showStatus;
 	private ExtendedIntSlider speed, jump, triggerMin, triggerMax, fastbowSpeed, blinksafety;
 	
 	public GuiMaunsic(Maunsic host) {
@@ -69,7 +69,8 @@ public class GuiMaunsic extends BasicScreen {
 		language = new ButtonVanilla(I18n.translate("conf.language"), this);
 		add(alts, keymaucros, luathreads, keys, xray, fanda, autosoup, phase, language);
 		
-		add(new BlankWidget());
+		showStatus = new StateButton(I18n.translate("conf.showstatus"), this, host.getActionHandler().showStatus ? 1 : 0);
+		add(showStatus);
 		
 		speed = new ExtendedIntSlider(I18n.translate("conf.amv.speed"), host.actionFly.getSpeed(), ActionFly.MIN_SPEED, ActionFly.MAX_SPEED);
 		jump = new ExtendedIntSlider(amount -> amount == 0 ? I18n.translate("conf.amv.jump.default") : I18n.translate("conf.amv.jump", amount),
@@ -156,6 +157,7 @@ public class GuiMaunsic extends BasicScreen {
 		else if (b == autosoup) Minecraft.getMinecraft().displayGuiScreen(new GuiAutosoup(this, host));
 		else if (b == phase) Minecraft.getMinecraft().displayGuiScreen(new GuiPhase(this, host));
 		else if (b == language) Minecraft.getMinecraft().displayGuiScreen(new GuiLanguage(this, host));
+		else if (b == showStatus) host.getActionHandler().showStatus = showStatus.getState() == 1;
 	}
 	
 	@Override

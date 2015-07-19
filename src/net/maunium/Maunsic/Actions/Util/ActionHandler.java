@@ -25,6 +25,7 @@ public class ActionHandler {
 	private Set<TickAction> startActions = new HashSet<TickAction>(), endActions = new HashSet<TickAction>(), livingActions = new HashSet<TickAction>(),
 			worldActions = new HashSet<TickAction>();
 	private Set<StatusAction> allActions = new HashSet<StatusAction>();
+	public boolean showStatus = true;
 	
 	/**
 	 * Initialize the action handler. This should only be used by the Maunsic main class.
@@ -93,6 +94,7 @@ public class ActionHandler {
 		Maunsic.getLogger().trace("Saving configurations of all actions.", this);
 		for (StatusAction a : allActions)
 			a.saveData(host.getConfig());
+		host.getConfig().set("show-status", showStatus);
 	}
 	
 	/**
@@ -102,6 +104,7 @@ public class ActionHandler {
 		Maunsic.getLogger().trace("Loading configurations of all actions.", this);
 		for (StatusAction a : allActions)
 			a.loadData(host.getConfig());
+		showStatus = host.getConfig().getBoolean("show-status", showStatus);
 	}
 	
 	@SubscribeEvent
@@ -131,7 +134,7 @@ public class ActionHandler {
 	
 	@SubscribeEvent
 	public void renderOverlay(RenderGameOverlayEvent.Text evt) {
-		if (Minecraft.getMinecraft().gameSettings.showDebugInfo) return;
+		if (Minecraft.getMinecraft().gameSettings.showDebugInfo || !showStatus) return;
 		for (StatusAction sa : allActions)
 			if (sa.isActive()) add(evt.left, sa.getStatusText());
 	}
@@ -139,7 +142,7 @@ public class ActionHandler {
 	/**
 	 * Add the contents of {@code objects} to {@code list}
 	 */
-	private void add(List<String> list, String[] objects) {
+	private void add(List<String> list, String... objects) {
 		if (objects == null) return;
 		for (String s : objects)
 			if (s != null) list.add(s);

@@ -143,6 +143,8 @@ conf.language.title=Language Selector
 conf.language.refresh=Refresh List
 conf.language.active=Active
 
+conf.showstatus=Status Overlay
+
 action.amv.title=Alt. Movement
 action.amv.mode=Mode
 action.amv.fly=Fly
