@@ -25,11 +25,12 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
  */
 public class InputHandler {
 	private boolean disabled = false;
-	public static final int[] konami = { Keyboard.KEY_UP, Keyboard.KEY_UP, Keyboard.KEY_DOWN, Keyboard.KEY_DOWN, Keyboard.KEY_LEFT, Keyboard.KEY_RIGHT,
-			Keyboard.KEY_LEFT, Keyboard.KEY_RIGHT, Keyboard.KEY_B, Keyboard.KEY_A };
-	private int konamiStatus = 0;
-	private boolean konamiDown = true;
 	private Maunsic host;
+	
+	public int[] forceOpen = { Keyboard.KEY_UP, Keyboard.KEY_UP, Keyboard.KEY_DOWN, Keyboard.KEY_DOWN, Keyboard.KEY_LEFT, Keyboard.KEY_RIGHT, Keyboard.KEY_LEFT,
+			Keyboard.KEY_RIGHT, Keyboard.KEY_B, Keyboard.KEY_A };
+	private int forceOpenStatus = 0;
+	private boolean forceOpenDown = true;
 	
 	public InputHandler(Maunsic host) {
 		this.host = host;
@@ -75,25 +76,25 @@ public class InputHandler {
 		// Check if the player exists. If not, return.
 		if (Minecraft.getMinecraft().thePlayer == null) return;
 		
+		if (evt.getCode() == forceOpen[forceOpenStatus] && evt.isPressed() == forceOpenDown) {
+			if (!forceOpenDown) forceOpenStatus++;
+			forceOpenDown = !forceOpenDown;
+			
+			if (forceOpenStatus >= forceOpen.length) {
+				Minecraft.getMinecraft().displayGuiScreen(new GuiMaunsic(host));
+				forceOpenStatus = 0;
+				forceOpenDown = true;
+			}
+			return;
+		} else {
+			forceOpenStatus = 0;
+			forceOpenDown = true;
+		}
+		
 		// Execute the prekeys key maucros, but only if the input handler is enabled.
 		if (!disabled) for (KeyMaucro km : KeyMaucro.getKeyMaucros()) {
 			KeyMaucro.ExecPhase ep = evt.isPressed() ? KeyMaucro.ExecPhase.PREKEYS_DOWN : KeyMaucro.ExecPhase.PREKEYS_UP;
 			if (evt.getCode() == km.getKeyCode() && km.shiftKeysDown() && km.getExecutionPhase().equals(ep)) km.executeMacro();
-		}
-		
-		if (evt.getCode() == konami[konamiStatus] && evt.isPressed() == konamiDown) {
-			if (!konamiDown) konamiStatus++;
-			konamiDown = !konamiDown;
-		} else {
-			konamiStatus = 0;
-			konamiDown = true;
-		}
-		
-		if (konamiStatus == konami.length + 1) {
-			Minecraft.getMinecraft().displayGuiScreen(new GuiMaunsic(host));
-			konamiStatus = 0;
-			konamiDown = true;
-			return;
 		}
 		
 		if (evt.isPressed() && !disabled) {
