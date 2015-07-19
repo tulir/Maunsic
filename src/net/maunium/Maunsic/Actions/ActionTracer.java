@@ -29,7 +29,7 @@ public class ActionTracer extends TickAction {
 	public void execute() {
 		EntityPlayerSP p = Minecraft.getMinecraft().thePlayer;
 		for (EntityPlayer e : (List<EntityPlayer>) Minecraft.getMinecraft().theWorld.playerEntities) {
-			if (e.equals(p)/* || e instanceof EntityFreecam */) continue;
+			if (e.getUniqueID().equals(p.getUniqueID())) continue;
 			if (Attacking.isFriend(e.getName())) GLHelper.drawLine(p.posX, p.posY, p.posZ, p.posX, p.posY + p.getEyeHeight(), p.posZ, e.posX,
 					e.posY + e.getEyeHeight(), e.posZ, 2, 0, 255, 0, 1.0F);
 			else GLHelper.drawLine(p.posX, p.posY, p.posZ, p.posX, p.posY + p.getEyeHeight(), p.posZ, e.posX, e.posY + e.getEyeHeight(), e.posZ, 2, 255, 0, 0,

@@ -30,7 +30,7 @@ public class ActionEsp extends TickAction {
 	public void execute() {
 		EntityPlayerSP p = Minecraft.getMinecraft().thePlayer;
 		for (EntityPlayer e : (List<EntityPlayer>) Minecraft.getMinecraft().theWorld.playerEntities) {
-			if (e.equals(p)/* || e instanceof EntityFreecam */) continue;
+			if (e.getUniqueID().equals(p.getUniqueID())) continue;
 			
 			float hW = e.width / 2.0F;
 			AxisAlignedBB bb = AxisAlignedBB.fromBounds(e.posX - hW, e.posY, e.posZ - hW, e.posX + hW, e.posY + 1.68, e.posZ + hW);

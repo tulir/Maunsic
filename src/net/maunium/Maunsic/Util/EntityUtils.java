@@ -109,7 +109,7 @@ public class EntityUtils {
 		EntityPlayerSP p = Minecraft.getMinecraft().thePlayer;
 		for (Entity e : entities) {
 			if (e.isDead) continue;
-			else if (e instanceof EntityPlayer && (e.equals(p) || Attacking.isFriend(((EntityPlayer) e).getName()))) continue;
+			else if (e instanceof EntityPlayer && (e.getUniqueID().equals(p.getUniqueID()) || Attacking.isFriend(((EntityPlayer) e).getName()))) continue;
 			else if (!p.canEntityBeSeen(e)) continue;
 			else if (closestEntity == null || p.getDistanceSqToEntity(closestEntity) > p.getDistanceSqToEntity(e)) closestEntity = e;
 		}
