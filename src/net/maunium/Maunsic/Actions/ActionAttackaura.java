@@ -1,18 +1,14 @@
 package net.maunium.Maunsic.Actions;
 
-import java.util.List;
-
 import net.maunium.Maunsic.Actions.Util.IntervalAction;
 import net.maunium.Maunsic.Settings.Attacking;
+import net.maunium.Maunsic.Util.EntityUtils;
 import net.maunium.Maunsic.Util.MaunsiConfig;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.projectile.EntityFireball;
-import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.EnumChatFormatting;
 
 /**
@@ -28,30 +24,31 @@ public class ActionAttackaura extends IntervalAction {
 	@Override
 	public void executeInterval() {
 		EntityPlayerSP p = Minecraft.getMinecraft().thePlayer;
-		List<Entity> entities = getEntitiesAABB(EntityFireball.class, Attacking.range);
-		for (Class<? extends EntityLivingBase> c : Attacking.getTargets())
-			entities.addAll(getEntitiesAABB(c, Attacking.range));
 		boolean hasSwung = false;
-		for (Entity e : entities) {
-			if (e instanceof EntityPlayer) {
-				EntityPlayer b = (EntityPlayer) e;
-				if (Attacking.isFriend(b.getName()) || b == p) continue;
-			}
-			if (!p.canEntityBeSeen(e)) continue;
-			Minecraft.getMinecraft().playerController.attackEntity(p, e);
-			if (!hasSwung && swing) {
-				p.swingItem();
-				hasSwung = true;
+		// Loop through the attacking target classes.
+		for (Class<?> c : Attacking.getTargets()) {
+			// Loop through the entities of the given class within the attacking range.
+			for (Entity e : EntityUtils.getEntitiesAABB(c, Attacking.range)) {
+				// If the entity is a player, do some checks.
+				if (e instanceof EntityPlayer) {
+					EntityPlayer b = (EntityPlayer) e;
+					// If the entity is a friend or the entity is the player, ignore it.
+					if (Attacking.isFriend(b.getName()) || b == p) continue;
+				}
+				
+				// If the entity is hiding, ignore it.
+				if (!p.canEntityBeSeen(e)) continue;
+				// Attack the entity
+				Minecraft.getMinecraft().playerController.attackEntity(p, e);
+				// If the player hasn't swung yet and the swing flag is set to true...
+				if (!hasSwung && swing) {
+					// ... swing the hand ...
+					p.swingItem();
+					// ... and set hasSwung to true.
+					hasSwung = true;
+				}
 			}
 		}
-	}
-	
-	private List<Entity> getEntitiesAABB(Class<?> c, double range) {
-		EntityPlayerSP p = Minecraft.getMinecraft().thePlayer;
-		@SuppressWarnings("unchecked")
-		List<Entity> l = p.worldObj.getEntitiesWithinAABB(c,
-				AxisAlignedBB.fromBounds(p.posX - range, p.posY - range, p.posZ - range, p.posX + range, p.posY + range, p.posZ + range));
-		return l;
 	}
 	
 	@Override

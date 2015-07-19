@@ -23,11 +23,16 @@ public class ActionAimbot extends IntervalAction {
 	@Override
 	public void executeInterval() {
 		List<Entity> e = new ArrayList<Entity>(EntityUtils.getEntitiesAABB(EntityFireball.class, Attacking.range));
+		// Loop through the attacking targets.
 		for (Class<?> c : Attacking.getTargets())
+			// Get each entity of the target class which is within the attacking range.
 			e.addAll(EntityUtils.getEntitiesAABB(c, Attacking.range));
 			
+		// Get the closest entity from the list.
 		Entity c = EntityUtils.getClosestEntity(true, e);
+		// If not found, return.
 		if (c == null) return;
+		// Face the closest entity.
 		EntityUtils.faceEntityClient(c);
 	}
 	
@@ -38,8 +43,8 @@ public class ActionAimbot extends IntervalAction {
 		if (Attacking.range <= 6) rtrn[1] = " Range: " + EnumChatFormatting.GREEN + Attacking.range;
 		else rtrn[1] = " Range: " + EnumChatFormatting.GREEN + EnumChatFormatting.ITALIC + Attacking.range;
 		
-		if (interval >= 40) rtrn[2] = " Speed (ms/ref): " + EnumChatFormatting.GREEN + interval;
-		else rtrn[2] = " Speed (ms/ref): " + EnumChatFormatting.GREEN + EnumChatFormatting.ITALIC + interval;
+		if (interval >= 40) rtrn[2] = " Speed (interval): " + EnumChatFormatting.GREEN + interval;
+		else rtrn[2] = " Speed (interval): " + EnumChatFormatting.GREEN + EnumChatFormatting.ITALIC + interval;
 		return rtrn;
 	}
 	
