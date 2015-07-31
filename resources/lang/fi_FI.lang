@@ -154,6 +154,8 @@ keymaucros.syntax.forward=The MaucroCommand Forward takes one integer.
 keymaucros.syntax.look=The MaucroCommand Look takes two integers.
 keymaucros.output.local={0}
 
+message.blink.sp=Blink ei ole käytössä yksinpelissä, sillä se aiheuttaa pelin jäätymisen.
+
 message.alt.username=Onnistuneesti vaihdettiin käyttäjänimeksi {0}.
 message.alt.login=Onnistuneesti kirjauduttiin sisään käyttäjänä {0}.
 message.alt.failusername=Nimen vaihto epäonnistui.
