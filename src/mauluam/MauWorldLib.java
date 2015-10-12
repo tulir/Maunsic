@@ -6,9 +6,11 @@ import org.luaj.vm2.lib.ThreeArgFunction;
 import org.luaj.vm2.lib.TwoArgFunction;
 import org.luaj.vm2.lib.VarArgFunction;
 
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
 
 /**
@@ -31,8 +33,13 @@ public class MauWorldLib extends TwoArgFunction {
 	public static class getBlockType extends ThreeArgFunction {
 		@Override
 		public LuaValue call(LuaValue x, LuaValue y, LuaValue z) {
-			return LuaValue.valueOf(Minecraft.getMinecraft().thePlayer.worldObj.getBlockState(new BlockPos(x.toint(), y.toint(), z.toint())).getBlock()
-					.getUnlocalizedName().substring(5));
+			IBlockState bs = Minecraft.getMinecraft().thePlayer.worldObj.getBlockState(new BlockPos(x.toint(), y.toint(), z.toint()));
+			if (bs == null) return LuaValue.NIL;
+			else if (bs.getBlock() == null || bs.getBlock().equals(Blocks.air)) return LuaValue.NIL;
+			else {
+				String name = bs.getBlock().getUnlocalizedName();
+				return LuaValue.valueOf(name.substring(5, name.length() - 5));
+			}
 		}
 	}
 	
