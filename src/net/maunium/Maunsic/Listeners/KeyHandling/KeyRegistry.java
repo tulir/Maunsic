@@ -29,6 +29,15 @@ public class KeyRegistry {
 	}
 	
 	/**
+	 * Get the keybind with the given name.
+	 */
+	public static MauKeybind findKeybind(String name) {
+		for (MauKeybind kb : keybinds)
+			if (kb.getName().equalsIgnoreCase(name)) return kb;
+		return null;
+	}
+	
+	/**
 	 * Get all the registered key bindings.
 	 */
 	public static Set<MauKeybind> getKeybinds() {
