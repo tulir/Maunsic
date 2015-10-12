@@ -56,8 +56,8 @@ public class MauKeyboardLib extends TwoArgFunction {
 		else if (s.equals("use")) return gs.keyBindUseItem.getKeyCode();
 		else if (s.equals("pick")) return gs.keyBindPickBlock.getKeyCode();
 		else if (s.equals("screenshot")) return gs.keyBindScreenshot.getKeyCode();
-		MauKeybind kb = KeyRegistry.findKeybind(s);
-		if (kb != null) return kb.getKeyCode();
+		MauKeybind mkb = KeyRegistry.findKeybind(s);
+		if (mkb != null) return mkb.getKeyCode();
 		else {
 			int kc = Keyboard.getKeyIndex(s.toUpperCase());
 			if (kc != Keyboard.KEY_NONE) return kc;
