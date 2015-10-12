@@ -78,7 +78,7 @@ public class LuaExecutionThread extends Thread {
 		globals.load(new JseOsLib());
 		globals.load(new LuajavaLib());
 		globals.load(new MauGDataLib());
-		// globals.load(new MauInvLib());
+		globals.load(new MauInvLib());
 		globals.load(new MauKeyboardLib());
 		globals.load(new MauLocationLib());
 		globals.load(new MauMathLib());
