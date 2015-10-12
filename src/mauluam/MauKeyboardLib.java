@@ -1,5 +1,7 @@
 package mauluam;
 
+import java.util.Locale;
+
 import org.luaj.vm2.LuaValue;
 import org.luaj.vm2.Varargs;
 import org.luaj.vm2.lib.OneArgFunction;
@@ -8,6 +10,8 @@ import org.luaj.vm2.lib.VarArgFunction;
 import org.lwjgl.input.Keyboard;
 
 import net.maunium.Maunsic.Maunsic;
+import net.maunium.Maunsic.Listeners.KeyHandling.KeyRegistry;
+import net.maunium.Maunsic.Listeners.KeyHandling.MauKeybind;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.GameSettings;
@@ -28,12 +32,13 @@ public class MauKeyboardLib extends TwoArgFunction {
 		lib.set("press", new press());
 		lib.set("keyup", new keyup());
 		lib.set("keydown", new keydown());
-		lib.set("isKeyDown", new isKeyDown());
+		lib.set("iskeydown", new iskeydown());
 		env.set("keyboard", lib);
 		return lib;
 	}
 	
 	private static int getKeyCode(String s) {
+		s = s.toLowerCase(Locale.ENGLISH);
 		GameSettings gs = Minecraft.getMinecraft().gameSettings;
 		try {
 			return Integer.parseInt(s);
@@ -51,30 +56,18 @@ public class MauKeyboardLib extends TwoArgFunction {
 		else if (s.equals("use")) return gs.keyBindUseItem.getKeyCode();
 		else if (s.equals("pick")) return gs.keyBindPickBlock.getKeyCode();
 		else if (s.equals("screenshot")) return gs.keyBindScreenshot.getKeyCode();
-//		else if (s.equals("aimbot")) return kbs.getPublicKeyCode(kbs.AIMBOT);
-//		else if (s.equals("attackaura")) return kbs.getPublicKeyCode(kbs.ATTACKAURA);
-//		else if (s.equals("autoattack")) return kbs.getPublicKeyCode(kbs.AUTOATTACK);
-//		else if (s.equals("autosoup")) return kbs.getPublicKeyCode(kbs.AUTOSOUP);
-//		else if (s.equals("autouse")) return kbs.getPublicKeyCode(kbs.AUTOUSE);
-//		else if (s.equals("blink")) return kbs.getPublicKeyCode(kbs.BLINK);
-//		else if (s.equals("config")) return kbs.getPublicKeyCode(kbs.CONFIG);
-//		else if (s.equals("fly")) return kbs.getPublicKeyCode(kbs.FLY);
-//		else if (s.equals("speeddec")) return kbs.getPublicKeyCode(kbs.FLYSPEED_DEC);
-//		else if (s.equals("speedinc")) return kbs.getPublicKeyCode(kbs.FLYSPEED_INC);
-//		else if (s.equals("nofall")) return kbs.getPublicKeyCode(kbs.NOFALL);
-//		else if (s.equals("phase")) return kbs.getPublicKeyCode(kbs.PHASE);
-//		else if (s.equals("playeresp")) return kbs.getPublicKeyCode(kbs.PLAYERESP);
-//		else if (s.equals("spammer")) return kbs.getPublicKeyCode(kbs.SPAMMER);
-//		else if (s.equals("tracer")) return kbs.getPublicKeyCode(kbs.TRACER);
-//		else if (s.equals("username")) return kbs.getPublicKeyCode(kbs.USERNAME);
-		int kc = Keyboard.getKeyIndex(s.toUpperCase());
-		if (kc != Keyboard.KEY_NONE) return kc;
-		else for (KeyBinding kb : gs.keyBindings)
-			if (s.equals(kb.getKeyDescription())) return kb.getKeyCode();
-		return Keyboard.KEY_NONE;
+		MauKeybind kb = KeyRegistry.findKeybind(s);
+		if (kb != null) return kb.getKeyCode();
+		else {
+			int kc = Keyboard.getKeyIndex(s.toUpperCase());
+			if (kc != Keyboard.KEY_NONE) return kc;
+			else for (KeyBinding kb : gs.keyBindings)
+				if (s.equals(kb.getKeyDescription())) return kb.getKeyCode();
+			return Keyboard.KEY_NONE;
+		}
 	}
 	
-	public static class isKeyDown extends OneArgFunction {
+	public static class iskeydown extends OneArgFunction {
 		@Override
 		public LuaValue call(LuaValue key) {
 			if (key.isint()) return LuaValue.valueOf(Keyboard.isKeyDown(key.toint()));
