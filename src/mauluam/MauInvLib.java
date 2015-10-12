@@ -18,12 +18,12 @@ public class MauInvLib extends TwoArgFunction {
 	@Override
 	public LuaValue call(LuaValue modname, LuaValue env) {
 		LuaValue lib = LuaValue.tableOf();
-		lib.set("setSelected", new setSelected());
+		lib.set("select", new select());
 		env.set("inv", lib);
 		return lib;
 	}
 	
-	public static class setSelected extends OneArgFunction {
+	public static class select extends OneArgFunction {
 		@Override
 		public LuaValue call(LuaValue slot) {
 			InventoryPlayer ip = Minecraft.getMinecraft().thePlayer.inventory;
