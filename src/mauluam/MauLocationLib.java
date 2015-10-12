@@ -26,6 +26,9 @@ public class MauLocationLib extends TwoArgFunction {
 		lib.set("getX", new getX());
 		lib.set("getY", new getY());
 		lib.set("getZ", new getZ());
+		lib.set("getBlockX", new getBlockX());
+		lib.set("getBlockY", new getBlockY());
+		lib.set("getBlockZ", new getBlockZ());
 		lib.set("getYaw", new getYaw());
 		lib.set("getPitch", new getPitch());
 		lib.set("setYaw", new setYaw());
@@ -153,6 +156,27 @@ public class MauLocationLib extends TwoArgFunction {
 		@Override
 		public LuaValue call() {
 			return LuaValue.valueOf(Minecraft.getMinecraft().thePlayer.posX);
+		}
+	}
+	
+	public static class getBlockZ extends ZeroArgFunction {
+		@Override
+		public LuaValue call() {
+			return LuaValue.valueOf(Minecraft.getMinecraft().thePlayer.getPosition().getZ());
+		}
+	}
+	
+	public static class getBlockY extends ZeroArgFunction {
+		@Override
+		public LuaValue call() {
+			return LuaValue.valueOf(Minecraft.getMinecraft().thePlayer.getPosition().getY());
+		}
+	}
+	
+	public static class getBlockX extends ZeroArgFunction {
+		@Override
+		public LuaValue call() {
+			return LuaValue.valueOf(Minecraft.getMinecraft().thePlayer.getPosition().getX());
 		}
 	}
 }
