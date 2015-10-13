@@ -162,21 +162,21 @@ public class MauLocationLib extends TwoArgFunction {
 	public static class getBlockZ extends ZeroArgFunction {
 		@Override
 		public LuaValue call() {
-			return LuaValue.valueOf(Minecraft.getMinecraft().thePlayer.getPosition().getZ());
+			return LuaValue.valueOf((int) Minecraft.getMinecraft().thePlayer.posZ);
 		}
 	}
 	
 	public static class getBlockY extends ZeroArgFunction {
 		@Override
 		public LuaValue call() {
-			return LuaValue.valueOf(Minecraft.getMinecraft().thePlayer.getPosition().getY());
+			return LuaValue.valueOf((int) Minecraft.getMinecraft().thePlayer.posY);
 		}
 	}
 	
 	public static class getBlockX extends ZeroArgFunction {
 		@Override
 		public LuaValue call() {
-			return LuaValue.valueOf(Minecraft.getMinecraft().thePlayer.getPosition().getX());
+			return LuaValue.valueOf((int) Minecraft.getMinecraft().thePlayer.posX);
 		}
 	}
 }
