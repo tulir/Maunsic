@@ -94,7 +94,7 @@ public class LuaExecutionThread extends Thread {
 			LuaValue chunk = globals.loadfile(f.getPath());
 			startTime = Minecraft.getSystemTime();
 			chunk.call();
-		} catch (Throwable t) {
+		} catch (ThreadDeath td) {} catch (Throwable t) {
 			Maunsic.printChatError("message.lua.execfail", f.getName(), t.getMessage());
 			Maunsic.getLogger().catching(t);
 		}
